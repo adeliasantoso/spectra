@@ -1,7 +1,7 @@
 const CACHE_NAME = 'spectra-vision-v2';
 const STATIC_ASSETS = [
-  '/spectra-vision-fe/',
-  '/spectra-vision-fe/index.html'
+  '/spectra/',
+  '/spectra/index.html'
 ];
 
 // Cache for images and videos
