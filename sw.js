@@ -1,13 +1,15 @@
-const CACHE_NAME = 'spectra-v1';
+const CACHE_NAME = 'spectra-vision-v2';
 const STATIC_ASSETS = [
-  '/',
-  '/index.html',
-  '/static/js/bundle.js',
-  '/static/css/main.css',
-  '/manifest.json'
+  '/spectra-vision-fe/',
+  '/spectra-vision-fe/index.html'
 ];
 
-const DYNAMIC_CACHE = 'spectra-dynamic-v1';
+// Cache for images and videos
+const MEDIA_CACHE = 'spectra-media-v1';
+// Cache for API responses
+const API_CACHE = 'spectra-api-v1';
+
+const DYNAMIC_CACHE = 'spectra-dynamic-v2';
 
 // Install event - cache static assets
 self.addEventListener('install', (event) => {
@@ -29,7 +31,10 @@ self.addEventListener('activate', (event) => {
       .then((cacheNames) => {
         return Promise.all(
           cacheNames.map((cacheName) => {
-            if (cacheName !== CACHE_NAME && cacheName !== DYNAMIC_CACHE) {
+            if (cacheName !== CACHE_NAME && 
+                cacheName !== DYNAMIC_CACHE && 
+                cacheName !== MEDIA_CACHE && 
+                cacheName !== API_CACHE) {
               return caches.delete(cacheName);
             }
           })
@@ -66,11 +71,23 @@ self.addEventListener('fetch', (event) => {
 
             // Clone the response for caching
             const responseToCache = response.clone();
+            const url = event.request.url;
 
-            caches.open(DYNAMIC_CACHE)
-              .then((cache) => {
-                cache.put(event.request, responseToCache);
-              });
+            // Cache images and videos in media cache
+            if (url.includes('.png') || url.includes('.jpg') || url.includes('.jpeg') || 
+                url.includes('.webp') || url.includes('.mp4') || url.includes('.webm')) {
+              caches.open(MEDIA_CACHE)
+                .then((cache) => {
+                  cache.put(event.request, responseToCache);
+                });
+            }
+            // Cache JS/CSS in dynamic cache
+            else if (url.includes('.js') || url.includes('.css')) {
+              caches.open(DYNAMIC_CACHE)
+                .then((cache) => {
+                  cache.put(event.request, responseToCache);
+                });
+            }
 
             return response;
           })
