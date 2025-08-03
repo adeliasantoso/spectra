@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://adeliasantoso.github.io/spectra-vision",
+  "homepage": "https://alwiam.github.io/spectra-vision-fe",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

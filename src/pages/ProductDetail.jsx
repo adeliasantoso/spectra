@@ -7,10 +7,7 @@ import OptimizedImage from '../components/OptimizedImage';
 import { useCart } from '../context/CartContext';
 import { useToast } from '../context/ToastContext';
 import { useWishlist } from '../context/WishlistContext';
-import spectraGlassesImage from '../assets/images/landing-page/spectra1.png';
-import productPov1 from '../assets/images/product-page/product-pov-1.png';
-import productPov2 from '../assets/images/product-page/product-pov-2.png';
-import productPov3 from '../assets/images/product-page/product-pov-3.png';
+import { getProductById, getAllProducts } from '../data/products';
 import social1Image from '../assets/images/landing-page/social1.png';
 import social3Image from '../assets/images/landing-page/social3.png';
 import isabellaMontoyaImg from '../assets/images/product-page/testimonial/isabella-montoya.png';
@@ -50,47 +47,34 @@ const ProductDetail = () => {
 
 
 
-  // Product data (in real app, fetch from API)
-  const product = {
-    id: 1,
-    name: 'Spectra 1.0',
-    tagline: 'Revolutionary Mind-Mapping Smart Glasses',
-    price: 2499,
-    originalPrice: 2999,
-    rating: 4.8,
-    reviewCount: 247,
-    images: [
-      spectraGlassesImage,
-      productPov1,
-      productPov2,
-      productPov3
-    ],
-    colors: ['Black', 'White', 'Silver'],
-    inStock: true,
-    description: 'Welcome to a new dimension of personalization. Spectra 1.0 is a next-generation wearable that brings the power of intelligent personalization into your everyday life. Designed to adapt and respond in real time, it enhances your experience across work, leisure, and everything in between. By learning from your habits, Spectra 1.0 offers insights and suggestions tailored to your preferences and environment. Supported by our powerful AI model, it presents what matters, exactly when you need it. Expand your universe with Spectra 1.0.',
-    features: [
-      'Ultra-lightweight titanium frame (28g)',
-      '4K micro-OLED displays with 120Hz refresh rate',
-      'Advanced eye-tracking technology',
-      'Spatial audio with noise cancellation',
-      '12-hour battery life with fast charging',
-      'IPX4 water resistance',
-      'Voice control and gesture recognition',
-      'Compatible with iOS, Android, and Windows'
-    ],
-    specifications: {
-      'Display': '4K micro-OLED, 120Hz, 3000 nits brightness',
-      'Processor': 'Custom neural processing unit',
-      'Memory': '8GB RAM, 256GB storage',
-      'Connectivity': 'WiFi 6E, Bluetooth 5.3, USB-C',
-      'Sensors': 'Accelerometer, Gyroscope, Magnetometer, Ambient light',
-      'Camera': 'Dual 8MP cameras with AI processing',
-      'Audio': 'Spatial audio speakers, 3-mic array',
-      'Battery': '12-hour typical use, 2-hour fast charge',
-      'Weight': '28g (without cable)',
-      'Compatibility': 'iOS 15+, Android 12+, Windows 11+'
+  // Get product data based on URL parameter
+  const product = getProductById(id);
+  
+  // Get related products (exclude current product)
+  const allProducts = getAllProducts();
+  const relatedProducts = allProducts.filter(p => p.id !== id).slice(0, 3);
+  
+  // Redirect to shop if product not found
+  useEffect(() => {
+    if (!product) {
+      // Could redirect to shop page or show 404
+      console.warn(`Product with ID ${id} not found`);
     }
-  };
+  }, [id, product]);
+  
+  // Return early if product not found
+  if (!product) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-gray-900 mb-4">Product Not Found</h1>
+          <Link to="/shop" className="text-blue-600 hover:text-blue-800">
+            Return to Shop
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   const testimonials = [
     {
@@ -103,7 +87,7 @@ const ProductDetail = () => {
     },
     {
       name: 'Jordan Carter',
-      headline: 'Really love Spectra 1.0!',
+      headline: 'Really love Spectra Vision!',
       rating: 5,
       review: 'I always dread those weekly grocery runs. Now, fresh stuff just shows up at my door on weekends. Spectra did all the heavy lifting for me.',
       avatar: jordanCarterImg,
@@ -246,7 +230,7 @@ const ProductDetail = () => {
       <Navigation />
       <CartIcon />
 
-      <div className="max-w-7xl mx-auto px-4 md:px-6 pt-24 md:pt-32 pb-12">
+      <div className="max-w-7xl mx-auto px-6 md:px-8 lg:px-12 pt-24 md:pt-32 pb-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
           {/* Product Images */}
           <div className="space-y-4">
@@ -323,14 +307,14 @@ const ProductDetail = () => {
               <div className="flex items-center space-x-3">
                 <button
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors"
+                  className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center hover:bg-gray-200 hover:scale-105 active:scale-95 transition-all duration-150"
                 >
                   -
                 </button>
-                <span className="text-lg font-semibold w-12 text-center">{quantity}</span>
+                <span className="text-lg font-semibold w-12 text-center transition-all duration-200">{quantity}</span>
                 <button
                   onClick={() => setQuantity(quantity + 1)}
-                  className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors"
+                  className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center hover:bg-gray-200 hover:scale-105 active:scale-95 transition-all duration-150"
                 >
                   +
                 </button>
@@ -342,10 +326,10 @@ const ProductDetail = () => {
               <button
                 onClick={handleAddToCart}
                 disabled={isAddingToCart}
-                className={`flex-1 py-3 md:py-4 px-6 md:px-8 rounded-lg font-semibold transition-all text-sm md:text-base ${
+                className={`flex-1 py-3 md:py-4 px-6 md:px-8 rounded-lg font-semibold transition-all duration-200 text-sm md:text-base ${
                   isAddingToCart 
                     ? 'bg-gray-400 text-white cursor-not-allowed' 
-                    : 'bg-blue-600 text-white hover:bg-blue-700 hover:scale-[1.02]'
+                    : 'bg-blue-600 text-white hover:bg-blue-700 hover:scale-105 active:scale-95 hover:shadow-lg'
                 }`}
               >
                 {isAddingToCart ? (
@@ -447,13 +431,13 @@ const ProductDetail = () => {
                 </p>
                 
                 <p className="text-lg md:text-xl">
-                  Spectra 1.0 is a next-generation wearable that brings the power of intelligent personalization into your everyday life. Designed to adapt and respond in real time, it enhances your experience across work, leisure, and everything in between. By learning from your habits, Spectra 1.0 offers insights and suggestions tailored to your preferences and environment. Supported by our powerful AI model, it presents what matters, exactly when you need it. Expand your universe with Spectra 1.0.
+                  Spectra Vision is a next-generation wearable that brings the power of intelligent personalization into your everyday life. Designed to adapt and respond in real time, it enhances your experience across work, leisure, and everything in between. By learning from your habits, Spectra Vision offers insights and suggestions tailored to your preferences and environment. Supported by our powerful AI model, it presents what matters, exactly when you need it. Expand your universe with Spectra Vision.
                 </p>
                 
                 {isDescriptionExpanded && (
                   <div className="space-y-8 animate-fade-in">
                     <p className="text-base md:text-lg">
-                      Spectra 1.0 was born from a simple belief: technology should understand more than it serves. It pays attention to the rhythms of your life—what you linger on, what you skip, and turns that awareness into moment-to-moment relevance. More than just a device, it's an intelligent companion that learns from you to help make each day feel smoother and more intentional.
+                      Spectra Vision was born from a simple belief: technology should understand more than it serves. It pays attention to the rhythms of your life—what you linger on, what you skip, and turns that awareness into moment-to-moment relevance. More than just a device, it's an intelligent companion that learns from you to help make each day feel smoother and more intentional.
                     </p>
                     
                     <p className="text-base md:text-lg">
@@ -461,11 +445,11 @@ const ProductDetail = () => {
                     </p>
                     
                     <p className="text-base md:text-lg">
-                      Spectra doesn't require constant input to be effective. Drawing on ambient data and contextual insights, it learns what you love and when you need it most. This enables Spectra 1.0 to help you discover the right product, service, or spark of inspiration, often before you even think to ask. With intuitive controls and seamless connectivity, Spectra 1.0 offers a more intelligent way to engage with the world around you.
+                      Spectra doesn't require constant input to be effective. Drawing on ambient data and contextual insights, it learns what you love and when you need it most. This enables Spectra Vision to help you discover the right product, service, or spark of inspiration, often before you even think to ask. With intuitive controls and seamless connectivity, Spectra Vision offers a more intelligent way to engage with the world around you.
                     </p>
                     
                     <p className="text-base md:text-lg">
-                      Privacy and trust are foundational to Spectra's design. With on-device AI processing and secure encryption, all data is handled locally to avoid cloud syncing or third-party access. It stores only what's necessary and learns solely for your benefit. Spectra 1.0 is equipped with intelligence and care to enrich your world.
+                      Privacy and trust are foundational to Spectra's design. With on-device AI processing and secure encryption, all data is handled locally to avoid cloud syncing or third-party access. It stores only what's necessary and learns solely for your benefit. Spectra Vision is equipped with intelligence and care to enrich your world.
                     </p>
                     
                     <p className="text-lg md:text-xl font-medium text-left pt-6">
@@ -587,26 +571,30 @@ const ProductDetail = () => {
         <div className="mt-16">
           <h3 className="text-2xl font-semibold mb-8">You might also like</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[1, 2, 3].map((item) => (
-              <div key={item} className="bg-white rounded-xl shadow-sm overflow-hidden group hover:shadow-lg transition-shadow">
+            {relatedProducts.map((relatedProduct) => (
+              <Link 
+                key={relatedProduct.id} 
+                to={`/product/${relatedProduct.id}`}
+                className="bg-white rounded-xl shadow-sm overflow-hidden group hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+              >
                 <div className="aspect-square bg-gradient-radial from-blue-50 via-purple-50 to-gray-100">
                   <img
-                    src={item === 1 ? social1Image : item === 2 ? social3Image : social1Image}
-                    alt={`Related Product ${item}`}
-                    className="w-full h-full object-cover"
+                    src={relatedProduct.images[0]}
+                    alt={relatedProduct.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
                 <div className="p-6">
-                  <h4 className="font-semibold mb-2">Spectra Pro {item}.0</h4>
-                  <p className="text-gray-600 text-sm mb-3">Advanced AR glasses for professionals</p>
+                  <h4 className="font-semibold mb-2">{relatedProduct.name}</h4>
+                  <p className="text-gray-600 text-sm mb-3">{relatedProduct.tagline}</p>
                   <div className="flex items-center justify-between">
-                    <span className="text-lg font-bold">${2999 + (item * 500)}</span>
-                    <button className="text-blue-600 hover:text-blue-700 font-medium">
+                    <span className="text-lg font-bold">£{relatedProduct.price.toLocaleString()}</span>
+                    <span className="text-blue-600 group-hover:text-blue-700 font-medium transition-colors">
                       View Details →
-                    </button>
+                    </span>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>

@@ -27,14 +27,14 @@ const ProductQuickView = memo(({ product, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 bg-black animate-modal-fade-in flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto animate-modal-scale-in">
         {/* Header */}
         <div className="flex justify-between items-center p-6 border-b">
           <h2 className="text-2xl font-light">Quick View</h2>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 text-2xl"
+            className="text-gray-400 hover:text-gray-600 hover:scale-110 active:scale-95 transition-all duration-200 text-2xl p-1 rounded-full hover:bg-gray-100"
           >
             ×
           </button>
@@ -46,7 +46,7 @@ const ProductQuickView = memo(({ product, onClose }) => {
             {/* Product Image */}
             <div>
               <img
-                src={product.image}
+                src={product.images ? product.images[0] : product.image}
                 alt={product.name}
                 className="w-full aspect-square object-cover rounded-2xl"
               />
@@ -59,7 +59,7 @@ const ProductQuickView = memo(({ product, onClose }) => {
                   {product.name}
                 </h3>
                 <p className="text-2xl font-light text-black">
-                  {product.price}
+                  £{typeof product.price === 'number' ? product.price.toLocaleString() : product.price}
                 </p>
               </div>
 
@@ -79,15 +79,15 @@ const ProductQuickView = memo(({ product, onClose }) => {
                 <div className="flex items-center space-x-3">
                   <button
                     onClick={() => handleQuantityChange(-1)}
-                    className="w-8 h-8 border border-gray-300 flex items-center justify-center hover:bg-gray-100 transition-colors"
+                    className="w-8 h-8 border border-gray-300 flex items-center justify-center hover:bg-gray-100 hover:scale-105 active:scale-95 transition-all duration-150"
                     disabled={quantity <= 1}
                   >
                     −
                   </button>
-                  <span className="w-12 text-center font-medium">{quantity}</span>
+                  <span className="w-12 text-center font-medium transition-all duration-200">{quantity}</span>
                   <button
                     onClick={() => handleQuantityChange(1)}
-                    className="w-8 h-8 border border-gray-300 flex items-center justify-center hover:bg-gray-100 transition-colors"
+                    className="w-8 h-8 border border-gray-300 flex items-center justify-center hover:bg-gray-100 hover:scale-105 active:scale-95 transition-all duration-150"
                   >
                     +
                   </button>
@@ -98,13 +98,13 @@ const ProductQuickView = memo(({ product, onClose }) => {
               <div className="space-y-3">
                 <button
                   onClick={handleAddToCart}
-                  className="w-full bg-black text-white px-6 py-3 text-lg font-medium hover:bg-gray-800 transition-colors duration-200 rounded-lg"
+                  className="w-full bg-black text-white px-6 py-3 text-lg font-medium hover:bg-gray-800 hover:scale-105 active:scale-95 transition-all duration-200 rounded-lg"
                 >
                   Add to Cart
                 </button>
                 <button
                   onClick={handleViewFullItem}
-                  className="w-full border border-black text-black px-6 py-3 text-lg font-medium hover:bg-black hover:text-white transition-colors duration-200 rounded-lg"
+                  className="w-full border border-black text-black px-6 py-3 text-lg font-medium hover:bg-black hover:text-white hover:scale-105 active:scale-95 transition-all duration-200 rounded-lg"
                 >
                   View Full Item
                 </button>

@@ -66,7 +66,7 @@ const ProductCard = ({ product, showQuickView = true }) => {
             </span>
             <button 
               onClick={handleAddToCart}
-              className="bg-black text-white px-4 py-2 text-sm font-medium hover:bg-gray-800 transition-colors duration-200"
+              className="bg-black text-white px-4 py-2 text-sm font-medium hover:bg-gray-800 hover:scale-105 active:scale-95 transition-all duration-200 rounded-md"
             >
               Add to Cart
             </button>

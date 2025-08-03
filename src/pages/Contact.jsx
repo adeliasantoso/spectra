@@ -56,7 +56,7 @@ const Contact = () => {
       
       {/* Contact Section */}
       <section className="flex-1 pt-40 md:pt-48 pb-12 md:pb-20 bg-gradient-radial from-blue-50 via-gray-50 to-gray-100">
-        <div className="max-w-4xl mx-auto px-4 md:px-6">
+        <div className="max-w-4xl mx-auto px-6 md:px-8 lg:px-12">
           <div className="text-center mb-12 md:mb-16">
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-medium text-black mb-8 md:mb-12">
               Connect with us

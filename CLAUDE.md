@@ -158,11 +158,11 @@ info('Color selection updated');
 npm run deploy
 
 # Builds project and pushes to gh-pages branch
-# Live URL: https://adeliasantoso.github.io/spectra-vision
+# Live URL: https://alwiam.github.io/spectra-vision-fe
 ```
 
 ### Build Configuration
-- **Base Path**: `/spectra-vision/` for GitHub Pages
+- **Base Path**: `/spectra-vision-fe/` for GitHub Pages
 - **Asset Optimization**: Automatic image and code splitting
 - **Browser Support**: Modern browsers (ES6+)
 
@@ -274,3 +274,52 @@ localStorage.setItem('debug', 'true');
 - **Business Support**: Creative tools for small businesses (pottery example)
 - **Personal Style**: AI-powered fashion recommendations
 - **Financial Growth**: Investment guidance and savings optimization
+
+## Video Asset Links
+
+### ImageKit CDN Video Assets
+All videos hosted on ImageKit CDN (https://ik.imagekit.io/ohyemuffin/asset/video/):
+
+1. **Hero Section Video**
+   - **Current**: `Futuristic_Smart_Glasses_Video_Generation.mp4?updatedAt=1754214351100`
+   - **Previous**: `https://drive.google.com/uc?export=download&id=1zXmE4fsjzJcGTNnie8mlQQlAwHsCJsP3`
+   - **Original**: `https://ik.imagekit.io/ohyemuffin/asset/video/dipake.mp4?updatedAt=1753676071907`
+   - Used in: Hero background, main landing page video
+   - Source: ImageKit CDN
+
+2. **Video Carousel Section (NEW)**
+   - **AI TV Tailors Content**: `AI_TV_Tailors_Content_for_Family.mp4?updatedAt=1754214349805`
+   - **Watch Tracks Lifestyle**: `Watch_Tracks_Active_Lifestyle.mp4?updatedAt=1754214349971`
+   - **Immersive Audio**: `Immersive_Audio_on_a_Busy_Street.mp4?updatedAt=1754214349985`
+   - **Smart Recognition**: `smart-recognition.mp4?updatedAt=1753676355632`
+   - Used in: Interactive video carousel with 8-second auto-advance
+   - Features: Animated black texture background, dots navigation, smooth transitions
+
+3. **Expand the Universe**
+   - **Current**: `AI_TV_Tailors_Content_for_Family.mp4?updatedAt=1754214349805` (Spectra Display)
+   - **Previous**: `expand-the-universe.mp4?updatedAt=1753676355743`
+   - Used in: "Expand your universe" section
+
+4. **Unlock Life Without Barriers**
+   - **Current**: `Watch_Tracks_Active_Lifestyle.mp4?updatedAt=1754214349971` (Spectra Watch)
+   - **Previous**: `unlock.mp4?updatedAt=1753676356747`
+   - Used in: "Unlock a life without barriers" section
+
+5. **Cancel Unwanted Noise**
+   - **Current**: `Immersive_Audio_on_a_Busy_Street.mp4?updatedAt=1754214349985` (Spectra Buds)
+   - **Previous**: `cancel-unwanted-noice.mp4?updatedAt=1753676357536`
+   - Used in: "Cancel the unwanted noise" section
+
+6. **See Through Your Thoughts**
+   - `look-through-your-head.mp4?updatedAt=1753676357987`
+   - Used in: "See through your thoughts" section
+
+7. **Intuitive Insights**
+   - `terakhir-sebelum-product.mp4?updatedAt=1753676358212`
+   - Used in: Full-width video USP section 2
+
+### Video Usage Context
+- All videos are set to autoplay, muted, loop, and playsInline
+- Videos serve as background elements and feature demonstrations
+- Each video supports the corresponding section's messaging
+- Fallback background colors provided for loading states

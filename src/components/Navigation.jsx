@@ -47,7 +47,7 @@ const Navigation = memo(() => {
             
             {/* CTA Button */}
             <Link 
-              to="/product/1" 
+              to="/product/spectra-vision" 
               className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-1.5 rounded-full font-medium hover:from-blue-600 hover:to-purple-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl ml-4"
             >
               Buy Now
@@ -105,7 +105,7 @@ const Navigation = memo(() => {
               
               {/* Mobile CTA Button */}
               <Link 
-                to="/product/1" 
+                to="/product/spectra-vision" 
                 className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-2 rounded-full font-medium hover:from-blue-600 hover:to-purple-700 transition-all duration-300 text-center mt-2"
                 onClick={() => setIsMobileMenuOpen(false)}
               >

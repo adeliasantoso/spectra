@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
@@ -18,11 +18,76 @@ import social3Image from "../assets/images/landing-page/social3.png";
 const Home = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
+  
+  // Video carousel state
+  const [activeVideoIndex, setActiveVideoIndex] = useState(0);
+  const [isCarouselInView, setIsCarouselInView] = useState(false);
+  const carouselRef = useRef(null);
+  const videoRefs = useRef([]);
+  
+  // Animation state for sections
+  const [visibleSections, setVisibleSections] = useState(new Set());
+  const sectionRefs = useRef({});
+  
+  // Animation observer for scroll-triggered animations
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.2,
+      rootMargin: '-50px 0px'
+    };
 
-  // Spectra 1.0 product data for quick view
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setVisibleSections(prev => new Set(prev).add(entry.target.id));
+        }
+      });
+    }, observerOptions);
+
+    // Observe all sections
+    Object.values(sectionRefs.current).forEach(ref => {
+      if (ref) observer.observe(ref);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+  
+  // Video carousel data
+  const carouselVideos = [
+    {
+      id: 1,
+      title: "Expand your universe",
+      subtitle: "AI TV tailors content for every family member",
+      videoUrl: "https://ik.imagekit.io/ohyemuffin/asset/video/AI_TV_Tailors_Content_for_Family.mp4?updatedAt=1754214349805",
+      product: "Spectra Display"
+    },
+    {
+      id: 2, 
+      title: "Unlock a life without barriers",
+      subtitle: "Watch tracks your active lifestyle seamlessly",
+      videoUrl: "https://ik.imagekit.io/ohyemuffin/asset/video/Watch_Tracks_Active_Lifestyle.mp4?updatedAt=1754214349971",
+      product: "Spectra Watch"
+    },
+    {
+      id: 3,
+      title: "Cancel the unwanted noise", 
+      subtitle: "Immersive audio cuts through busy environments",
+      videoUrl: "https://ik.imagekit.io/ohyemuffin/asset/video/Immersive_Audio_on_a_Busy_Street.mp4?updatedAt=1754214349985",
+      product: "Spectra Buds"
+    },
+    {
+      id: 4,
+      title: "See through your thoughts",
+      subtitle: "Look through your head with intelligent insights", 
+      videoUrl: "https://ik.imagekit.io/ohyemuffin/asset/video/look-through-your-head.mp4?updatedAt=1753676357987",
+      product: "Spectra Vision"
+    }
+  ];
+
+  // Spectra Vision product data for quick view
   const spectraProduct = {
     id: 1,
-    name: "Spectra 1.0",
+    name: "Spectra Vision",
     price: "£2,499",
     image: spectraGlassesImage,
     description: "Revolutionary AR smart glasses that seamlessly blend into your routine and deliver helpful, personalized suggestions. Experience the future of wearable technology with advanced AI integration and stunning visual clarity."
@@ -32,6 +97,64 @@ const Home = () => {
     setSelectedProduct(spectraProduct);
     setIsQuickViewOpen(true);
   };
+
+  // Video carousel logic
+  const nextVideo = () => {
+    setActiveVideoIndex((prev) => (prev + 1) % carouselVideos.length);
+  };
+
+  const prevVideo = () => {
+    setActiveVideoIndex((prev) => (prev - 1 + carouselVideos.length) % carouselVideos.length);
+  };
+
+  const goToVideo = (index) => {
+    setActiveVideoIndex(index);
+  };
+
+  // Auto-advance videos every 8 seconds
+  useEffect(() => {
+    if (!isCarouselInView) return;
+
+    const interval = setInterval(() => {
+      nextVideo();
+    }, 8000);
+
+    return () => clearInterval(interval);
+  }, [isCarouselInView, activeVideoIndex]);
+
+  // Intersection observer for carousel
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsCarouselInView(entry.isIntersecting);
+      },
+      { threshold: 0.3 }
+    );
+
+    if (carouselRef.current) {
+      observer.observe(carouselRef.current);
+    }
+
+    return () => {
+      if (carouselRef.current) {
+        observer.unobserve(carouselRef.current);
+      }
+    };
+  }, []);
+
+  // Play/pause videos based on active index
+  useEffect(() => {
+    videoRefs.current.forEach((video, index) => {
+      if (video) {
+        if (index === activeVideoIndex) {
+          video.play();
+        } else {
+          video.pause();
+          video.currentTime = 0;
+        }
+      }
+    });
+  }, [activeVideoIndex]);
 
   return (
     <div className="min-h-screen">
@@ -50,7 +173,7 @@ const Home = () => {
             className="w-full h-full object-cover"
           >
             <source
-              src="https://ik.imagekit.io/ohyemuffin/asset/video/dipake.mp4?updatedAt=1753676071907"
+              src="https://ik.imagekit.io/ohyemuffin/asset/video/Futuristic_Smart_Glasses_Video_Generation.mp4?updatedAt=1754214351100"
               type="video/mp4"
             />
             {/* Fallback background */}
@@ -62,12 +185,16 @@ const Home = () => {
         <div className="absolute inset-0 bg-black bg-opacity-40"></div>
 
         {/* Content */}
-        <div className="relative z-10 flex items-end justify-center h-full pb-8 md:pb-16">
+        <div className="relative z-20 flex items-end justify-center h-full pb-8 md:pb-16">
           <div className="text-center text-white px-4 md:px-6">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-light mb-4 md:mb-6 leading-tight">
-              A world tailored to
-              <br />
-              <span className="font-bold">your mind</span>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-light mb-4 md:mb-6 leading-tight relative z-30">
+              <div>
+                <span className="animate-word-1 inline-block">A</span>{' '}
+                <span className="animate-word-2 inline-block">world</span>{' '}
+                <span className="animate-word-3 inline-block">tailored</span>{' '}
+                <span className="animate-word-3 inline-block">to</span>
+              </div>
+              <div className="font-bold animate-fade-up-2 animate-subtle-glow -mt-2 md:-mt-4">your mind</div>
             </h1>
           </div>
         </div>
@@ -82,27 +209,127 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Introducing Spectra 1.0 */}
+      {/* Introducing Spectra Vision */}
       <section className="py-16 md:py-32 bg-gradient-radial from-gray-50 via-gray-100 to-gray-200 relative">
-        <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 text-center">
+        <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-8 lg:px-12 text-center">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-12 md:mb-20">
-            Introducing the new Spectra 1.0
+            Introducing the new Spectra Vision
           </h2>
           <div className="mb-8 md:mb-12 max-w-4xl mx-auto">
             <img
               src={spectraGlassesImage}
-              alt="Spectra 1.0"
+              alt="Spectra Vision"
               className="w-full h-auto rounded-2xl"
             />
           </div>
         </div>
       </section>
 
+      {/* Video Carousel Section */}
+      <section 
+        id="video-carousel"
+        ref={(el) => {
+          carouselRef.current = el;
+          sectionRefs.current['video-carousel'] = el;
+        }}
+        className={`relative w-full overflow-hidden bg-black ${
+          visibleSections.has('video-carousel') ? 'animate-video-carousel-enter' : ''
+        }`}
+      >
+        <div className="w-full">
+          <div className="relative w-full h-[50vh] md:h-[60vh] lg:h-[70vh] overflow-hidden">
+            {/* Animated Texture Background */}
+            <div className="absolute inset-0 z-0">
+              <div className="absolute inset-0 bg-gradient-to-br from-gray-800 via-black to-gray-900"></div>
+              {[...Array(15)].map((_, i) => (
+                <div
+                  key={i}
+                  className={`absolute bg-white rounded-full ${
+                    i % 3 === 0 ? 'animate-floating-texture' : 'animate-pulse-glow'
+                  }`}
+                  style={{
+                    width: Math.random() * 6 + 3 + 'px',
+                    height: Math.random() * 6 + 3 + 'px',
+                    left: Math.random() * 100 + '%',
+                    top: Math.random() * 100 + '%',
+                    animationDelay: Math.random() * 4 + 's',
+                  }}
+                />
+              ))}
+            </div>
+            
+            {/* Video Display */}
+            {carouselVideos.map((video, index) => (
+              <video
+                key={video.id}
+                ref={(el) => (videoRefs.current[index] = el)}
+                muted
+                loop
+                playsInline
+                className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ${
+                  index === activeVideoIndex 
+                    ? 'opacity-100 scale-100' 
+                    : 'opacity-0 scale-105'
+                }`}
+              >
+                <source src={video.videoUrl} type="video/mp4" />
+              </video>
+            ))}
+            
+            {/* Video Overlay Content */}
+            <div className="absolute inset-0 bg-black bg-opacity-40 flex items-end justify-center z-10">
+              <div className="text-center text-white px-4 pb-8 md:pb-12 lg:pb-16">
+                <h3 className={`text-2xl md:text-4xl lg:text-5xl font-bold mb-4 animate-caption-reveal stagger-1 ${
+                  visibleSections.has('video-carousel') ? 'animate-text-stagger' : ''
+                }`}>
+                  {carouselVideos[activeVideoIndex]?.title}
+                </h3>
+                <p className={`text-lg md:text-xl max-w-2xl mx-auto opacity-90 animate-caption-reveal stagger-2 ${
+                  visibleSections.has('video-carousel') ? 'animate-text-stagger' : ''
+                }`}>
+                  {carouselVideos[activeVideoIndex]?.subtitle}
+                </p>
+                <p className={`text-sm md:text-base opacity-70 mt-2 animate-caption-reveal stagger-3 ${
+                  visibleSections.has('video-carousel') ? 'animate-text-stagger' : ''
+                }`}>
+                  {carouselVideos[activeVideoIndex]?.product}
+                </p>
+                
+                {/* Dots Navigation */}
+                <div className={`flex justify-center mt-8 ${
+                  visibleSections.has('video-carousel') ? 'animate-dots-appear stagger-4' : ''
+                }`}>
+                  <div className="flex space-x-3">
+                    {carouselVideos.map((_, index) => (
+                      <button
+                        key={index}
+                        onClick={() => goToVideo(index)}
+                        className={`h-2 rounded-full transition-all duration-300 hover:scale-125 ${
+                          index === activeVideoIndex 
+                            ? 'w-8 bg-white shadow-lg' 
+                            : 'w-2 bg-white bg-opacity-50 hover:bg-opacity-75'
+                        }`}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Expand Your Universe */}
-      <section className="py-16 md:py-32 bg-gray-50 relative">
-        <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-6">
+      <section 
+        id="expand-universe"
+        ref={(el) => sectionRefs.current['expand-universe'] = el}
+        className="py-16 md:py-32 bg-gray-50 relative"
+      >
+        <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-8 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 md:gap-20 items-center">
-            <div className="lg:col-span-3 lg:pr-8 order-2 lg:order-1">
+            <div className={`lg:col-span-3 lg:pr-8 order-2 lg:order-1 ${
+              visibleSections.has('expand-universe') ? 'scroll-animate-video visible' : 'scroll-animate-video'
+            }`}>
               <video
                 autoPlay
                 muted
@@ -110,11 +337,13 @@ const Home = () => {
                 playsInline
                 className="w-full h-auto aspect-video object-contain rounded-2xl bg-black"
               >
-                <source src="https://ik.imagekit.io/ohyemuffin/asset/video/expand-the-universe.mp4?updatedAt=1753676355743" type="video/mp4" />
+                <source src="https://ik.imagekit.io/ohyemuffin/asset/video/AI_TV_Tailors_Content_for_Family.mp4?updatedAt=1754214349805" type="video/mp4" />
                 <div className="w-full h-full bg-gray-900 rounded-2xl"></div>
               </video>
             </div>
-            <div className="lg:col-span-2 space-y-6 md:space-y-8 order-1 lg:order-2">
+            <div className={`lg:col-span-2 space-y-6 md:space-y-8 order-1 lg:order-2 ${
+              visibleSections.has('expand-universe') ? 'scroll-animate visible' : 'scroll-animate'
+            }`}>
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-gray-900 leading-tight">
                 Expand your universe
               </h2>
@@ -132,10 +361,16 @@ const Home = () => {
       </section>
 
       {/* Unlock a Life Without Barriers */}
-      <section className="py-16 md:py-32 bg-white relative">
-        <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-6">
+      <section 
+        id="unlock-barriers"
+        ref={(el) => sectionRefs.current['unlock-barriers'] = el}
+        className="py-16 md:py-32 bg-white relative"
+      >
+        <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-8 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 md:gap-20 items-center">
-            <div className="lg:col-span-2 space-y-6 md:space-y-8">
+            <div className={`lg:col-span-2 space-y-6 md:space-y-8 ${
+              visibleSections.has('unlock-barriers') ? 'scroll-animate visible' : 'scroll-animate'
+            }`}>
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-gray-900 leading-tight">
                 Unlock a life without barriers
               </h2>
@@ -148,7 +383,9 @@ const Home = () => {
                 </p>
               </div>
             </div>
-            <div className="lg:col-span-3 lg:pl-8">
+            <div className={`lg:col-span-3 lg:pl-8 ${
+              visibleSections.has('unlock-barriers') ? 'scroll-animate-video visible' : 'scroll-animate-video'
+            }`}>
               <video
                 autoPlay
                 muted
@@ -156,7 +393,7 @@ const Home = () => {
                 playsInline
                 className="w-full h-auto aspect-video object-contain rounded-2xl bg-black"
               >
-                <source src="https://ik.imagekit.io/ohyemuffin/asset/video/unlock.mp4?updatedAt=1753676356747" type="video/mp4" />
+                <source src="https://ik.imagekit.io/ohyemuffin/asset/video/Watch_Tracks_Active_Lifestyle.mp4?updatedAt=1754214349971" type="video/mp4" />
                 <div className="w-full h-full bg-gray-900 rounded-2xl"></div>
               </video>
             </div>
@@ -164,10 +401,16 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Video USP Section 1 */}
-      <section className="py-16 md:py-24 bg-gray-50">
+      {/* Video USP Section 1 - Smart Recognition */}
+      <section 
+        id="smart-recognition"
+        ref={(el) => sectionRefs.current['smart-recognition'] = el}
+        className="py-16 md:py-24 bg-gray-50"
+      >
         <div className="w-full">
-          <div className="relative w-full h-[50vh] md:h-[60vh] lg:h-[70vh] overflow-hidden">
+          <div className={`relative w-full h-[50vh] md:h-[60vh] lg:h-[70vh] overflow-hidden ${
+            visibleSections.has('smart-recognition') ? 'animate-video-load-in' : ''
+          }`}>
             <video
               autoPlay
               muted
@@ -183,10 +426,14 @@ const Home = () => {
             </video>
             <div className="absolute inset-0 bg-black bg-opacity-20 flex items-end justify-center">
               <div className="text-center text-white px-4 pb-8 md:pb-12 lg:pb-16">
-                <h3 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-4">
+                <h3 className={`text-2xl md:text-4xl lg:text-5xl font-bold mb-4 ${
+                  visibleSections.has('smart-recognition') ? 'animate-caption-reveal stagger-1' : ''
+                }`}>
                   Smart Recognition
                 </h3>
-                <p className="text-lg md:text-xl max-w-2xl mx-auto">
+                <p className={`text-lg md:text-xl max-w-2xl mx-auto ${
+                  visibleSections.has('smart-recognition') ? 'animate-caption-reveal stagger-2' : ''
+                }`}>
                   See how Spectra identifies and adapts to your environment in real-time
                 </p>
               </div>
@@ -196,10 +443,16 @@ const Home = () => {
       </section>
 
       {/* Cancel the Unwanted Noise */}
-      <section className="py-16 md:py-32 bg-gray-50 relative">
-        <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-6">
+      <section 
+        id="cancel-noise"
+        ref={(el) => sectionRefs.current['cancel-noise'] = el}
+        className="py-16 md:py-32 bg-gray-50 relative"
+      >
+        <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-8 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 md:gap-20 items-center">
-            <div className="lg:col-span-3 lg:pr-8 order-2 lg:order-1">
+            <div className={`lg:col-span-3 lg:pr-8 order-2 lg:order-1 ${
+              visibleSections.has('cancel-noise') ? 'scroll-animate-video visible' : 'scroll-animate-video'
+            }`}>
               <video
                 autoPlay
                 muted
@@ -207,11 +460,13 @@ const Home = () => {
                 playsInline
                 className="w-full h-auto aspect-video object-contain rounded-2xl bg-black"
               >
-                <source src="https://ik.imagekit.io/ohyemuffin/asset/video/cancel-unwanted-noice.mp4?updatedAt=1753676357536" type="video/mp4" />
+                <source src="https://ik.imagekit.io/ohyemuffin/asset/video/Immersive_Audio_on_a_Busy_Street.mp4?updatedAt=1754214349985" type="video/mp4" />
                 <div className="w-full h-full bg-gray-900 rounded-2xl"></div>
               </video>
             </div>
-            <div className="lg:col-span-2 space-y-6 md:space-y-8 order-1 lg:order-2">
+            <div className={`lg:col-span-2 space-y-6 md:space-y-8 order-1 lg:order-2 ${
+              visibleSections.has('cancel-noise') ? 'scroll-animate visible' : 'scroll-animate'
+            }`}>
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-gray-900 leading-tight">
                 Cancel the unwanted noise
               </h2>
@@ -230,7 +485,7 @@ const Home = () => {
 
       {/* Look Through Your Head */}
       <section className="py-16 md:py-32 bg-white relative">
-        <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-6">
+        <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-8 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 md:gap-20 items-center">
             <div className="lg:col-span-2 space-y-6 md:space-y-8">
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-gray-900 leading-tight">
@@ -294,7 +549,7 @@ const Home = () => {
 
       {/* Experience the Future, Today */}
       <section className="pt-16 md:pt-24 pb-16 md:pb-32 bg-gray-50 relative">
-        <div className="relative z-10 max-w-6xl mx-auto px-4 md:px-6">
+        <div className="relative z-10 max-w-6xl mx-auto px-6 md:px-8 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 md:gap-12 items-center">
             <div className="order-2 lg:order-1 lg:col-span-3 relative group flex justify-center">
               <div className="relative max-w-md lg:max-w-lg xl:max-w-xl">
@@ -341,7 +596,7 @@ const Home = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-gray-300/20 via-transparent to-gray-200/30"></div>
         <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-gray-200/80 to-transparent"></div>
         <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-gray-75/80 to-transparent"></div>
-        <div className="relative z-10 max-w-3xl mx-auto px-4 md:px-6 text-center">
+        <div className="relative z-10 max-w-3xl mx-auto px-6 md:px-8 lg:px-12 text-center">
           <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-12 md:p-16 lg:p-20 shadow-xl">
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-12 md:mb-16">
               About us
@@ -372,7 +627,7 @@ const Home = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-gray-100/25 via-transparent to-white/50"></div>
         <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-gray-75/80 to-transparent"></div>
         <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-white/90 to-transparent"></div>
-        <div className="relative z-10 max-w-full mx-auto px-4 md:px-12">
+        <div className="relative z-10 max-w-full mx-auto px-6 md:px-8 lg:px-12">
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 text-center mb-12 md:mb-20">
             Follow us on social
           </h2>

@@ -8,7 +8,7 @@ const CallToAction = () => {
 
   const featuredProduct = {
     id: 'featured-1',
-    name: 'Spectra 1.0',
+    name: 'Spectra Vision',
     price: '£1,099',
     image: introNewSpectraAndExperienceTheFutureToday,
     description: 'Advanced neural integration smart glasses with cutting-edge AI technology.'

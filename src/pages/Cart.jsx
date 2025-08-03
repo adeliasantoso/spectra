@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
@@ -8,6 +8,7 @@ import { useToast } from '../context/ToastContext';
 const Cart = () => {
   const { cartItems, updateQuantity, removeFromCart, getTotalPrice, clearCart } = useCart();
   const { success, info, warning } = useToast();
+  const [removingItems, setRemovingItems] = useState(new Set());
 
   const handleQuantityChange = (productId, newQuantity) => {
     if (newQuantity <= 0) {
@@ -20,8 +21,17 @@ const Cart = () => {
   };
 
   const handleRemoveItem = (productId, productName) => {
-    removeFromCart(productId);
-    warning(`${productName} removed from cart`);
+    setRemovingItems(prev => new Set(prev).add(productId));
+    
+    setTimeout(() => {
+      removeFromCart(productId);
+      warning(`${productName} removed from cart`);
+      setRemovingItems(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(productId);
+        return newSet;
+      });
+    }, 300);
   };
 
   const handleClearCart = () => {
@@ -58,7 +68,7 @@ const Cart = () => {
         <Navigation />
         
         <section className="pt-24 md:pt-32 pb-12 md:pb-20">
-          <div className="max-w-4xl mx-auto px-4 md:px-6 text-center">
+          <div className="max-w-4xl mx-auto px-6 md:px-8 lg:px-12 text-center">
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-light text-black mb-6 md:mb-8">Your Cart</h1>
             <div className="py-8 md:py-16">
               <svg className="w-16 h-16 md:w-24 md:h-24 mx-auto mb-4 md:mb-6 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -86,7 +96,7 @@ const Cart = () => {
       <Navigation />
       
       <section className="pt-24 md:pt-32 pb-12 md:pb-20">
-        <div className="max-w-6xl mx-auto px-4 md:px-6">
+        <div className="max-w-6xl mx-auto px-6 md:px-8 lg:px-12">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-light text-black mb-8 md:mb-12 text-center">Your Cart</h1>
           
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-12">
@@ -94,7 +104,14 @@ const Cart = () => {
             <div className="lg:col-span-2">
               <div className="space-y-4 md:space-y-6">
                 {cartItems.map((item) => (
-                  <div key={item.id} className="flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-4 border-b border-gray-200 pb-4 md:pb-6">
+                  <div 
+                    key={item.id} 
+                    className={`flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-4 border-b border-gray-200 pb-4 md:pb-6 transition-all duration-300 ${
+                      removingItems.has(item.id) 
+                        ? 'opacity-0 transform translate-x-full scale-95' 
+                        : 'opacity-100 transform translate-x-0 scale-100'
+                    }`}
+                  >
                     {/* Product Image */}
                     <div className="w-20 h-20 sm:w-24 sm:h-24 flex-shrink-0 mx-auto sm:mx-0">
                       <img
@@ -116,14 +133,14 @@ const Cart = () => {
                       <div className="flex items-center justify-center space-x-3">
                         <button
                           onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
-                          className="w-8 h-8 border border-gray-300 rounded flex items-center justify-center hover:bg-gray-100 transition-colors text-sm"
+                          className="w-8 h-8 border border-gray-300 rounded flex items-center justify-center hover:bg-gray-100 hover:scale-105 active:scale-95 transition-all duration-150 text-sm"
                         >
                           −
                         </button>
-                        <span className="w-8 text-center font-medium text-sm md:text-base">{item.quantity}</span>
+                        <span className="w-8 text-center font-medium text-sm md:text-base transition-all duration-200">{item.quantity}</span>
                         <button
                           onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
-                          className="w-8 h-8 border border-gray-300 rounded flex items-center justify-center hover:bg-gray-100 transition-colors text-sm"
+                          className="w-8 h-8 border border-gray-300 rounded flex items-center justify-center hover:bg-gray-100 hover:scale-105 active:scale-95 transition-all duration-150 text-sm"
                         >
                           +
                         </button>
@@ -140,7 +157,7 @@ const Cart = () => {
                     {/* Remove Button */}
                     <button
                       onClick={() => handleRemoveItem(item.id, item.name)}
-                      className="text-gray-400 hover:text-red-500 transition-colors self-center sm:self-start"
+                      className="text-gray-400 hover:text-red-500 hover:scale-110 active:scale-95 transition-all duration-200 self-center sm:self-start p-1 rounded-full hover:bg-red-50"
                       title="Remove item"
                     >
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

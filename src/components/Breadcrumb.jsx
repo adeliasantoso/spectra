@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { getProductById } from '../data/products';
 
 const Breadcrumb = ({ customPath = null, className = "" }) => {
   const location = useLocation();
@@ -27,10 +28,14 @@ const Breadcrumb = ({ customPath = null, className = "" }) => {
 
   // Handle product detail pages
   if (location.pathname.startsWith('/product/')) {
+    const productId = location.pathname.split('/')[2];
+    const product = getProductById(productId);
+    const productName = product ? product.name : 'Product';
+    
     breadcrumbMap[location.pathname] = [
       { label: 'Home', path: '/' },
       { label: 'Shop', path: '/shop' },
-      { label: 'Spectra 1.0', path: location.pathname }
+      { label: productName, path: location.pathname }
     ];
   }
   

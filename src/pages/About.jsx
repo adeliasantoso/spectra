@@ -37,7 +37,7 @@ const About = () => {
 
       {/* Building tech that understands you */}
       <section className="py-12 md:py-20">
-        <div className="max-w-6xl mx-auto px-4 md:px-6">
+        <div className="max-w-6xl mx-auto px-6 md:px-8 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-start">
             <div className="space-y-4 md:space-y-6 pt-2 md:pt-4 ml-8 md:ml-12 lg:ml-16">
               <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 leading-tight">
@@ -73,7 +73,7 @@ const About = () => {
 
       {/* Designing for safety, accessibility, and sustainability */}
       <section className="py-12 md:py-20">
-        <div className="max-w-6xl mx-auto px-4 md:px-6">
+        <div className="max-w-6xl mx-auto px-6 md:px-8 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-start">
             <div className="order-2 lg:order-1">
               <img
@@ -108,7 +108,7 @@ const About = () => {
 
       {/* Driving change for better experiences */}
       <section className="py-12 md:py-20">
-        <div className="max-w-6xl mx-auto px-4 md:px-6">
+        <div className="max-w-6xl mx-auto px-6 md:px-8 lg:px-12">
           <div className="relative">
             
             <div className="text-center mb-8 md:mb-16 pt-8 md:pt-12">
