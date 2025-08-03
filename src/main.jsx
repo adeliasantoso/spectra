@@ -16,6 +16,8 @@ const About = lazy(() => import('./pages/About.jsx'))
 const Contact = lazy(() => import('./pages/Contact.jsx'))
 const Cart = lazy(() => import('./pages/Cart.jsx'))
 const ProductDetail = lazy(() => import('./pages/ProductDetail.jsx'))
+const Checkout = lazy(() => import('./pages/Checkout.jsx'))
+const OrderSuccess = lazy(() => import('./pages/OrderSuccess.jsx'))
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -31,6 +33,8 @@ createRoot(document.getElementById('root')).render(
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/product/:id" element={<ProductDetail />} />
+                <Route path="/checkout" element={<Checkout />} />
+                <Route path="/order-success" element={<OrderSuccess />} />
               </Routes>
             </Suspense>
             <ToastContainer />
@@ -44,7 +48,8 @@ createRoot(document.getElementById('root')).render(
 // Register Service Worker for caching and offline support
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
+    const swPath = import.meta.env.BASE_URL + 'sw.js';
+    navigator.serviceWorker.register(swPath)
       .then((registration) => {
         console.log('SW registered: ', registration);
       })

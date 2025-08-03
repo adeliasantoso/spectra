@@ -27,8 +27,8 @@ const ProductQuickView = memo(({ product, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black animate-modal-fade-in flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto animate-modal-scale-in">
+    <div className="fixed inset-0 bg-black bg-opacity-50 animate-modal-fade-in flex items-center justify-center z-[9999] p-4" style={{ margin: 0, top: 0, left: 0, right: 0, bottom: 0 }}>
+      <div className="bg-white rounded-lg max-w-2xl w-full max-h-[80vh] overflow-y-auto animate-modal-scale-in relative">
         {/* Header */}
         <div className="flex justify-between items-center p-6 border-b">
           <h2 className="text-2xl font-light">Quick View</h2>
@@ -63,13 +63,6 @@ const ProductQuickView = memo(({ product, onClose }) => {
                 </p>
               </div>
 
-              {product.description && (
-                <div>
-                  <p className="text-gray-600 leading-relaxed">
-                    {product.description}
-                  </p>
-                </div>
-              )}
 
               {/* Quantity Selector */}
               <div>
@@ -106,7 +99,7 @@ const ProductQuickView = memo(({ product, onClose }) => {
                   onClick={handleViewFullItem}
                   className="w-full border border-black text-black px-6 py-3 text-lg font-medium hover:bg-black hover:text-white hover:scale-105 active:scale-95 transition-all duration-200 rounded-lg"
                 >
-                  View Full Item
+                  View Product Detail
                 </button>
               </div>
             </div>

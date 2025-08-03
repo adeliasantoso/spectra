@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const FAQ = () => {
+const FAQ = React.memo(() => {
   const [openItem, setOpenItem] = useState(null);
 
   const toggleItem = (index) => {
@@ -110,6 +110,8 @@ const FAQ = () => {
       </div>
     </section>
   );
-};
+});
+
+FAQ.displayName = 'FAQ';
 
 export default FAQ;

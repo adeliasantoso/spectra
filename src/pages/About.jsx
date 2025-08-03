@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import CartIcon from '../components/CartIcon';
@@ -9,6 +9,32 @@ import designingFor from '../assets/images/about-page/designing-for.png';
 import drivingChange from '../assets/images/about-page/diriving-change.png';
 
 const About = () => {
+  // Animation state for sections
+  const [visibleSections, setVisibleSections] = useState(new Set());
+  const sectionRefs = useRef({});
+
+  // Animation observer for scroll-triggered animations
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.2,
+      rootMargin: '-50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setVisibleSections(prev => new Set(prev).add(entry.target.id));
+        }
+      });
+    }, observerOptions);
+
+    // Observe all sections
+    Object.values(sectionRefs.current).forEach(ref => {
+      if (ref) observer.observe(ref);
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
@@ -16,19 +42,27 @@ const About = () => {
       <CartIcon />
       
       {/* Hero Section - "Our vision" */}
-      <section className="relative w-full h-[60vh] md:h-[70vh] lg:h-[85vh] overflow-hidden -mt-16 pt-16">
+      <section 
+        id="hero-vision"
+        ref={(el) => sectionRefs.current['hero-vision'] = el}
+        className="relative w-full h-[60vh] md:h-[70vh] lg:h-[85vh] overflow-hidden -mt-16 pt-16"
+      >
         <OptimizedImage
           src={heroAbout}
           alt="Our Vision"
           width={1920}
           height={800}
           lazy={false}
-          className="w-full h-full object-cover object-[center_62%]"
+          className={`w-full h-full object-cover object-[center_62%] transition-all duration-1000 ${
+            visibleSections.has('hero-vision') ? 'scale-100' : 'scale-105'
+          }`}
         />
         <div className="absolute inset-0 bg-black bg-opacity-60"></div>
         <div className="absolute inset-0 flex items-end justify-center pb-16 md:pb-20">
           <div className="text-center px-4 md:px-6">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-white font-bold">
+            <h1 className={`text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-white font-bold transition-all duration-700 ${
+              visibleSections.has('hero-vision') ? 'animate-fade-up opacity-100' : 'opacity-0 translate-y-8'
+            }`}>
               Our vision
             </h1>
           </div>
@@ -36,10 +70,16 @@ const About = () => {
       </section>
 
       {/* Building tech that understands you */}
-      <section className="py-12 md:py-20">
+      <section 
+        id="building-tech"
+        ref={(el) => sectionRefs.current['building-tech'] = el}
+        className="py-12 md:py-20"
+      >
         <div className="max-w-6xl mx-auto px-6 md:px-8 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-start">
-            <div className="space-y-4 md:space-y-6 pt-2 md:pt-4 ml-8 md:ml-12 lg:ml-16">
+            <div className={`space-y-4 md:space-y-6 pt-2 md:pt-4 ml-8 md:ml-12 lg:ml-16 transition-all duration-700 ${
+              visibleSections.has('building-tech') ? 'animate-fade-up opacity-100' : 'opacity-0 translate-y-8'
+            }`}>
               <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 leading-tight">
                 Building tech that<br />understands you
               </h2>
@@ -60,7 +100,9 @@ const About = () => {
                 </p>
               </div>
             </div>
-            <div>
+            <div className={`transition-all duration-700 delay-200 ${
+              visibleSections.has('building-tech') ? 'animate-fade-up opacity-100' : 'opacity-0 translate-y-8'
+            }`}>
               <img
                 src={buildingTech}
                 alt="Team collaboration"
@@ -72,17 +114,25 @@ const About = () => {
       </section>
 
       {/* Designing for safety, accessibility, and sustainability */}
-      <section className="py-12 md:py-20">
+      <section 
+        id="designing-for"
+        ref={(el) => sectionRefs.current['designing-for'] = el}
+        className="py-12 md:py-20"
+      >
         <div className="max-w-6xl mx-auto px-6 md:px-8 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-start">
-            <div className="order-2 lg:order-1">
+            <div className={`order-2 lg:order-1 transition-all duration-700 delay-200 ${
+              visibleSections.has('designing-for') ? 'animate-fade-up opacity-100' : 'opacity-0 translate-y-8'
+            }`}>
               <img
                 src={designingFor}
                 alt="Safety and accessibility design"
                 className="w-full h-[320px] md:h-[400px] lg:h-[480px] object-cover rounded-2xl"
               />
             </div>
-            <div className="space-y-4 md:space-y-6 pt-2 md:pt-4 order-1 lg:order-2">
+            <div className={`space-y-4 md:space-y-6 pt-2 md:pt-4 order-1 lg:order-2 transition-all duration-700 ${
+              visibleSections.has('designing-for') ? 'animate-fade-up opacity-100' : 'opacity-0 translate-y-8'
+            }`}>
               <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 leading-tight">
                 Designing for safety,<br />accessibility, and<br />sustainability
               </h2>
@@ -107,15 +157,23 @@ const About = () => {
       </section>
 
       {/* Driving change for better experiences */}
-      <section className="py-12 md:py-20">
+      <section 
+        id="driving-change"
+        ref={(el) => sectionRefs.current['driving-change'] = el}
+        className="py-12 md:py-20"
+      >
         <div className="max-w-6xl mx-auto px-6 md:px-8 lg:px-12">
           <div className="relative">
             
             <div className="text-center mb-8 md:mb-16 pt-8 md:pt-12">
-              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-8 md:mb-12 leading-tight">
+              <h2 className={`text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-8 md:mb-12 leading-tight transition-all duration-700 ${
+                visibleSections.has('driving-change') ? 'animate-fade-up opacity-100' : 'opacity-0 translate-y-8'
+              }`}>
                 Driving change for better experiences
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 max-w-4xl mx-auto text-left">
+              <div className={`grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 max-w-4xl mx-auto text-left transition-all duration-700 delay-300 ${
+                visibleSections.has('driving-change') ? 'animate-fade-up opacity-100' : 'opacity-0 translate-y-8'
+              }`}>
                 <div className="space-y-6 md:space-y-7 text-sm md:text-base lg:text-lg">
                   <p className="text-gray-700 leading-relaxed">
                     One of our key breakthroughs has been rethinking<br/>
@@ -142,7 +200,9 @@ const About = () => {
               </div>
             </div>
             
-            <div className="mt-8 md:mt-12 pb-8 md:pb-12">
+            <div className={`mt-8 md:mt-12 pb-8 md:pb-12 transition-all duration-700 delay-500 ${
+              visibleSections.has('driving-change') ? 'animate-fade-up opacity-100' : 'opacity-0 translate-y-8'
+            }`}>
               <img
                 src={drivingChange}
                 alt="Better experiences team"

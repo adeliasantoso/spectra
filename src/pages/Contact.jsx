@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
@@ -17,6 +17,33 @@ const Contact = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // Animation state for sections
+  const [visibleSections, setVisibleSections] = useState(new Set());
+  const sectionRefs = useRef({});
+
+  // Animation observer for scroll-triggered animations
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.2,
+      rootMargin: '-50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setVisibleSections(prev => new Set(prev).add(entry.target.id));
+        }
+      });
+    }, observerOptions);
+
+    // Observe all sections
+    Object.values(sectionRefs.current).forEach(ref => {
+      if (ref) observer.observe(ref);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData(prev => ({
@@ -34,7 +61,10 @@ const Contact = () => {
       console.log('Form submitted:', formData);
       
       // Show success message
-      success('Thank you for your message! We\'ll get back to you soon.');
+      success('Message sent successfully', {
+        title: 'Thank You',
+        message: 'We have received your message and will get back to you soon'
+      });
       
       // Clear form
       setFormData({
@@ -55,13 +85,21 @@ const Contact = () => {
       <CartIcon />
       
       {/* Contact Section */}
-      <section className="flex-1 pt-40 md:pt-48 pb-12 md:pb-20 bg-gradient-radial from-blue-50 via-gray-50 to-gray-100">
+      <section 
+        id="contact-hero"
+        ref={(el) => sectionRefs.current['contact-hero'] = el}
+        className="flex-1 pt-40 md:pt-48 pb-12 md:pb-20 bg-gradient-radial from-blue-50 via-gray-50 to-gray-100"
+      >
         <div className="max-w-4xl mx-auto px-6 md:px-8 lg:px-12">
           <div className="text-center mb-12 md:mb-16">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-medium text-black mb-8 md:mb-12">
+            <h1 className={`text-4xl sm:text-5xl md:text-6xl font-medium text-black mb-8 md:mb-12 transition-all duration-700 ${
+              visibleSections.has('contact-hero') ? 'animate-fade-up opacity-100' : 'opacity-0 translate-y-8'
+            }`}>
               Connect with us
             </h1>
-            <div className="max-w-2xl mx-auto space-y-4 md:space-y-6">
+            <div className={`max-w-2xl mx-auto space-y-4 md:space-y-6 transition-all duration-700 delay-200 ${
+              visibleSections.has('contact-hero') ? 'animate-fade-up opacity-100' : 'opacity-0 translate-y-8'
+            }`}>
               <p className="text-base md:text-lg text-gray-700 leading-relaxed">
                 Connect with our team to explore how Spectra's innovations can support tailored solutions for you or your organization. We also welcome inquiries about potential collaborations or career opportunities.
               </p>
@@ -72,8 +110,14 @@ const Contact = () => {
           </div>
 
           {/* Contact Form */}
-          <div className="max-w-3xl mx-auto">
-            <form onSubmit={handleSubmit} className="space-y-6 md:space-y-8">
+          <div 
+            id="contact-form"
+            ref={(el) => sectionRefs.current['contact-form'] = el}
+            className="max-w-3xl mx-auto"
+          >
+            <form onSubmit={handleSubmit} className={`space-y-6 md:space-y-8 transition-all duration-700 delay-400 ${
+              visibleSections.has('contact-form') ? 'animate-fade-up opacity-100' : 'opacity-0 translate-y-8'
+            }`}>
               {/* Name Section */}
               <div>
                 <div className="mb-2 md:mb-3">

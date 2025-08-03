@@ -1,12 +1,16 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 
-const OptimizedImage = ({ 
+const OptimizedImage = React.memo(({ 
   src, 
   alt, 
   className = '', 
   width,
   height,
   lazy = true,
+  placeholder = true,
+  priority = false,
+  sizes,
+  srcSet,
   ...props 
 }) => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -17,7 +21,7 @@ const OptimizedImage = ({
 
   // Intersection Observer for lazy loading
   useEffect(() => {
-    if (!lazy) {
+    if (!lazy || priority) {
       setIsInView(true);
       return;
     }
@@ -31,7 +35,7 @@ const OptimizedImage = ({
       },
       {
         threshold: 0.1,
-        rootMargin: '50px'
+        rootMargin: priority ? '200px' : '50px'
       }
     );
 
@@ -40,7 +44,7 @@ const OptimizedImage = ({
     }
 
     return () => observer.disconnect();
-  }, [lazy]);
+  }, [lazy, priority]);
 
   const handleLoad = useCallback(() => {
     setIsLoaded(true);
@@ -61,7 +65,7 @@ const OptimizedImage = ({
       }}
     >
       {/* Placeholder while loading */}
-      {!isLoaded && isInView && !hasError && (
+      {placeholder && !isLoaded && isInView && !hasError && (
         <div className="absolute inset-0 animate-pulse bg-gray-200">
           <div className="w-full h-full bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 animate-shimmer"></div>
         </div>
@@ -77,8 +81,10 @@ const OptimizedImage = ({
           height={height}
           onLoad={handleLoad}
           onError={handleError}
-          loading={lazy ? "lazy" : "eager"}
+          loading={priority ? "eager" : lazy ? "lazy" : "eager"}
           decoding="async"
+          sizes={sizes}
+          srcSet={srcSet}
           className={`transition-all duration-500 ease-out ${
             isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
           } ${className}`}
@@ -99,6 +105,8 @@ const OptimizedImage = ({
       )}
     </div>
   );
-};
+});
+
+OptimizedImage.displayName = 'OptimizedImage';
 
 export default OptimizedImage;

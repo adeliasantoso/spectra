@@ -6,6 +6,8 @@ import CartIcon from "../components/CartIcon";
 import ProductQuickView from "../components/ProductQuickView";
 import FAQ from "../components/FAQ";
 import OptimizedImage from "../components/OptimizedImage";
+import OptimizedVideo from "../components/OptimizedVideo";
+import { measurePerformance, monitorBundleSize } from "../utils/performance";
 import spectraGlassesImage from "../assets/images/landing-page/spectra1.png";
 import aboutImage from "../assets/images/about-page/hero-about.png";
 import expandUniverseImage from "../assets/images/landing-page/expandtheuniverseandcanceltheunwanted.png";
@@ -15,20 +17,61 @@ import social1Image from "../assets/images/landing-page/social1.png";
 import social2Image from "../assets/images/landing-page/social2.png";
 import social3Image from "../assets/images/landing-page/social3.png";
 
-const Home = () => {
+const Home = React.memo(() => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
+
+  // Performance monitoring
+  useEffect(() => {
+    measurePerformance.logMetrics();
+    monitorBundleSize();
+  }, []);
   
   // Video carousel state
   const [activeVideoIndex, setActiveVideoIndex] = useState(0);
   const [isCarouselInView, setIsCarouselInView] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const carouselRef = useRef(null);
   const videoRefs = useRef([]);
+  
+  // Video play/pause states for USP sections
+  const [videoPaused, setVideoPaused] = useState({
+    'expand-universe': false,
+    'unlock-barriers': false,
+    'smart-recognition': false,
+    'cancel-noise': false,
+    'look-through': false,
+    'intuitive-insights': false
+  });
+  const uspVideoRefs = useRef({});
   
   // Animation state for sections
   const [visibleSections, setVisibleSections] = useState(new Set());
   const sectionRefs = useRef({});
   
+  // Parallax scrolling effect
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+
+    const handleMouseMove = (e) => {
+      setMousePosition({
+        x: (e.clientX / window.innerWidth) * 100,
+        y: (e.clientY / window.innerHeight) * 100
+      });
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('mousemove', handleMouseMove);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, []);
+
   // Animation observer for scroll-triggered animations
   useEffect(() => {
     const observerOptions = {
@@ -52,37 +95,46 @@ const Home = () => {
     return () => observer.disconnect();
   }, []);
   
-  // Video carousel data
+  // Video carousel data with gradient themes
   const carouselVideos = [
     {
       id: 1,
       title: "Expand your universe",
       subtitle: "AI TV tailors content for every family member",
       videoUrl: "https://ik.imagekit.io/ohyemuffin/asset/video/AI_TV_Tailors_Content_for_Family.mp4?updatedAt=1754214349805",
-      product: "Spectra Display"
+      product: "Spectra Display",
+      gradient: "from-purple-600 via-blue-600 to-indigo-800",
+      particles: { color: "#8b5cf6", count: 30 }
     },
     {
       id: 2, 
       title: "Unlock a life without barriers",
       subtitle: "Watch tracks your active lifestyle seamlessly",
       videoUrl: "https://ik.imagekit.io/ohyemuffin/asset/video/Watch_Tracks_Active_Lifestyle.mp4?updatedAt=1754214349971",
-      product: "Spectra Watch"
+      product: "Spectra Watch",
+      gradient: "from-emerald-500 via-teal-600 to-cyan-700",
+      particles: { color: "#10b981", count: 35 }
     },
     {
       id: 3,
       title: "Cancel the unwanted noise", 
       subtitle: "Immersive audio cuts through busy environments",
       videoUrl: "https://ik.imagekit.io/ohyemuffin/asset/video/Immersive_Audio_on_a_Busy_Street.mp4?updatedAt=1754214349985",
-      product: "Spectra Buds"
+      product: "Spectra Buds",
+      gradient: "from-orange-500 via-red-500 to-pink-600",
+      particles: { color: "#f97316", count: 25 }
     },
     {
       id: 4,
       title: "See through your thoughts",
       subtitle: "Look through your head with intelligent insights", 
       videoUrl: "https://ik.imagekit.io/ohyemuffin/asset/video/look-through-your-head.mp4?updatedAt=1753676357987",
-      product: "Spectra Vision"
+      product: "Spectra Vision",
+      gradient: "from-violet-600 via-purple-600 to-fuchsia-700",
+      particles: { color: "#7c3aed", count: 40 }
     }
   ];
+
 
   // Spectra Vision product data for quick view
   const spectraProduct = {
@@ -109,6 +161,20 @@ const Home = () => {
 
   const goToVideo = (index) => {
     setActiveVideoIndex(index);
+  };
+
+  // Toggle play/pause for USP videos
+  const toggleVideoPlayPause = (videoId) => {
+    const video = uspVideoRefs.current[videoId];
+    if (video) {
+      if (video.paused) {
+        video.play();
+        setVideoPaused(prev => ({ ...prev, [videoId]: false }));
+      } else {
+        video.pause();
+        setVideoPaused(prev => ({ ...prev, [videoId]: true }));
+      }
+    }
   };
 
   // Auto-advance videos every 8 seconds
@@ -162,45 +228,42 @@ const Home = () => {
       <CartIcon />
 
       {/* Hero Section */}
-      <section className="relative h-screen w-full overflow-hidden">
+      <section className="relative h-screen w-full overflow-hidden bg-gradient-to-br from-gray-900 via-black to-gray-800" style={{ minHeight: '100vh' }}>
         {/* Video Background */}
         <div className="absolute inset-0 w-full h-full">
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
+          <OptimizedVideo
+            src="https://ik.imagekit.io/ohyemuffin/asset/video/Futuristic_Smart_Glasses_Video_Generation.mp4?updatedAt=1754214351100"
             className="w-full h-full object-cover"
-          >
-            <source
-              src="https://ik.imagekit.io/ohyemuffin/asset/video/Futuristic_Smart_Glasses_Video_Generation.mp4?updatedAt=1754214351100"
-              type="video/mp4"
-            />
-            {/* Fallback background */}
-            <div className="w-full h-full bg-gray-900"></div>
-          </video>
+            autoplay={true}
+            muted={true}
+            loop={true}
+            playsInline={true}
+            priority={true}
+            lazy={false}
+            fallbackImage="data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100' height='100' fill='%23111827'/%3E%3C/svg%3E"
+          />
         </div>
 
         {/* Dark Overlay */}
-        <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+        <div className="absolute inset-0 bg-black bg-opacity-40 z-10"></div>
 
         {/* Content */}
-        <div className="relative z-20 flex items-end justify-center h-full pb-8 md:pb-16">
-          <div className="text-center text-white px-4 md:px-6">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-light mb-4 md:mb-6 leading-tight relative z-30">
+        <div className="relative z-30 flex items-end justify-center h-full pb-12 sm:pb-16 md:pb-16">
+          <div className="text-center text-white px-4 sm:px-6 md:px-6 max-w-4xl mx-auto">
+            <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-light mb-4 md:mb-6 leading-tight relative z-40">
               <div>
                 <span className="animate-word-1 inline-block">A</span>{' '}
                 <span className="animate-word-2 inline-block">world</span>{' '}
                 <span className="animate-word-3 inline-block">tailored</span>{' '}
                 <span className="animate-word-3 inline-block">to</span>
               </div>
-              <div className="font-bold animate-fade-up-2 animate-subtle-glow -mt-2 md:-mt-4">your mind</div>
+              <div className="font-bold animate-fade-up-2 animate-subtle-glow -mt-1 sm:-mt-2 md:-mt-4">your mind</div>
             </h1>
           </div>
         </div>
 
         {/* Scroll Indicator */}
-        <div className="absolute bottom-6 md:bottom-8 left-1/2 transform -translate-x-1/2 z-20">
+        <div className="absolute bottom-6 md:bottom-8 left-1/2 transform -translate-x-1/2 z-30">
           <div className="text-white/80 hover:text-white transition-colors duration-300 cursor-pointer group">
             <div className="w-6 h-10 border-2 border-white/60 rounded-full flex justify-center group-hover:border-white transition-colors duration-300">
               <div className="w-1 h-3 bg-white/80 rounded-full mt-2 animate-bounce group-hover:bg-white transition-colors duration-300"></div>
@@ -210,17 +273,21 @@ const Home = () => {
       </section>
 
       {/* Introducing Spectra Vision */}
-      <section className="py-16 md:py-32 bg-gradient-radial from-gray-50 via-gray-100 to-gray-200 relative">
-        <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-8 lg:px-12 text-center">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-12 md:mb-20">
-            Introducing the new Spectra Vision
-          </h2>
-          <div className="mb-8 md:mb-12 max-w-4xl mx-auto">
-            <img
+      <section className="pt-0 pb-0 bg-white relative">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 text-center">
+          <div className="mb-0 max-w-3xl mx-auto relative">
+            <OptimizedImage
               src={spectraGlassesImage}
               alt="Spectra Vision"
-              className="w-full h-auto rounded-2xl"
+              className="w-full h-auto rounded-xl sm:rounded-2xl"
+              priority={true}
             />
+            <div className="absolute top-0 left-0 right-0 flex items-start justify-center pt-8 sm:pt-12 md:pt-16 px-4">
+              <h2 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-black drop-shadow-2xl text-center max-w-full">
+                <span className="block sm:inline">Introducing the new</span>
+                <span className="block sm:inline sm:ml-2">Spectra Vision</span>
+              </h2>
+            </div>
           </div>
         </div>
       </section>
@@ -232,33 +299,31 @@ const Home = () => {
           carouselRef.current = el;
           sectionRefs.current['video-carousel'] = el;
         }}
-        className={`relative w-full overflow-hidden bg-black ${
-          visibleSections.has('video-carousel') ? 'animate-video-carousel-enter' : ''
-        }`}
+        className="relative w-full overflow-hidden"
       >
-        <div className="w-full">
-          <div className="relative w-full h-[50vh] md:h-[60vh] lg:h-[70vh] overflow-hidden">
-            {/* Animated Texture Background */}
-            <div className="absolute inset-0 z-0">
-              <div className="absolute inset-0 bg-gradient-to-br from-gray-800 via-black to-gray-900"></div>
-              {[...Array(15)].map((_, i) => (
-                <div
-                  key={i}
-                  className={`absolute bg-white rounded-full ${
-                    i % 3 === 0 ? 'animate-floating-texture' : 'animate-pulse-glow'
-                  }`}
-                  style={{
-                    width: Math.random() * 6 + 3 + 'px',
-                    height: Math.random() * 6 + 3 + 'px',
-                    left: Math.random() * 100 + '%',
-                    top: Math.random() * 100 + '%',
-                    animationDelay: Math.random() * 4 + 's',
-                  }}
-                />
-              ))}
-            </div>
+        {/* Parallax Background Layer */}
+        <div 
+          className="absolute inset-0 w-full h-full"
+          style={{
+            transform: `translateY(${scrollY * 0.3}px)`,
+            backgroundImage: `radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(255,255,255,0.1) 0%, transparent 50%)`
+          }}
+        />
+
+        {/* Animated Gradient Overlay */}
+        <div 
+          className={`absolute inset-0 bg-gradient-to-br ${carouselVideos[activeVideoIndex]?.gradient} opacity-20 transition-all duration-1000 ease-in-out`}
+          style={{
+            transform: `scale(${1 + scrollY * 0.0001}) rotate(${scrollY * 0.05}deg)`,
+            background: `linear-gradient(135deg, ${carouselVideos[activeVideoIndex]?.particles.color}20, transparent 70%)`
+          }}
+        />
+
+
+        <div className="w-full relative z-10">
+          <div className="relative w-full h-[40vh] sm:h-[50vh] md:h-[60vh] lg:h-[70vh] overflow-hidden">
             
-            {/* Video Display */}
+            {/* Video Display with 3D Effects */}
             {carouselVideos.map((video, index) => (
               <video
                 key={video.id}
@@ -266,51 +331,109 @@ const Home = () => {
                 muted
                 loop
                 playsInline
-                className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ${
+                className={`absolute inset-0 w-full h-full object-cover transition-all duration-1000 ease-out ${
                   index === activeVideoIndex 
-                    ? 'opacity-100 scale-100' 
-                    : 'opacity-0 scale-105'
+                    ? 'opacity-100 scale-100 transform-gpu' 
+                    : index < activeVideoIndex 
+                      ? 'opacity-0 scale-95 -translate-x-full rotate-y-12' 
+                      : 'opacity-0 scale-95 translate-x-full rotate-y-12'
                 }`}
+                style={{
+                  transform: index === activeVideoIndex 
+                    ? `perspective(1000px) rotateY(0deg) rotateX(0deg) scale(1) translateZ(0px)`
+                    : index < activeVideoIndex
+                      ? `perspective(1000px) rotateY(-15deg) rotateX(5deg) scale(0.95) translateZ(-100px) translateX(-100%)`
+                      : `perspective(1000px) rotateY(15deg) rotateX(5deg) scale(0.95) translateZ(-100px) translateX(100%)`,
+                  filter: index === activeVideoIndex ? 'brightness(1) blur(0px)' : 'brightness(0.7) blur(2px)',
+                  objectPosition: video.id === 2 ? 'center 15o%' : 'center center'
+                }}
               >
                 <source src={video.videoUrl} type="video/mp4" />
               </video>
             ))}
             
-            {/* Video Overlay Content */}
-            <div className="absolute inset-0 bg-black bg-opacity-40 flex items-end justify-center z-10">
-              <div className="text-center text-white px-4 pb-8 md:pb-12 lg:pb-16">
-                <h3 className={`text-2xl md:text-4xl lg:text-5xl font-bold mb-4 animate-caption-reveal stagger-1 ${
-                  visibleSections.has('video-carousel') ? 'animate-text-stagger' : ''
-                }`}>
+            {/* Enhanced Video Overlay Content */}
+            <div 
+              className="absolute inset-0 flex items-end justify-center z-20"
+              style={{
+                background: `linear-gradient(to top, ${carouselVideos[activeVideoIndex]?.particles.color}40 0%, transparent 60%)`
+              }}
+            >
+              <div className="text-center text-white px-4 sm:px-6 pb-2 sm:pb-3 md:pb-4 max-w-4xl mx-auto">
+                <h3 className={`text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold mb-2 sm:mb-4 leading-tight transition-all duration-700 ${
+                  visibleSections.has('video-carousel') ? 'animate-text-stagger opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                }`}
+                style={{
+                  textShadow: '0 4px 20px rgba(0,0,0,0.5), 0 0 40px rgba(255,255,255,0.1)',
+                  filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.3))'
+                }}>
                   {carouselVideos[activeVideoIndex]?.title}
                 </h3>
-                <p className={`text-lg md:text-xl max-w-2xl mx-auto opacity-90 animate-caption-reveal stagger-2 ${
-                  visibleSections.has('video-carousel') ? 'animate-text-stagger' : ''
-                }`}>
-                  {carouselVideos[activeVideoIndex]?.subtitle}
-                </p>
-                <p className={`text-sm md:text-base opacity-70 mt-2 animate-caption-reveal stagger-3 ${
-                  visibleSections.has('video-carousel') ? 'animate-text-stagger' : ''
-                }`}>
-                  {carouselVideos[activeVideoIndex]?.product}
-                </p>
                 
-                {/* Dots Navigation */}
-                <div className={`flex justify-center mt-8 ${
-                  visibleSections.has('video-carousel') ? 'animate-dots-appear stagger-4' : ''
+                {/* Enhanced Navigation with Arrows */}
+                <div className={`flex justify-center items-center mt-2 sm:mt-3 transition-all duration-500 ${
+                  visibleSections.has('video-carousel') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
                 }`}>
-                  <div className="flex space-x-3">
-                    {carouselVideos.map((_, index) => (
-                      <button
-                        key={index}
-                        onClick={() => goToVideo(index)}
-                        className={`h-2 rounded-full transition-all duration-300 hover:scale-125 ${
-                          index === activeVideoIndex 
-                            ? 'w-8 bg-white shadow-lg' 
-                            : 'w-2 bg-white bg-opacity-50 hover:bg-opacity-75'
-                        }`}
-                      />
-                    ))}
+                  <div className="flex items-center space-x-4 px-4 py-1.5 rounded-full bg-black/20 backdrop-blur-sm">
+                    {/* Left Arrow */}
+                    <button
+                      onClick={() => prevVideo()}
+                      className="w-6 h-6 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-all duration-300 hover:scale-110 group"
+                      style={{
+                        boxShadow: `0 0 15px ${carouselVideos[activeVideoIndex]?.particles.color}30`
+                      }}
+                    >
+                      <svg 
+                        className="w-3 h-3 text-white transition-transform duration-300 group-hover:scale-110" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                      </svg>
+                    </button>
+
+                    {/* Dots */}
+                    <div className="flex space-x-1.5 sm:space-x-2">
+                      {carouselVideos.map((_, index) => (
+                        <button
+                          key={index}
+                          onClick={() => goToVideo(index)}
+                          className={`h-1.5 rounded-full transition-all duration-500 hover:scale-125 relative overflow-hidden ${
+                            index === activeVideoIndex 
+                              ? 'w-6 shadow-lg transform scale-110' 
+                              : 'w-1.5 hover:w-3'
+                          }`}
+                          style={{
+                            backgroundColor: index === activeVideoIndex 
+                              ? 'white' 
+                              : 'rgba(255,255,255,0.5)',
+                            boxShadow: index === activeVideoIndex 
+                              ? `0 0 20px ${carouselVideos[activeVideoIndex]?.particles.color}, 0 2px 10px rgba(0,0,0,0.3)` 
+                              : 'none',
+                            animation: index === activeVideoIndex ? 'pulse 2s infinite' : 'none'
+                          }}
+                        />
+                      ))}
+                    </div>
+
+                    {/* Right Arrow */}
+                    <button
+                      onClick={() => nextVideo()}
+                      className="w-6 h-6 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-all duration-300 hover:scale-110 group"
+                      style={{
+                        boxShadow: `0 0 15px ${carouselVideos[activeVideoIndex]?.particles.color}30`
+                      }}
+                    >
+                      <svg 
+                        className="w-3 h-3 text-white transition-transform duration-300 group-hover:scale-110" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -323,14 +446,15 @@ const Home = () => {
       <section 
         id="expand-universe"
         ref={(el) => sectionRefs.current['expand-universe'] = el}
-        className="py-16 md:py-32 bg-gray-50 relative"
+        className="py-16 md:py-32 bg-gradient-to-br from-gray-50 via-white to-gray-100 relative"
       >
         <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-8 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 md:gap-20 items-center">
-            <div className={`lg:col-span-3 lg:pr-8 order-2 lg:order-1 ${
+            <div className={`lg:col-span-3 lg:pr-8 order-2 lg:order-1 relative ${
               visibleSections.has('expand-universe') ? 'scroll-animate-video visible' : 'scroll-animate-video'
             }`}>
               <video
+                ref={(el) => (uspVideoRefs.current['expand-universe'] = el)}
                 autoPlay
                 muted
                 loop
@@ -340,6 +464,22 @@ const Home = () => {
                 <source src="https://ik.imagekit.io/ohyemuffin/asset/video/AI_TV_Tailors_Content_for_Family.mp4?updatedAt=1754214349805" type="video/mp4" />
                 <div className="w-full h-full bg-gray-900 rounded-2xl"></div>
               </video>
+              
+              {/* Play/Pause Button */}
+              <button
+                onClick={() => toggleVideoPlayPause('expand-universe')}
+                className="absolute bottom-2 right-8 w-12 h-12 bg-black/30 hover:bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 group"
+              >
+                {videoPaused['expand-universe'] ? (
+                  <svg className="w-6 h-6 text-white group-hover:scale-110 transition-transform duration-200" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z"/>
+                  </svg>
+                ) : (
+                  <svg className="w-6 h-6 text-white group-hover:scale-110 transition-transform duration-200" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+                  </svg>
+                )}
+              </button>
             </div>
             <div className={`lg:col-span-2 space-y-6 md:space-y-8 order-1 lg:order-2 ${
               visibleSections.has('expand-universe') ? 'scroll-animate visible' : 'scroll-animate'
@@ -364,7 +504,7 @@ const Home = () => {
       <section 
         id="unlock-barriers"
         ref={(el) => sectionRefs.current['unlock-barriers'] = el}
-        className="py-16 md:py-32 bg-white relative"
+        className="py-16 md:py-32 bg-gradient-to-bl from-gray-50 via-white to-gray-100 relative"
       >
         <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-8 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 md:gap-20 items-center">
@@ -383,10 +523,11 @@ const Home = () => {
                 </p>
               </div>
             </div>
-            <div className={`lg:col-span-3 lg:pl-8 ${
+            <div className={`lg:col-span-3 lg:pl-8 relative ${
               visibleSections.has('unlock-barriers') ? 'scroll-animate-video visible' : 'scroll-animate-video'
             }`}>
               <video
+                ref={(el) => (uspVideoRefs.current['unlock-barriers'] = el)}
                 autoPlay
                 muted
                 loop
@@ -396,6 +537,22 @@ const Home = () => {
                 <source src="https://ik.imagekit.io/ohyemuffin/asset/video/Watch_Tracks_Active_Lifestyle.mp4?updatedAt=1754214349971" type="video/mp4" />
                 <div className="w-full h-full bg-gray-900 rounded-2xl"></div>
               </video>
+              
+              {/* Play/Pause Button */}
+              <button
+                onClick={() => toggleVideoPlayPause('unlock-barriers')}
+                className="absolute bottom-2 right-2 w-12 h-12 bg-black/30 hover:bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 group"
+              >
+                {videoPaused['unlock-barriers'] ? (
+                  <svg className="w-6 h-6 text-white group-hover:scale-110 transition-transform duration-200" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z"/>
+                  </svg>
+                ) : (
+                  <svg className="w-6 h-6 text-white group-hover:scale-110 transition-transform duration-200" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+                  </svg>
+                )}
+              </button>
             </div>
           </div>
         </div>
@@ -412,6 +569,11 @@ const Home = () => {
             visibleSections.has('smart-recognition') ? 'animate-video-load-in' : ''
           }`}>
             <video
+              ref={(el) => {
+                if (el) {
+                  uspVideoRefs.current['smart-recognition'] = el;
+                }
+              }}
               autoPlay
               muted
               loop
@@ -424,6 +586,22 @@ const Home = () => {
               />
               <div className="w-full h-full bg-gray-800"></div>
             </video>
+            
+            {/* Play/Pause Button */}
+            <button
+              onClick={() => toggleVideoPlayPause('smart-recognition')}
+              className="absolute bottom-4 right-4 w-12 h-12 bg-black/30 hover:bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 group z-20 cursor-pointer"
+            >
+              {videoPaused['smart-recognition'] ? (
+                <svg className="w-6 h-6 text-white group-hover:scale-110 transition-transform duration-200" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
+              ) : (
+                <svg className="w-6 h-6 text-white group-hover:scale-110 transition-transform duration-200" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+                </svg>
+              )}
+            </button>
             <div className="absolute inset-0 bg-black bg-opacity-20 flex items-end justify-center">
               <div className="text-center text-white px-4 pb-8 md:pb-12 lg:pb-16">
                 <h3 className={`text-2xl md:text-4xl lg:text-5xl font-bold mb-4 ${
@@ -446,14 +624,15 @@ const Home = () => {
       <section 
         id="cancel-noise"
         ref={(el) => sectionRefs.current['cancel-noise'] = el}
-        className="py-16 md:py-32 bg-gray-50 relative"
+        className="py-16 md:py-32 bg-gradient-to-br from-gray-50 via-white to-gray-100 relative"
       >
         <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-8 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 md:gap-20 items-center">
-            <div className={`lg:col-span-3 lg:pr-8 order-2 lg:order-1 ${
+            <div className={`lg:col-span-3 lg:pr-8 order-2 lg:order-1 relative ${
               visibleSections.has('cancel-noise') ? 'scroll-animate-video visible' : 'scroll-animate-video'
             }`}>
               <video
+                ref={(el) => (uspVideoRefs.current['cancel-noise'] = el)}
                 autoPlay
                 muted
                 loop
@@ -463,6 +642,22 @@ const Home = () => {
                 <source src="https://ik.imagekit.io/ohyemuffin/asset/video/Immersive_Audio_on_a_Busy_Street.mp4?updatedAt=1754214349985" type="video/mp4" />
                 <div className="w-full h-full bg-gray-900 rounded-2xl"></div>
               </video>
+              
+              {/* Play/Pause Button */}
+              <button
+                onClick={() => toggleVideoPlayPause('cancel-noise')}
+                className="absolute bottom-2 right-8 w-12 h-12 bg-black/30 hover:bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 group"
+              >
+                {videoPaused['cancel-noise'] ? (
+                  <svg className="w-6 h-6 text-white group-hover:scale-110 transition-transform duration-200" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z"/>
+                  </svg>
+                ) : (
+                  <svg className="w-6 h-6 text-white group-hover:scale-110 transition-transform duration-200" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+                  </svg>
+                )}
+              </button>
             </div>
             <div className={`lg:col-span-2 space-y-6 md:space-y-8 order-1 lg:order-2 ${
               visibleSections.has('cancel-noise') ? 'scroll-animate visible' : 'scroll-animate'
@@ -484,7 +679,7 @@ const Home = () => {
       </section>
 
       {/* Look Through Your Head */}
-      <section className="py-16 md:py-32 bg-white relative">
+      <section className="py-16 md:py-32 bg-gradient-to-bl from-gray-50 via-white to-gray-100 relative">
         <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-8 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 md:gap-20 items-center">
             <div className="lg:col-span-2 space-y-6 md:space-y-8">
@@ -500,8 +695,9 @@ const Home = () => {
                 </p>
               </div>
             </div>
-            <div className="lg:col-span-3 lg:pl-8">
+            <div className="lg:col-span-3 lg:pl-8 relative">
               <video
+                ref={(el) => (uspVideoRefs.current['look-through'] = el)}
                 autoPlay
                 muted
                 loop
@@ -511,16 +707,33 @@ const Home = () => {
                 <source src="https://ik.imagekit.io/ohyemuffin/asset/video/look-through-your-head.mp4?updatedAt=1753676357987" type="video/mp4" />
                 <div className="w-full h-full bg-gray-900 rounded-2xl"></div>
               </video>
+              
+              {/* Play/Pause Button */}
+              <button
+                onClick={() => toggleVideoPlayPause('look-through')}
+                className="absolute bottom-2 right-2 w-12 h-12 bg-black/30 hover:bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 group"
+              >
+                {videoPaused['look-through'] ? (
+                  <svg className="w-6 h-6 text-white group-hover:scale-110 transition-transform duration-200" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z"/>
+                  </svg>
+                ) : (
+                  <svg className="w-6 h-6 text-white group-hover:scale-110 transition-transform duration-200" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+                  </svg>
+                )}
+              </button>
             </div>
           </div>
         </div>
       </section>
 
       {/* Video USP Section 2 */}
-      <section className="py-16 md:py-24 bg-gray-50">
+      <section className="py-16 md:py-24 bg-white">
         <div className="w-full">
-          <div className="relative w-full h-[50vh] md:h-[60vh] lg:h-[70vh] overflow-hidden">
+          <div className="relative w-full h-[40vh] sm:h-[50vh] md:h-[60vh] lg:h-[70vh] overflow-hidden">
             <video
+              ref={(el) => (uspVideoRefs.current['intuitive-insights'] = el)}
               autoPlay
               muted
               loop
@@ -533,6 +746,22 @@ const Home = () => {
               />
               <div className="w-full h-full bg-purple-800"></div>
             </video>
+            
+            {/* Play/Pause Button */}
+            <button
+              onClick={() => toggleVideoPlayPause('intuitive-insights')}
+              className="absolute bottom-2 right-2 w-12 h-12 bg-black/30 hover:bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 group z-10"
+            >
+              {videoPaused['intuitive-insights'] ? (
+                <svg className="w-6 h-6 text-white group-hover:scale-110 transition-transform duration-200" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
+              ) : (
+                <svg className="w-6 h-6 text-white group-hover:scale-110 transition-transform duration-200" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+                </svg>
+              )}
+            </button>
             <div className="absolute inset-0 bg-black bg-opacity-20 flex items-end justify-center">
               <div className="text-center text-white px-4 pb-8 md:pb-12 lg:pb-16">
                 <h3 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-4">
@@ -548,7 +777,7 @@ const Home = () => {
       </section>
 
       {/* Experience the Future, Today */}
-      <section className="pt-16 md:pt-24 pb-16 md:pb-32 bg-gray-50 relative">
+      <section className="pt-16 md:pt-24 pb-16 md:pb-32 bg-white relative">
         <div className="relative z-10 max-w-6xl mx-auto px-6 md:px-8 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 md:gap-12 items-center">
             <div className="order-2 lg:order-1 lg:col-span-3 relative group flex justify-center">
@@ -696,6 +925,8 @@ const Home = () => {
       )}
     </div>
   );
-};
+});
+
+Home.displayName = 'Home';
 
 export default Home;

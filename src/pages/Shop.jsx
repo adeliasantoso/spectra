@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
@@ -13,10 +13,37 @@ const Shop = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [isTransitioning, setIsTransitioning] = useState(false);
   
+  // Animation state for sections
+  const [visibleSections, setVisibleSections] = useState(new Set());
+  const sectionRefs = useRef({});
+  
   const allProducts = getAllProducts();
   const filteredProducts = selectedCategory === 'all' 
     ? allProducts 
     : getProductsByCategory(selectedCategory);
+
+  // Animation observer for scroll-triggered animations
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.2,
+      rootMargin: '-50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setVisibleSections(prev => new Set(prev).add(entry.target.id));
+        }
+      });
+    }, observerOptions);
+
+    // Observe all sections
+    Object.values(sectionRefs.current).forEach(ref => {
+      if (ref) observer.observe(ref);
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   const handleCategoryChange = (category) => {
     if (category === selectedCategory) return;
@@ -41,27 +68,38 @@ const Shop = () => {
       <CartIcon />
 
       {/* White spacing below navbar */}
-      <div className="bg-white h-36 md:h-44"></div>
+      <div className="bg-white h-20 sm:h-28 md:h-36 lg:h-44"></div>
 
       {/* Header */}
-      <section className="py-8 md:py-12">
-        <div className="max-w-7xl mx-auto px-6 md:px-8 lg:px-12 text-center">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-black mb-8">
+      <section 
+        id="shop-header"
+        ref={(el) => sectionRefs.current['shop-header'] = el}
+        className="py-6 sm:py-8 md:py-12"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 text-center">
+          <h1 className={`text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-black mb-6 sm:mb-8 transition-all duration-700 ${
+            visibleSections.has('shop-header') ? 'animate-fade-up opacity-100' : 'opacity-0 translate-y-8'
+          }`}>
             Explore Our Latest Products
           </h1>
           
           {/* Category Filter */}
-          <div className="flex justify-center mb-8">
-            <div className="flex flex-wrap gap-2 bg-gray-100 p-2 rounded-lg">
-              {Object.entries(categoryLabels).map(([key, label]) => (
+          <div className={`flex justify-center mb-8 transition-all duration-700 delay-200 ${
+            visibleSections.has('shop-header') ? 'animate-fade-up opacity-100' : 'opacity-0 translate-y-8'
+          }`}>
+            <div className="flex flex-wrap gap-2 bg-gray-100 p-1.5 sm:p-2 rounded-lg justify-center">
+              {Object.entries(categoryLabels).map(([key, label], index) => (
                 <button
                   key={key}
                   onClick={() => handleCategoryChange(key)}
-                  className={`px-4 py-2 rounded-md font-medium transition-all duration-200 ${
+                  className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-md font-medium transition-all duration-200 text-sm sm:text-base ${
                     selectedCategory === key
                       ? 'bg-black text-white shadow-md'
                       : 'bg-transparent text-gray-600 hover:bg-gray-200'
-                  }`}
+                  } ${visibleSections.has('shop-header') ? 'animate-scale-in' : ''}`}
+                  style={{
+                    animationDelay: visibleSections.has('shop-header') ? `${400 + (index * 100)}ms` : '0ms'
+                  }}
                 >
                   {label}
                 </button>
@@ -72,21 +110,27 @@ const Shop = () => {
       </section>
 
       {/* Products Grid */}
-      <section className="pb-8 md:pb-16">
-        <div className="max-w-7xl mx-auto px-6 md:px-8 lg:px-12">
-          <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12 transition-all duration-300 ${
+      <section 
+        id="products-grid"
+        ref={(el) => sectionRefs.current['products-grid'] = el}
+        className="pb-8 md:pb-16"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
+          <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-6 md:gap-8 lg:gap-12 transition-all duration-300 ${
             isTransitioning ? 'opacity-0 transform translate-y-4' : 'opacity-100 transform translate-y-0'
           }`}>
             {filteredProducts.map((product, index) => (
               <div
                 key={product.id}
-                className={`text-center group transition-all duration-300 ${
+                className={`text-center group transition-all duration-700 ${
                   isTransitioning 
                     ? 'opacity-0 transform translate-y-4' 
-                    : 'opacity-100 transform translate-y-0'
+                    : visibleSections.has('products-grid')
+                      ? 'opacity-100 transform translate-y-0 animate-fade-up'
+                      : 'opacity-0 translate-y-8'
                 }`}
                 style={{
-                  transitionDelay: isTransitioning ? '0ms' : `${index * 100}ms`
+                  transitionDelay: isTransitioning ? '0ms' : visibleSections.has('products-grid') ? `${index * 150}ms` : '0ms'
                 }}
               >
                 {/* Product Image with Quick View overlay */}

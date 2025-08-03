@@ -1,18 +1,42 @@
-import React, { useState, memo } from "react";
+import React, { useState, useEffect, memo } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 const Navigation = memo(() => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const location = useLocation();
   const isHomePage = location.pathname === "/";
 
+  useEffect(() => {
+    const controlNavbar = () => {
+      const currentScrollY = window.scrollY;
+      const heroSectionHeight = window.innerHeight; // Full viewport height for hero
+      
+      if (currentScrollY > lastScrollY && currentScrollY > heroSectionHeight) {
+        // Scrolling down & past hero section
+        setIsVisible(false);
+      } else {
+        // Scrolling up or still in hero section
+        setIsVisible(true);
+      }
+      
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', controlNavbar);
+    return () => window.removeEventListener('scroll', controlNavbar);
+  }, [lastScrollY]);
+
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-[100] shadow-md ${
+      className={`fixed top-0 left-0 right-0 z-[100] shadow-md transition-transform duration-300 ease-in-out ${
+        isVisible ? "translate-y-0" : "-translate-y-full"
+      } ${
         isHomePage ? "bg-[rgba(115,115,115,0.6)]" : "bg-[rgba(115,115,115,255)]"
       }`}
     >
-      <div className="max-w-full mx-auto px-4 md:px-12 py-2 md:py-3">
+      <div className="max-w-full mx-auto px-4 sm:px-6 md:px-12 py-2 md:py-3">
         <div className="flex justify-between items-center w-full">
           {/* Logo - Push to far left */}
           <div className="flex-shrink-0">
@@ -79,25 +103,25 @@ const Navigation = memo(() => {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden mt-2 pb-2">
-            <div className="flex flex-col space-y-2">
+          <div className="md:hidden mt-4 pb-4 border-t border-white/20">
+            <div className="flex flex-col space-y-3 pt-4">
               <Link
                 to="/shop"
-                className="text-white hover:text-gray-300 transition-colors duration-200 font-medium py-1"
+                className="text-white hover:text-gray-300 transition-colors duration-200 font-medium py-2 px-2 rounded hover:bg-white/10"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Shop
               </Link>
               <Link
                 to="/about"
-                className="text-white hover:text-gray-300 transition-colors duration-200 font-medium py-1"
+                className="text-white hover:text-gray-300 transition-colors duration-200 font-medium py-2 px-2 rounded hover:bg-white/10"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 About
               </Link>
               <Link
                 to="/contact"
-                className="text-white hover:text-gray-300 transition-colors duration-200 font-medium py-1"
+                className="text-white hover:text-gray-300 transition-colors duration-200 font-medium py-2 px-2 rounded hover:bg-white/10"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Contact
@@ -106,7 +130,7 @@ const Navigation = memo(() => {
               {/* Mobile CTA Button */}
               <Link 
                 to="/product/spectra-vision" 
-                className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-2 rounded-full font-medium hover:from-blue-600 hover:to-purple-700 transition-all duration-300 text-center mt-2"
+                className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-3 rounded-full font-medium hover:from-blue-600 hover:to-purple-700 transition-all duration-300 text-center mt-4 shadow-lg"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Buy Now

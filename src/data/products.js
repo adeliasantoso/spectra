@@ -1,6 +1,5 @@
 // Product data for Spectra ecosystem
 import spectraGlassesImage from '../assets/images/landing-page/spectra1.png';
-import productPov1 from '../assets/images/product-page/product-pov-1.png';
 import productPov2 from '../assets/images/product-page/product-pov-2.png';
 import productPov3 from '../assets/images/product-page/product-pov-3.png';
 
@@ -33,14 +32,14 @@ export const PRODUCTS = {
     id: 'spectra-vision',
     name: 'Spectra Vision',
     category: CATEGORIES.WEARABLES,
-    tagline: 'Revolutionary AI-Powered Smart Glasses',
+    tagline: '',
     price: 2499,
     originalPrice: 2999,
     rating: 4.8,
     reviewCount: 247,
     images: [
       spectraGlassesImage,
-      productPov1,
+      productPov2,
       productPov3
     ],
     colors: ['Black', 'White', 'Silver'],
@@ -75,7 +74,7 @@ export const PRODUCTS = {
     id: 'spectra-buds',
     name: 'Spectra Buds',
     category: CATEGORIES.AUDIO,
-    tagline: 'Adaptive Spatial Audio Earbuds',
+    tagline: '',
     price: 299,
     originalPrice: 349,
     rating: 4.6,
@@ -116,7 +115,7 @@ export const PRODUCTS = {
     id: 'spectra-display',
     name: 'Spectra Display',
     category: CATEGORIES.DISPLAY,
-    tagline: 'Intelligent 4K Smart Display',
+    tagline: '',
     price: 1299,
     originalPrice: 1499,
     rating: 4.7,
@@ -158,7 +157,7 @@ export const PRODUCTS = {
     id: 'spectra-watch',
     name: 'Spectra Watch',
     category: CATEGORIES.WEARABLES,
-    tagline: 'Intelligent Health & Productivity Companion',
+    tagline: '',
     price: 499,
     originalPrice: 599,
     rating: 4.5,

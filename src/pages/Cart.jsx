@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
@@ -10,13 +10,46 @@ const Cart = () => {
   const { success, info, warning } = useToast();
   const [removingItems, setRemovingItems] = useState(new Set());
 
+  // Animation state for sections
+  const [visibleSections, setVisibleSections] = useState(new Set());
+  const sectionRefs = useRef({});
+
+  // Animation observer for scroll-triggered animations
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.2,
+      rootMargin: '-50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setVisibleSections(prev => new Set(prev).add(entry.target.id));
+        }
+      });
+    }, observerOptions);
+
+    // Observe all sections
+    Object.values(sectionRefs.current).forEach(ref => {
+      if (ref) observer.observe(ref);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   const handleQuantityChange = (productId, newQuantity) => {
     if (newQuantity <= 0) {
       removeFromCart(productId);
-      info('Item removed from cart');
+      info('Item removed', {
+        title: 'Cart Updated',
+        message: 'Item has been removed from your cart'
+      });
     } else {
       updateQuantity(productId, newQuantity);
-      info(`Quantity updated to ${newQuantity}`);
+      info('Quantity updated', {
+        title: 'Cart Updated',
+        message: `Quantity has been updated to ${newQuantity}`
+      });
     }
   };
 
@@ -25,7 +58,10 @@ const Cart = () => {
     
     setTimeout(() => {
       removeFromCart(productId);
-      warning(`${productName} removed from cart`);
+      warning('Item removed', {
+        title: 'Cart Updated',
+        message: `${productName} has been removed from your cart`
+      });
       setRemovingItems(prev => {
         const newSet = new Set(prev);
         newSet.delete(productId);
@@ -36,7 +72,10 @@ const Cart = () => {
 
   const handleClearCart = () => {
     clearCart();
-    warning('All items removed from cart');
+    warning('Cart cleared', {
+      title: 'Cart Empty',
+      message: 'All items have been removed from your cart'
+    });
   };
 
   const formatPrice = (price) => {
@@ -67,10 +106,18 @@ const Cart = () => {
       <div className="min-h-screen bg-white">
         <Navigation />
         
-        <section className="pt-24 md:pt-32 pb-12 md:pb-20">
+        <section 
+          id="empty-cart"
+          ref={(el) => sectionRefs.current['empty-cart'] = el}
+          className="pt-24 md:pt-32 pb-12 md:pb-20"
+        >
           <div className="max-w-4xl mx-auto px-6 md:px-8 lg:px-12 text-center">
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-light text-black mb-6 md:mb-8">Your Cart</h1>
-            <div className="py-8 md:py-16">
+            <h1 className={`text-3xl md:text-4xl lg:text-5xl font-light text-black mb-6 md:mb-8 transition-all duration-700 ${
+              visibleSections.has('empty-cart') ? 'animate-fade-up opacity-100' : 'opacity-0 translate-y-8'
+            }`}>Your Cart</h1>
+            <div className={`py-8 md:py-16 transition-all duration-700 delay-200 ${
+              visibleSections.has('empty-cart') ? 'animate-fade-up opacity-100' : 'opacity-0 translate-y-8'
+            }`}>
               <svg className="w-16 h-16 md:w-24 md:h-24 mx-auto mb-4 md:mb-6 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m1.6 8L5 3H3m4 10v6a1 1 0 001 1h10a1 1 0 001-1v-6m-8 6V9a1 1 0 011-1h6a1 1 0 011 1v8" />
               </svg>
@@ -95,27 +142,40 @@ const Cart = () => {
     <div className="min-h-screen bg-white">
       <Navigation />
       
-      <section className="pt-24 md:pt-32 pb-12 md:pb-20">
+      <section 
+        id="cart-main"
+        ref={(el) => sectionRefs.current['cart-main'] = el}
+        className="pt-24 md:pt-32 pb-12 md:pb-20"
+      >
         <div className="max-w-6xl mx-auto px-6 md:px-8 lg:px-12">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-light text-black mb-8 md:mb-12 text-center">Your Cart</h1>
+          <h1 className={`text-3xl md:text-4xl lg:text-5xl font-light text-black mb-8 md:mb-12 text-center transition-all duration-700 ${
+            visibleSections.has('cart-main') ? 'animate-fade-up opacity-100' : 'opacity-0 translate-y-8'
+          }`}>Your Cart</h1>
           
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-12">
+          <div className={`grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-12 transition-all duration-700 delay-200 ${
+            visibleSections.has('cart-main') ? 'animate-fade-up opacity-100' : 'opacity-0 translate-y-8'
+          }`}>
             {/* Cart Items */}
             <div className="lg:col-span-2">
               <div className="space-y-4 md:space-y-6">
-                {cartItems.map((item) => (
+                {cartItems.map((item, index) => (
                   <div 
                     key={item.id} 
-                    className={`flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-4 border-b border-gray-200 pb-4 md:pb-6 transition-all duration-300 ${
+                    className={`flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-4 border-b border-gray-200 pb-4 md:pb-6 transition-all duration-700 ${
                       removingItems.has(item.id) 
                         ? 'opacity-0 transform translate-x-full scale-95' 
-                        : 'opacity-100 transform translate-x-0 scale-100'
+                        : visibleSections.has('cart-main')
+                          ? 'opacity-100 transform translate-x-0 scale-100 animate-fade-up'
+                          : 'opacity-0 translate-y-8'
                     }`}
+                    style={{
+                      animationDelay: visibleSections.has('cart-main') ? `${400 + (index * 100)}ms` : '0ms'
+                    }}
                   >
                     {/* Product Image */}
                     <div className="w-20 h-20 sm:w-24 sm:h-24 flex-shrink-0 mx-auto sm:mx-0">
                       <img
-                        src={item.image}
+                        src={item.images ? item.images[0] : item.image}
                         alt={item.name}
                         className="w-full h-full object-cover rounded-2xl"
                       />
@@ -204,9 +264,12 @@ const Cart = () => {
                   </div>
                 </div>
 
-                <button className="w-full bg-black text-white px-4 md:px-6 py-3 md:py-4 font-medium mt-4 md:mt-6 hover:bg-gray-800 transition-colors duration-200 rounded-lg text-sm md:text-base">
+                <Link
+                  to="/checkout"
+                  className="block w-full bg-black text-white px-4 md:px-6 py-3 md:py-4 font-medium mt-4 md:mt-6 hover:bg-gray-800 transition-colors duration-200 rounded-lg text-sm md:text-base text-center"
+                >
                   Proceed to Checkout
-                </button>
+                </Link>
 
                 <Link
                   to="/shop"

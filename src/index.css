@@ -34,11 +34,39 @@
   animation: shimmer 1.6s ease-in-out infinite;
 }
 
-/* Optimize image rendering */
-img {
+/* Optimize media rendering and performance */
+img, video {
   image-rendering: -webkit-optimize-contrast;
   image-rendering: -moz-crisp-edges;
   image-rendering: crisp-edges;
+  will-change: transform;
+}
+
+/* Critical CSS optimizations */
+* {
+  box-sizing: border-box;
+}
+
+/* Reduce repaints and reflows */
+.gpu-accelerated {
+  transform: translateZ(0);
+  will-change: transform, opacity;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Optimize animations */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* Radial gradient utility for About page */
@@ -168,22 +196,19 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Custom scrollbar for modern look */
+/* Hide all scrollbars completely */
 ::-webkit-scrollbar {
-  width: 8px;
+  display: none;
 }
 
-::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.1);
+/* For Firefox */
+html {
+  scrollbar-width: none;
 }
 
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(45deg, #60a5fa, #a855f7);
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+/* For Internet Explorer and Edge */
+body {
+  -ms-overflow-style: none;
 }
 
 /* Selection color */
@@ -940,3 +965,136 @@ html {
 .stagger-3 { animation-delay: 0.3s; }
 .stagger-4 { animation-delay: 0.4s; }
 .stagger-5 { animation-delay: 0.5s; }
+
+/* Enhanced Video Carousel Animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px);
+    opacity: 0.6;
+  }
+  25% {
+    transform: translateY(-20px) translateX(10px);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-10px) translateX(-10px);
+    opacity: 0.8;
+  }
+  75% {
+    transform: translateY(-30px) translateX(5px);
+    opacity: 0.9;
+  }
+}
+
+@keyframes parallax-drift {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-50px) translateX(20px) rotate(5deg);
+  }
+}
+
+@keyframes gradient-shift-carousel {
+  0%, 100% {
+    opacity: 0.2;
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(1.1) rotate(180deg);
+  }
+}
+
+@keyframes video-3d-entrance {
+  0% {
+    opacity: 0;
+    transform: perspective(1000px) rotateY(45deg) scale(0.8) translateZ(-200px);
+    filter: blur(10px);
+  }
+  50% {
+    opacity: 0.7;
+    transform: perspective(1000px) rotateY(15deg) scale(0.95) translateZ(-100px);
+    filter: blur(3px);
+  }
+  100% {
+    opacity: 1;
+    transform: perspective(1000px) rotateY(0deg) scale(1) translateZ(0px);
+    filter: blur(0px);
+  }
+}
+
+@keyframes video-3d-exit-left {
+  0% {
+    opacity: 1;
+    transform: perspective(1000px) rotateY(0deg) scale(1) translateZ(0px);
+    filter: blur(0px);
+  }
+  100% {
+    opacity: 0;
+    transform: perspective(1000px) rotateY(-45deg) scale(0.8) translateZ(-200px) translateX(-100%);
+    filter: blur(5px);
+  }
+}
+
+@keyframes video-3d-exit-right {
+  0% {
+    opacity: 1;
+    transform: perspective(1000px) rotateY(0deg) scale(1) translateZ(0px);
+    filter: blur(0px);
+  }
+  100% {
+    opacity: 0;
+    transform: perspective(1000px) rotateY(45deg) scale(0.8) translateZ(-200px) translateX(100%);
+    filter: blur(5px);
+  }
+}
+
+@keyframes enhanced-pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+  }
+}
+
+/* Animation utility classes */
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.animate-parallax-drift {
+  animation: parallax-drift 20s linear infinite;
+}
+
+.animate-gradient-shift-carousel {
+  animation: gradient-shift-carousel 8s ease-in-out infinite;
+}
+
+.animate-video-3d-enter {
+  animation: video-3d-entrance 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.animate-video-3d-exit-left {
+  animation: video-3d-exit-left 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.animate-video-3d-exit-right {
+  animation: video-3d-exit-right 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.animate-enhanced-pulse {
+  animation: enhanced-pulse 2s ease-in-out infinite;
+}
+
+/* Additional utility animations for page transitions */
+.animate-fade-up {
+  animation: gentle-fade-up 0.6s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: modal-scale-in 0.5s ease-out forwards;
+}
