@@ -7,7 +7,7 @@ import introNewSpectraAndExperienceTheFutureToday from '../assets/images/landing
 
 const ProductIntro = () => {
   return (
-    <section className="py-20 bg-gradient-to-b from-white via-gray-50 to-white relative overflow-hidden">
+    <section className="py-8 bg-gradient-to-b from-white via-gray-50 to-white relative overflow-hidden">
       {/* XR-style ambient background */}
       <div className="absolute inset-0">
         <motion.div
@@ -41,7 +41,7 @@ const ProductIntro = () => {
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         {/* Enhanced Heading */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-8">
           <motion.h2 
             className="text-4xl md:text-5xl lg:text-6xl font-light text-black mb-8"
             initial={{ opacity: 0, y: 50 }}
