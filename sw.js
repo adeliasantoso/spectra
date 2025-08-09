@@ -1,15 +1,15 @@
-// Stable cache version - only changes when we actually update the app
-const CACHE_VERSION = 'v1.0.0';
+// Force cache clear - updated version
+const CACHE_VERSION = 'v1.0.1';
 const CACHE_NAME = `spectra-${CACHE_VERSION}`;
 const STATIC_ASSETS = [
   '/spectra/',
   '/spectra/index.html'
 ];
 
-// Stable cache names - won't change on every deployment
-const MEDIA_CACHE = `spectra-media-v1`;
-const API_CACHE = `spectra-api-v1`;
-const DYNAMIC_CACHE = `spectra-dynamic-v1`;
+// Updated cache names to force refresh
+const MEDIA_CACHE = `spectra-media-v2`;
+const API_CACHE = `spectra-api-v2`;
+const DYNAMIC_CACHE = `spectra-dynamic-v2`;
 
 // Version check endpoint
 const VERSION_ENDPOINT = '/version.json';
@@ -28,25 +28,28 @@ self.addEventListener('install', (event) => {
   );
 });
 
-// Activate event - gentle cache cleanup
+// Activate event - aggressive cache cleanup
 self.addEventListener('activate', (event) => {
   console.log('Service Worker: Activating version', CACHE_VERSION);
   
   event.waitUntil(
-    // Only clean up really old caches (not current stable ones)
+    // Clean up ALL old caches, keep only current version
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((cacheName) => {
-          // Only delete caches with timestamp versions, keep stable named ones
-          if (cacheName.startsWith('spectra-') && cacheName.match(/v\d{13}/)) {
-            console.log('Service Worker: Cleaning up old timestamped cache', cacheName);
+          // Delete any spectra cache that's not the current version
+          if (cacheName.startsWith('spectra-') && cacheName !== CACHE_NAME && 
+              cacheName !== MEDIA_CACHE && cacheName !== API_CACHE && 
+              cacheName !== DYNAMIC_CACHE) {
+            console.log('Service Worker: Cleaning up old cache', cacheName);
             return caches.delete(cacheName);
           }
         }).filter(Boolean)
       );
     }).then(() => {
       console.log('Service Worker: Activation complete');
-      // Don't force claim - let user navigate naturally
+      // Force claim to ensure new SW takes control immediately
+      return self.clients.claim();
     })
   );
 });
