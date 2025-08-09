@@ -129,17 +129,17 @@ const Home = React.memo(() => {
       title: "See through your thoughts",
       subtitle: "Look through your head with intelligent insights", 
       videoUrl: "https://ik.imagekit.io/ohyemuffin/asset/video/look-through-your-head.mp4?updatedAt=1753676357987",
-      product: "Spectra Vision",
+      product: "Spectra 1.0",
       gradient: "from-violet-600 via-purple-600 to-fuchsia-700",
       particles: { color: "#7c3aed", count: 40 }
     }
   ];
 
 
-  // Spectra Vision product data for quick view
+  // Spectra 1.0 product data for quick view
   const spectraProduct = {
-    id: 'spectra-vision',
-    name: "Spectra Vision",
+    id: 'spectra-1-0',
+    name: "Spectra 1.0",
     price: 2499,
     image: spectraGlassesImage,
     description: "Revolutionary AR smart glasses that seamlessly blend into your routine and deliver helpful, personalized suggestions. Experience the future of wearable technology with advanced AI integration and stunning visual clarity."
@@ -272,19 +272,19 @@ const Home = React.memo(() => {
         </div>
       </section>
 
-      {/* Introducing Spectra Vision */}
+      {/* Introducing Spectra 1.0 */}
       <section className="pt-0 pb-0 bg-white relative">
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 text-center">
           <div className="mb-0 max-w-3xl mx-auto relative">
             <OptimizedImage
               src={spectraGlassesImage}
-              alt="Spectra Vision"
+              alt="Spectra 1.0"
               className="w-full h-auto rounded-xl sm:rounded-2xl"
               priority={true}
             />
             <div className="absolute top-0 left-0 right-0 flex items-start justify-center pt-8 sm:pt-12 md:pt-16 px-4">
               <h2 className="text-3xl md:text-5xl font-bold text-black drop-shadow-2xl text-center max-w-full whitespace-nowrap">
-                Introducing the new Spectra Vision
+                Introducing the new Spectra 1.0
               </h2>
             </div>
           </div>

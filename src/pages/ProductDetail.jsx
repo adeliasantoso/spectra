@@ -117,7 +117,7 @@ const ProductDetail = () => {
     },
     {
       name: 'Jordan Carter',
-      headline: 'Really love Spectra Vision!',
+      headline: 'Really love Spectra 1.0!',
       rating: 5,
       review: 'I always dread those weekly grocery runs. Now, fresh stuff just shows up at my door on weekends. Spectra did all the heavy lifting for me.',
       avatar: jordanCarterImg,
@@ -490,20 +490,20 @@ const ProductDetail = () => {
           }`}>
             <div className="max-w-4xl mx-auto">
               <div className="space-y-8 text-gray-700 leading-loose tracking-wide">
-                {product.id === 'spectra-vision' ? (
+                {product.id === 'spectra-1-0' ? (
                   <>
                     <p className="text-base md:text-lg font-medium">
                       <strong>Welcome to a new dimension of personalization.</strong>
                     </p>
                     
                     <p className="text-base md:text-lg">
-                      Spectra Vision is a next-generation wearable that brings the power of intelligent personalization into your everyday life. Designed to adapt and respond in real time, it enhances your experience across work, leisure, and everything in between. By learning from your habits, Spectra Vision offers insights and suggestions tailored to your preferences and environment. Supported by our powerful AI model, it presents what matters, exactly when you need it. Expand your universe with Spectra Vision.
+                      Spectra 1.0 is a next-generation wearable that brings the power of intelligent personalization into your everyday life. Designed to adapt and respond in real time, it enhances your experience across work, leisure, and everything in between. By learning from your habits, Spectra 1.0 offers insights and suggestions tailored to your preferences and environment. Supported by our powerful AI model, it presents what matters, exactly when you need it. Expand your universe with Spectra 1.0.
                     </p>
                     
                     {isDescriptionExpanded && (
                       <div key={expandAnimationKey} className="space-y-8 animate-fade-in">
                         <p className="text-sm md:text-base">
-                          Spectra Vision was born from a simple belief: technology should understand more than it serves. It pays attention to the rhythms of your life—what you linger on, what you skip, and turns that awareness into moment-to-moment relevance. More than just a device, it's an intelligent companion that learns from you to help make each day feel smoother and more intentional.
+                          Spectra 1.0 was born from a simple belief: technology should understand more than it serves. It pays attention to the rhythms of your life—what you linger on, what you skip, and turns that awareness into moment-to-moment relevance. More than just a device, it's an intelligent companion that learns from you to help make each day feel smoother and more intentional.
                         </p>
                         
                         <p className="text-sm md:text-base">
@@ -511,11 +511,11 @@ const ProductDetail = () => {
                         </p>
                         
                         <p className="text-sm md:text-base">
-                          Spectra doesn't require constant input to be effective. Drawing on ambient data and contextual insights, it learns what you love and when you need it most. This enables Spectra Vision to help you discover the right product, service, or spark of inspiration, often before you even think to ask. With intuitive controls and seamless connectivity, Spectra Vision offers a more intelligent way to engage with the world around you.
+                          Spectra doesn't require constant input to be effective. Drawing on ambient data and contextual insights, it learns what you love and when you need it most. This enables Spectra 1.0 to help you discover the right product, service, or spark of inspiration, often before you even think to ask. With intuitive controls and seamless connectivity, Spectra 1.0 offers a more intelligent way to engage with the world around you.
                         </p>
                         
                         <p className="text-sm md:text-base">
-                          Privacy and trust are foundational to Spectra's design. With on-device AI processing and secure encryption, all data is handled locally to avoid cloud syncing or third-party access. It stores only what's necessary and learns solely for your benefit. Spectra Vision is equipped with intelligence and care to enrich your world.
+                          Privacy and trust are foundational to Spectra's design. With on-device AI processing and secure encryption, all data is handled locally to avoid cloud syncing or third-party access. It stores only what's necessary and learns solely for your benefit. Spectra 1.0 is equipped with intelligence and care to enrich your world.
                         </p>
                         
                         <p className="text-base md:text-lg font-medium text-left pt-6">

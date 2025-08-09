@@ -71,7 +71,7 @@ const ProductIntro = () => {
                 backgroundSize: '200% 200%',
               }}
             >
-              Spectra Vision
+              Spectra 1.0
             </motion.span>
           </motion.h2>
         </div>
@@ -80,7 +80,7 @@ const ProductIntro = () => {
         <div className="flex justify-center">
           <div className="max-w-2xl w-full">
             <GestureInteractive className="block group" sensitivity={0.5}>
-              <Link to="/product/spectra-vision" className="block">
+              <Link to="/product/spectra-1-0" className="block">
                 {/* Holographic frame */}
                 <motion.div
                   className="relative p-8"
@@ -102,7 +102,7 @@ const ProductIntro = () => {
                   >
                     <LazyImage
                       src={introNewSpectraAndExperienceTheFutureToday}
-                      alt="Spectra Vision Smart Glasses"
+                      alt="Spectra 1.0 Smart Glasses"
                       className="w-full transition-all duration-700 group-hover:scale-105"
                       style={{ aspectRatio: '16/10', maxHeight: '500px' }}
                     />

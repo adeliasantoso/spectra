@@ -1,4 +1,4 @@
-# Button Color System - Spectra Vision
+# Button Color System - Spectra
 
 ## Konsisten Color Palette untuk Buttons
 

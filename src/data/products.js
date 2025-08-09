@@ -28,9 +28,9 @@ export const CATEGORIES = {
 // All Spectra products
 export const PRODUCTS = {
   // AR Glasses
-  'spectra-vision': {
-    id: 'spectra-vision',
-    name: 'Spectra Vision',
+  'spectra-1-0': {
+    id: 'spectra-1-0',
+    name: 'Spectra 1.0',
     category: CATEGORIES.WEARABLES,
     tagline: '',
     price: 2499,
@@ -44,7 +44,7 @@ export const PRODUCTS = {
     ],
     colors: ['Black', 'White', 'Silver'],
     inStock: true,
-    description: 'Welcome to a new dimension of personalization. Spectra Vision is a next-generation wearable that brings the power of intelligent personalization into your everyday life. Designed to adapt and respond in real time, it enhances your experience across work, leisure, and everything in between.',
+    description: 'Welcome to a new dimension of personalization. Spectra 1.0 is a next-generation wearable that brings the power of intelligent personalization into your everyday life. Designed to adapt and respond in real time, it enhances your experience across work, leisure, and everything in between.',
     features: [
       'Ultra-lightweight titanium frame (28g)',
       '4K micro-OLED displays with 120Hz refresh rate',
@@ -212,7 +212,7 @@ export const getProductById = (id) => {
 // Featured products for homepage
 export const getFeaturedProducts = () => {
   return [
-    PRODUCTS['spectra-vision'],
+    PRODUCTS['spectra-1-0'],
     PRODUCTS['spectra-buds'],
     PRODUCTS['spectra-display'],
     PRODUCTS['spectra-watch']

@@ -315,7 +315,7 @@ const OrderSuccess = () => {
             'animate-fade-up opacity-100'
           }`}>
             <p className="text-sm text-gray-600 mb-4">
-              Love Spectra Vision? Share your excitement with friends!
+              Love Spectra 1.0? Share your excitement with friends!
             </p>
             <div className="flex justify-center space-x-6">
               {/* Instagram */}

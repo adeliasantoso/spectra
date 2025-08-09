@@ -1,4 +1,4 @@
-const CACHE_NAME = 'spectra-vision-v2';
+const CACHE_NAME = 'spectra-v2';
 const STATIC_ASSETS = [
   '/spectra/',
   '/spectra/index.html'

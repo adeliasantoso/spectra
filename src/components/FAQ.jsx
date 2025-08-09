@@ -9,27 +9,27 @@ const FAQ = React.memo(() => {
 
   const faqData = [
     {
-      question: "What is Spectra Vision?",
-      answer: "Spectra Vision is lightweight, wearable device designed to support your everyday life. Powered by our advanced AI model, it anticipates your needs by delivering the most relevant solutions directly within your view. Spectra learns from your environment and preferences to provide personalized insights. Its sleek, minimal display enhances your experience while offering hyper-relevant content. Spectra Vision is your intelligent companion, built to move with your rhythm."
+      question: "What is Spectra 1.0?",
+      answer: "Spectra 1.0 is lightweight, wearable device designed to support your everyday life. Powered by our advanced AI model, it anticipates your needs by delivering the most relevant solutions directly within your view. Spectra learns from your environment and preferences to provide personalized insights. Its sleek, minimal display enhances your experience while offering hyper-relevant content. Spectra 1.0 is your intelligent companion, built to move with your rhythm."
     },
     {
-      question: "What can I do with my Spectra Vision?",
-      answer: "There are many wonderful things you can do with your Spectra Vision. The device uses ambient cues to bring relevant suggestions, allowing you to make informed decisions in real time. It boosts your productivity by providing the most useful resources to help you get things done quickly and efficiently. It provides access to practical tools and resources to help you complete tasks efficiently. When you are ready to unwind, Spectra offers tailored recommendations, including original content that align with your current mood and interests."
+      question: "What can I do with my Spectra 1.0?",
+      answer: "There are many wonderful things you can do with your Spectra 1.0. The device uses ambient cues to bring relevant suggestions, allowing you to make informed decisions in real time. It boosts your productivity by providing the most useful resources to help you get things done quickly and efficiently. It provides access to practical tools and resources to help you complete tasks efficiently. When you are ready to unwind, Spectra offers tailored recommendations, including original content that align with your current mood and interests."
     },
     {
       question: "How do I custom recommendations shown to me?",
       answer: "You don't need to manually configure your preferences. Spectra does the work for you. It learns from your offline and online patterns: what you see, where you go, and how you interact. Using contextual awareness and structured memory, Spectra generates dynamic suggestions that reflect your latest preferences. If a particular recommendation doesn't feel useful, simply tap the \"Dislike\" button and similar content will appear less frequently."
     },
     {
-      question: "How do I connect my Spectra Vision to my other devices?",
-      answer: "Spectra Vision pairs easily with your smartphone and other devices via Bluetooth or Wi-Fi. Once connected, the companion app allows you to sync notifications, adjust preferences, and manage how Spectra interacts with your other devices. Granting Spectra access to commonly used apps helps it deliver more precise, personalized recommendations. The whole setup process is quick and straightforward."
+      question: "How do I connect my Spectra 1.0 to my other devices?",
+      answer: "Spectra 1.0 pairs easily with your smartphone and other devices via Bluetooth or Wi-Fi. Once connected, the companion app allows you to sync notifications, adjust preferences, and manage how Spectra interacts with your other devices. Granting Spectra access to commonly used apps helps it deliver more precise, personalized recommendations. The whole setup process is quick and straightforward."
     },
     {
-      question: "How does Spectra Vision manage my personal data?",
+      question: "How does Spectra 1.0 manage my personal data?",
       answer: "Data privacy is built into every part of Spectra. Information stays on your device whenever possible, and all insights are processed through secure, encrypted channels. You maintain full control through customizable settings for data collection, sharing, and retention."
     },
     {
-      question: "How much does it cost to use Spectra Vision's AI model?",
+      question: "How much does it cost to use Spectra 1.0's AI model?",
       answer: "The device includes full access to its core features with no recurring fees. Optional add-ons or subscriptions may become available in the future for enhanced experiences, such as extended AI insights or specialized integrations. However, the essential functionality is covered in your purchase."
     },
     {
@@ -37,20 +37,20 @@ const FAQ = React.memo(() => {
       answer: "Spectra's ambient AI builds a gradual understanding of your preferences to deliver suggestions that feel relevant. Product recommendations are tailored to reflect your evolving needs, often before you are aware of them. Designed to blend naturally into your routine, these suggestions appear as subtle cues. They appear when they're most useful, in the content formats you prefer. You can manage or adjust the setting at any time through your privacy controls."
     },
     {
-      question: "Why do the product suggestions I see through Spectra Vision sometimes change?",
-      answer: "Brands and advertisers typically provide a base version of their content to our team. Spectra Vision's built-in AI automatically personalizes this content to better suit your preferences. It may alter the ad format—from static image to video, or from live action to animation—depending on what resonates most with you. The message, creative elements, and even duration may also shift to reflect your interests. Over time, the AI may update the ad dynamically to align with changes in your lifestyle. If there's a product you like but aren't ready to purchase, you can mark it as a Favorite for future reference."
+      question: "Why do the product suggestions I see through Spectra 1.0 sometimes change?",
+      answer: "Brands and advertisers typically provide a base version of their content to our team. Spectra 1.0's built-in AI automatically personalizes this content to better suit your preferences. It may alter the ad format—from static image to video, or from live action to animation—depending on what resonates most with you. The message, creative elements, and even duration may also shift to reflect your interests. Over time, the AI may update the ad dynamically to align with changes in your lifestyle. If there's a product you like but aren't ready to purchase, you can mark it as a Favorite for future reference."
     },
     {
-      question: "Does Spectra Vision share my personal data with advertisers to create personalized ads?",
-      answer: "While product suggestions in Spectra Vision may feel highly personalized, your personal data is not shared with advertisers without a specific, explicit purpose. The ad creation process is linear: advertisers provide a base version, and Spectra's AI personalizes it using on-device insights before displaying it to you. All ad personalization occurs within the Spectra ecosystem and is stored locally on your device. For more details, we encourage you to review our privacy policy or contact our support team."
+      question: "Does Spectra 1.0 share my personal data with advertisers to create personalized ads?",
+      answer: "While product suggestions in Spectra 1.0 may feel highly personalized, your personal data is not shared with advertisers without a specific, explicit purpose. The ad creation process is linear: advertisers provide a base version, and Spectra's AI personalizes it using on-device insights before displaying it to you. All ad personalization occurs within the Spectra ecosystem and is stored locally on your device. For more details, we encourage you to review our privacy policy or contact our support team."
     },
     {
       question: "How can I shop for products or services from Spectra's recommendations?",
-      answer: "Spectra Vision offers intuitive interaction with selected products and services. It responds to physical cues, including eye movement, hand gestures, or voice commands. A \"Blitz\" buy button appears when you engage with certain products, allowing you to complete purchases in a single tap. All transactions are securely verified through retina scan, preventing purchases from unauthorized users."
+      answer: "Spectra 1.0 offers intuitive interaction with selected products and services. It responds to physical cues, including eye movement, hand gestures, or voice commands. A \"Blitz\" buy button appears when you engage with certain products, allowing you to complete purchases in a single tap. All transactions are securely verified through retina scan, preventing purchases from unauthorized users."
     },
     {
-      question: "What does shopping experience through Spectra Vision look like?",
-      answer: "Shopping with Spectra Vision is fast and convenient. Through Spectra's recommendations, you can explore product details, compare options, and complete purchases directly from your glasses or other connected devices. The whole experience runs smoothly without interrupting what you're doing."
+      question: "What does shopping experience through Spectra 1.0 look like?",
+      answer: "Shopping with Spectra 1.0 is fast and convenient. Through Spectra's recommendations, you can explore product details, compare options, and complete purchases directly from your glasses or other connected devices. The whole experience runs smoothly without interrupting what you're doing."
     }
   ];
 

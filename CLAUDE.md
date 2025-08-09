@@ -1,7 +1,7 @@
 # Claude Code Configuration
 
 ## Project Overview
-**Spectra Vision Website** - Modern e-commerce platform for AR smart glasses
+**Spectra Website** - Modern e-commerce platform for futuristic smart glasses brand
 
 ### Tech Stack
 - **Frontend**: React 19.1.0 with Vite 7.0.4
