@@ -84,62 +84,42 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Fetch event - serve from cache with network fallback and cache busting
+// Fetch event - serve from cache with network fallback 
 self.addEventListener('fetch', (event) => {
   // Skip cross-origin requests
   if (!event.request.url.startsWith(self.location.origin)) {
     return;
   }
 
-  // For development, bypass cache for HTML files
-  if (event.request.url.includes('localhost') && 
-      (event.request.destination === 'document' || event.request.url.includes('.html'))) {
-    event.respondWith(
-      fetch(event.request, { cache: 'no-cache' })
-        .catch(() => caches.match(event.request))
-    );
-    return;
+  // For development localhost, skip service worker completely for most requests
+  if (event.request.url.includes('localhost')) {
+    // Skip caching for dev server files
+    if (event.request.url.includes('/@') || 
+        event.request.url.includes('?') ||
+        event.request.url.includes('main.jsx') ||
+        event.request.url.includes('env.mjs') ||
+        event.request.url.includes('react-refresh')) {
+      return; // Let browser handle normally
+    }
+    
+    // Only cache static assets in development
+    if (!event.request.url.includes('.png') && 
+        !event.request.url.includes('.jpg') && 
+        !event.request.url.includes('.mp4')) {
+      return; // Let browser handle normally
+    }
   }
 
   event.respondWith(
     caches.match(event.request)
       .then((response) => {
-        // For cached assets, check if they're still fresh
+        // Return cached version if available
         if (response) {
-          // For JS/CSS files, verify they haven't changed
-          if (event.request.url.includes('.js') || event.request.url.includes('.css')) {
-            // Try network first for critical assets in dev
-            if (event.request.url.includes('localhost')) {
-              return fetch(event.request, { cache: 'no-cache' })
-                .then(networkResponse => {
-                  if (networkResponse && networkResponse.status === 200) {
-                    // Update cache with fresh version
-                    const responseToCache = networkResponse.clone();
-                    caches.open(DYNAMIC_CACHE).then(cache => {
-                      cache.put(event.request, responseToCache);
-                    });
-                    return networkResponse;
-                  }
-                  return response;
-                })
-                .catch(() => response);
-            }
-          }
           return response;
         }
 
-        // Network request for dynamic content with cache busting
-        const fetchRequest = event.request.url.includes('localhost') 
-          ? new Request(event.request.url + (event.request.url.includes('?') ? '&' : '?') + '_cb=' + Date.now(), {
-              method: event.request.method,
-              headers: event.request.headers,
-              mode: event.request.mode,
-              credentials: event.request.credentials,
-              cache: 'no-cache'
-            })
-          : event.request;
-
-        return fetch(fetchRequest)
+        // Network request for new content
+        return fetch(event.request)
           .then((response) => {
             // Don't cache non-successful responses
             if (!response || response.status !== 200 || response.type !== 'basic') {
@@ -150,7 +130,7 @@ self.addEventListener('fetch', (event) => {
             const responseToCache = response.clone();
             const url = event.request.url;
 
-            // Cache images and videos in media cache
+            // Only cache static assets
             if (url.includes('.png') || url.includes('.jpg') || url.includes('.jpeg') || 
                 url.includes('.webp') || url.includes('.mp4') || url.includes('.webm')) {
               caches.open(MEDIA_CACHE)
@@ -158,8 +138,8 @@ self.addEventListener('fetch', (event) => {
                   cache.put(event.request, responseToCache);
                 });
             }
-            // Cache JS/CSS in dynamic cache with version check
-            else if (url.includes('.js') || url.includes('.css')) {
+            // Cache production JS/CSS only
+            else if (!url.includes('localhost') && (url.includes('.js') || url.includes('.css'))) {
               caches.open(DYNAMIC_CACHE)
                 .then((cache) => {
                   cache.put(event.request, responseToCache);

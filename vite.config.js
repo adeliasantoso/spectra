@@ -9,10 +9,10 @@ export default defineConfig({
     // Optimize chunk splitting
     rollupOptions: {
       output: {
-        // Add timestamp to filenames for cache busting
-        entryFileNames: `assets/[name]-[hash]-${Date.now()}.js`,
-        chunkFileNames: `assets/[name]-[hash]-${Date.now()}.js`,
-        assetFileNames: `assets/[name]-[hash]-${Date.now()}.[ext]`,
+        // Use normal Vite hashing for cache busting
+        entryFileNames: `assets/[name]-[hash].js`,
+        chunkFileNames: `assets/[name]-[hash].js`,
+        assetFileNames: `assets/[name]-[hash].[ext]`,
         manualChunks: {
           vendor: ['react', 'react-dom', 'react-router-dom'],
           ui: ['./src/components/OptimizedImage.jsx', './src/components/OptimizedVideo.jsx']
@@ -22,9 +22,7 @@ export default defineConfig({
     // Enable compression
     minify: 'esbuild',
     // Set chunk size warning limit
-    chunkSizeWarningLimit: 1000,
-    // Force new build every time
-    sourcemap: false
+    chunkSizeWarningLimit: 1000
   },
   // Optimize dependencies
   optimizeDeps: {
@@ -33,12 +31,7 @@ export default defineConfig({
   // Server configuration for development
   server: {
     open: true,
-    cors: true,
-    // Disable caching in development
-    headers: {
-      'Cache-Control': 'no-cache, no-store, must-revalidate',
-      'Pragma': 'no-cache',
-      'Expires': '0'
-    }
+    cors: true
   }
+}
 })

@@ -1,12 +1,14 @@
-// Cache version management
-export const CACHE_VERSION = `v${Date.now()}`;
+// Cache version management (simplified)
+export const CACHE_VERSION = `v1.0.0`;
 export const APP_VERSION = '1.0.0';
 
 // Generate unique cache key for this deployment
 export const getCacheKey = (cacheName) => `${cacheName}-${CACHE_VERSION}`;
 
-// Check if app version has changed
+// Check if app version has changed (production only)
 export const hasVersionChanged = () => {
+  if (import.meta.env.DEV) return false; // Skip in development
+  
   const storedVersion = localStorage.getItem('app-version');
   const currentVersion = `${APP_VERSION}-${CACHE_VERSION}`;
   
@@ -18,8 +20,10 @@ export const hasVersionChanged = () => {
   return false;
 };
 
-// Force reload if version changed
+// Force reload if version changed (production only)
 export const checkForUpdates = () => {
+  if (import.meta.env.DEV) return false; // Skip in development
+  
   if (hasVersionChanged()) {
     console.log('New version detected, clearing caches...');
     
@@ -34,43 +38,8 @@ export const checkForUpdates = () => {
       });
     }
     
-    // Clear localStorage cache items
-    Object.keys(localStorage).forEach(key => {
-      if (key.startsWith('cache-') || key.startsWith('spectra-cache-')) {
-        localStorage.removeItem(key);
-      }
-    });
-    
     return true;
   }
   
   return false;
-};
-
-// Development mode cache clearing
-export const clearDevCache = () => {
-  if (import.meta.env.DEV) {
-    console.log('Development mode: clearing all caches');
-    
-    // Clear browser cache
-    if ('caches' in window) {
-      caches.keys().then(cacheNames => {
-        cacheNames.forEach(cacheName => caches.delete(cacheName));
-      });
-    }
-    
-    // Clear localStorage
-    Object.keys(localStorage).forEach(key => {
-      if (key.startsWith('cache-') || key.startsWith('spectra-')) {
-        localStorage.removeItem(key);
-      }
-    });
-    
-    // Force reload without cache
-    if (window.location.href.includes('localhost')) {
-      setTimeout(() => {
-        window.location.reload();
-      }, 100);
-    }
-  }
 };

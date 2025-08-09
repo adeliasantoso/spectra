@@ -45,27 +45,20 @@ createRoot(document.getElementById('root')).render(
   </StrictMode>,
 )
 
-// Import cache version utilities
-import { checkForUpdates, clearDevCache } from './utils/cacheVersion.js'
-
-// Register Service Worker for caching and offline support with auto-refresh
-if ('serviceWorker' in navigator) {
+// Register Service Worker for caching and offline support
+if ('serviceWorker' in navigator && !import.meta.env.DEV) {
+  // Only register service worker in production
   window.addEventListener('load', () => {
     const swPath = import.meta.env.BASE_URL + 'sw.js';
-    
-    // Clear dev cache if in development
-    if (import.meta.env.DEV) {
-      clearDevCache();
-    }
     
     navigator.serviceWorker.register(swPath)
       .then((registration) => {
         console.log('SW registered: ', registration);
         
-        // Check for updates periodically
+        // Check for updates periodically in production
         setInterval(() => {
           registration.update();
-        }, 30000); // Check every 30 seconds in dev, every 5 minutes in prod
+        }, 300000); // Check every 5 minutes
         
         // Listen for service worker updates
         registration.addEventListener('updatefound', () => {
@@ -75,7 +68,7 @@ if ('serviceWorker' in navigator) {
               if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
                 console.log('New service worker available, reloading...');
                 
-                // Automatically reload the page when new service worker is ready
+                // Show update notification or auto-reload
                 setTimeout(() => {
                   window.location.reload();
                 }, 1000);
@@ -87,35 +80,5 @@ if ('serviceWorker' in navigator) {
       .catch((registrationError) => {
         console.log('SW registration failed: ', registrationError);
       });
-      
-    // Listen for messages from service worker
-    navigator.serviceWorker.addEventListener('message', (event) => {
-      if (event.data && event.data.type === 'CACHE_UPDATED') {
-        console.log('Cache updated to version:', event.data.version);
-        
-        // Force reload if cache was updated
-        if (checkForUpdates()) {
-          setTimeout(() => {
-            window.location.reload();
-          }, 500);
-        }
-      }
-    });
   });
-  
-  // Development mode: Clear cache on page focus
-  if (import.meta.env.DEV) {
-    window.addEventListener('focus', () => {
-      // Clear caches when returning to the tab in development
-      if ('caches' in window) {
-        caches.keys().then(cacheNames => {
-          cacheNames.forEach(cacheName => {
-            if (cacheName.includes('localhost')) {
-              caches.delete(cacheName);
-            }
-          });
-        });
-      }
-    });
-  }
 }
