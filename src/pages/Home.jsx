@@ -15,6 +15,7 @@ import aboutImage from "../assets/images/about-page/hero-about.png";
 import expandUniverseImage from "../assets/images/landing-page/expandtheuniverseandcanceltheunwanted.png";
 import unlockLifeImage from "../assets/images/landing-page/unlocklifeandlookthrough.png";
 import cancelNoiseImage from "../assets/images/landing-page/expandtheuniverseandcanceltheunwanted.png";
+import experienceDudeImage from "../assets/images/landing-page/experience-dude.png";
 import social1Image from "../assets/images/landing-page/social1.png";
 import social2Image from "../assets/images/landing-page/social2.png";
 import social3Image from "../assets/images/landing-page/social3.png";
@@ -542,8 +543,8 @@ const Home = React.memo(() => {
             <div className="order-2 lg:order-1 lg:col-span-3 relative group flex justify-center">
               <div className="relative max-w-md lg:max-w-lg xl:max-w-xl">
                 <img
-                  src={spectraGlassesImage}
-                  alt="Spectra Glasses"
+                  src={experienceDudeImage}
+                  alt="Experience Dude"
                   className="w-full h-auto transition-transform duration-300 group-hover:scale-105 rounded-2xl"
                 />
                 
