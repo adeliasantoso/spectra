@@ -35,13 +35,8 @@ const Home = React.memo(() => {
     setupCacheManagement();
   }, []);
   
-  // Video carousel state
-  const [activeVideoIndex, setActiveVideoIndex] = useState(0);
-  const [isCarouselInView, setIsCarouselInView] = useState(false);
   const [scrollY, setScrollY] = useState(0);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const carouselRef = useRef(null);
-  const videoRefs = useRef([]);
   
   // Video play/pause states for USP sections
   const [videoPaused, setVideoPaused] = useState({
@@ -103,45 +98,6 @@ const Home = React.memo(() => {
     return () => observer.disconnect();
   }, []);
   
-  // Video carousel data with gradient themes
-  const carouselVideos = [
-    {
-      id: 1,
-      title: "Expand your universe",
-      subtitle: "AI TV tailors content for every family member",
-      videoUrl: "https://ik.imagekit.io/ohyemuffin/asset/video/AI_TV_Tailors_Content_for_Family.mp4?updatedAt=1754214349805",
-      product: "Spectra Display",
-      gradient: "from-purple-600 via-blue-600 to-indigo-800",
-      particles: { color: "#8b5cf6", count: 30 }
-    },
-    {
-      id: 2, 
-      title: "Unlock a life without barriers",
-      subtitle: "Watch tracks your active lifestyle seamlessly",
-      videoUrl: "https://ik.imagekit.io/ohyemuffin/asset/video/Watch_Tracks_Active_Lifestyle.mp4?updatedAt=1754214349971",
-      product: "Spectra Watch",
-      gradient: "from-emerald-500 via-teal-600 to-cyan-700",
-      particles: { color: "#10b981", count: 35 }
-    },
-    {
-      id: 3,
-      title: "Cancel the unwanted noise", 
-      subtitle: "Immersive audio cuts through busy environments",
-      videoUrl: "https://ik.imagekit.io/ohyemuffin/asset/video/Immersive_Audio_on_a_Busy_Street.mp4?updatedAt=1754214349985",
-      product: "Spectra Buds",
-      gradient: "from-orange-500 via-red-500 to-pink-600",
-      particles: { color: "#f97316", count: 25 }
-    },
-    {
-      id: 4,
-      title: "See through your thoughts",
-      subtitle: "Look through your head with intelligent insights", 
-      videoUrl: "https://ik.imagekit.io/ohyemuffin/asset/video/look-through-your-head.mp4?updatedAt=1753676357987",
-      product: "Spectra 1.0",
-      gradient: "from-violet-600 via-purple-600 to-fuchsia-700",
-      particles: { color: "#7c3aed", count: 40 }
-    }
-  ];
 
 
   // Spectra 1.0 product data for quick view
@@ -158,18 +114,6 @@ const Home = React.memo(() => {
     setIsQuickViewOpen(true);
   };
 
-  // Video carousel logic
-  const nextVideo = () => {
-    setActiveVideoIndex((prev) => (prev + 1) % carouselVideos.length);
-  };
-
-  const prevVideo = () => {
-    setActiveVideoIndex((prev) => (prev - 1 + carouselVideos.length) % carouselVideos.length);
-  };
-
-  const goToVideo = (index) => {
-    setActiveVideoIndex(index);
-  };
 
   // Toggle play/pause for USP videos
   const toggleVideoPlayPause = (videoId) => {
@@ -185,50 +129,7 @@ const Home = React.memo(() => {
     }
   };
 
-  // Auto-advance videos every 8 seconds
-  useEffect(() => {
-    if (!isCarouselInView) return;
 
-    const interval = setInterval(() => {
-      nextVideo();
-    }, 8000);
-
-    return () => clearInterval(interval);
-  }, [isCarouselInView, activeVideoIndex]);
-
-  // Intersection observer for carousel
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsCarouselInView(entry.isIntersecting);
-      },
-      { threshold: 0.3 }
-    );
-
-    if (carouselRef.current) {
-      observer.observe(carouselRef.current);
-    }
-
-    return () => {
-      if (carouselRef.current) {
-        observer.unobserve(carouselRef.current);
-      }
-    };
-  }, []);
-
-  // Play/pause videos based on active index
-  useEffect(() => {
-    videoRefs.current.forEach((video, index) => {
-      if (video) {
-        if (index === activeVideoIndex) {
-          video.play();
-        } else {
-          video.pause();
-          video.currentTime = 0;
-        }
-      }
-    });
-  }, [activeVideoIndex]);
 
   return (
     <div className="min-h-screen">
@@ -299,155 +200,6 @@ const Home = React.memo(() => {
         </div>
       </section>
 
-      {/* Video Carousel Section */}
-      <section 
-        id="video-carousel"
-        ref={(el) => {
-          carouselRef.current = el;
-          sectionRefs.current['video-carousel'] = el;
-        }}
-        className="relative w-full overflow-hidden"
-      >
-        {/* Parallax Background Layer */}
-        <div 
-          className="absolute inset-0 w-full h-full"
-          style={{
-            transform: `translateY(${scrollY * 0.3}px)`,
-            backgroundImage: `radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(255,255,255,0.1) 0%, transparent 50%)`
-          }}
-        />
-
-        {/* Animated Gradient Overlay */}
-        <div 
-          className={`absolute inset-0 bg-gradient-to-br ${carouselVideos[activeVideoIndex]?.gradient} opacity-20 transition-all duration-1000 ease-in-out`}
-          style={{
-            transform: `scale(${1 + scrollY * 0.0001}) rotate(${scrollY * 0.05}deg)`,
-            background: `linear-gradient(135deg, ${carouselVideos[activeVideoIndex]?.particles.color}20, transparent 70%)`
-          }}
-        />
-
-
-        <div className="w-full relative z-10">
-          <div className="relative w-full h-[40vh] sm:h-[50vh] md:h-[60vh] lg:h-[70vh] overflow-hidden">
-            
-            {/* Video Display with 3D Effects */}
-            {carouselVideos.map((video, index) => (
-              <video
-                key={video.id}
-                ref={(el) => (videoRefs.current[index] = el)}
-                muted
-                loop
-                playsInline
-                className={`absolute inset-0 w-full h-full transition-all duration-1000 ease-out ${
-                  index === activeVideoIndex 
-                    ? 'opacity-100 scale-100 transform-gpu' 
-                    : index < activeVideoIndex 
-                      ? 'opacity-0 scale-95 -translate-x-full rotate-y-12' 
-                      : 'opacity-0 scale-95 translate-x-full rotate-y-12'
-                } ${index === 1 ? 'object-cover' : 'object-cover'}`}
-                style={{
-                  transform: index === activeVideoIndex 
-                    ? `perspective(1000px) rotateY(0deg) rotateX(0deg) scale(1) translateZ(0px)`
-                    : index < activeVideoIndex
-                      ? `perspective(1000px) rotateY(-15deg) rotateX(5deg) scale(0.95) translateZ(-100px) translateX(-100%)`
-                      : `perspective(1000px) rotateY(15deg) rotateX(5deg) scale(0.95) translateZ(-100px) translateX(100%)`,
-                  filter: index === activeVideoIndex ? 'brightness(1) blur(0px)' : 'brightness(0.7) blur(2px)',
-                  objectPosition: index === 1 ? '50% 25%' : index === 2 ? '50% 35%' : 'center'
-                }}
-              >
-                <source src={video.videoUrl} type="video/mp4" />
-              </video>
-            ))}
-            
-            {/* Enhanced Video Overlay Content */}
-            <div 
-              className="absolute inset-0 flex items-end justify-center z-20"
-              style={{
-                background: `linear-gradient(to top, ${carouselVideos[activeVideoIndex]?.particles.color}40 0%, transparent 60%)`
-              }}
-            >
-              <div className="text-center text-white px-4 sm:px-6 pb-2 sm:pb-3 md:pb-4 max-w-4xl mx-auto">
-                <h3 className={`text-2xl md:text-4xl font-semibold mb-2 sm:mb-4 leading-tight transition-all duration-700 ${
-                  visibleSections.has('video-carousel') ? 'animate-text-stagger opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-                }`}
-                style={{
-                  textShadow: '0 4px 20px rgba(0,0,0,0.5), 0 0 40px rgba(255,255,255,0.1)',
-                  filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.3))'
-                }}>
-                  {carouselVideos[activeVideoIndex]?.title}
-                </h3>
-                
-                {/* Enhanced Navigation with Arrows */}
-                <div className={`flex justify-center items-center mt-2 sm:mt-3 transition-all duration-500 ${
-                  visibleSections.has('video-carousel') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-                }`}>
-                  <div className="flex items-center space-x-4 px-4 py-1.5 rounded-full bg-black/20 backdrop-blur-sm">
-                    {/* Left Arrow */}
-                    <button
-                      onClick={() => prevVideo()}
-                      className="w-6 h-6 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-all duration-300 hover:scale-110 group"
-                      style={{
-                        boxShadow: `0 0 15px ${carouselVideos[activeVideoIndex]?.particles.color}30`
-                      }}
-                    >
-                      <svg 
-                        className="w-3 h-3 text-white transition-transform duration-300 group-hover:scale-110" 
-                        fill="none" 
-                        stroke="currentColor" 
-                        viewBox="0 0 24 24"
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                      </svg>
-                    </button>
-
-                    {/* Dots */}
-                    <div className="flex space-x-1.5 sm:space-x-2">
-                      {carouselVideos.map((_, index) => (
-                        <button
-                          key={index}
-                          onClick={() => goToVideo(index)}
-                          className={`h-1.5 rounded-full transition-all duration-500 hover:scale-125 relative overflow-hidden ${
-                            index === activeVideoIndex 
-                              ? 'w-6 shadow-lg transform scale-110' 
-                              : 'w-1.5 hover:w-3'
-                          }`}
-                          style={{
-                            backgroundColor: index === activeVideoIndex 
-                              ? 'white' 
-                              : 'rgba(255,255,255,0.5)',
-                            boxShadow: index === activeVideoIndex 
-                              ? `0 0 20px ${carouselVideos[activeVideoIndex]?.particles.color}, 0 2px 10px rgba(0,0,0,0.3)` 
-                              : 'none',
-                            animation: index === activeVideoIndex ? 'pulse 2s infinite' : 'none'
-                          }}
-                        />
-                      ))}
-                    </div>
-
-                    {/* Right Arrow */}
-                    <button
-                      onClick={() => nextVideo()}
-                      className="w-6 h-6 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-all duration-300 hover:scale-110 group"
-                      style={{
-                        boxShadow: `0 0 15px ${carouselVideos[activeVideoIndex]?.particles.color}30`
-                      }}
-                    >
-                      <svg 
-                        className="w-3 h-3 text-white transition-transform duration-300 group-hover:scale-110" 
-                        fill="none" 
-                        stroke="currentColor" 
-                        viewBox="0 0 24 24"
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Expand Your Universe */}
       <section 
