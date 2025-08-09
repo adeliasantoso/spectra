@@ -1,56 +1,66 @@
-const CACHE_NAME = 'spectra-vision-v2';
+// Stable cache version - only changes when we actually update the app
+const CACHE_VERSION = 'v1.0.0';
+const CACHE_NAME = `spectra-${CACHE_VERSION}`;
 const STATIC_ASSETS = [
   '/spectra/',
   '/spectra/index.html'
 ];
 
-// Cache for images and videos
-const MEDIA_CACHE = 'spectra-media-v1';
-// Cache for API responses
-const API_CACHE = 'spectra-api-v1';
+// Stable cache names - won't change on every deployment
+const MEDIA_CACHE = `spectra-media-v1`;
+const API_CACHE = `spectra-api-v1`;
+const DYNAMIC_CACHE = `spectra-dynamic-v1`;
 
-const DYNAMIC_CACHE = 'spectra-dynamic-v2';
+// Version check endpoint
+const VERSION_ENDPOINT = '/version.json';
 
-// Install event - cache static assets
+// Install event - cache static assets (no aggressive cache clearing)
 self.addEventListener('install', (event) => {
+  console.log('Service Worker: Installing version', CACHE_VERSION);
+  
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then((cache) => {
-        return cache.addAll(STATIC_ASSETS);
-      })
-      .then(() => {
-        return self.skipWaiting();
-      })
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.addAll(STATIC_ASSETS);
+    }).then(() => {
+      console.log('Service Worker: Installation complete');
+      // Don't skip waiting - let user refresh naturally
+    })
   );
 });
 
-// Activate event - clean up old caches
+// Activate event - gentle cache cleanup
 self.addEventListener('activate', (event) => {
+  console.log('Service Worker: Activating version', CACHE_VERSION);
+  
   event.waitUntil(
-    caches.keys()
-      .then((cacheNames) => {
-        return Promise.all(
-          cacheNames.map((cacheName) => {
-            if (cacheName !== CACHE_NAME && 
-                cacheName !== DYNAMIC_CACHE && 
-                cacheName !== MEDIA_CACHE && 
-                cacheName !== API_CACHE) {
-              return caches.delete(cacheName);
-            }
-          })
-        );
-      })
-      .then(() => {
-        return self.clients.claim();
-      })
+    // Only clean up really old caches (not current stable ones)
+    caches.keys().then((cacheNames) => {
+      return Promise.all(
+        cacheNames.map((cacheName) => {
+          // Only delete caches with timestamp versions, keep stable named ones
+          if (cacheName.startsWith('spectra-') && cacheName.match(/v\d{13}/)) {
+            console.log('Service Worker: Cleaning up old timestamped cache', cacheName);
+            return caches.delete(cacheName);
+          }
+        }).filter(Boolean)
+      );
+    }).then(() => {
+      console.log('Service Worker: Activation complete');
+      // Don't force claim - let user navigate naturally
+    })
   );
 });
 
-// Fetch event - serve from cache with network fallback
+// Fetch event - serve from cache with network fallback 
 self.addEventListener('fetch', (event) => {
   // Skip cross-origin requests
   if (!event.request.url.startsWith(self.location.origin)) {
     return;
+  }
+
+  // For development localhost, completely skip service worker
+  if (event.request.url.includes('localhost') || event.request.url.includes('127.0.0.1')) {
+    return; // Let browser handle all requests normally in development
   }
 
   event.respondWith(
@@ -61,7 +71,7 @@ self.addEventListener('fetch', (event) => {
           return response;
         }
 
-        // Network request for dynamic content
+        // Network request for new content
         return fetch(event.request)
           .then((response) => {
             // Don't cache non-successful responses
@@ -73,7 +83,7 @@ self.addEventListener('fetch', (event) => {
             const responseToCache = response.clone();
             const url = event.request.url;
 
-            // Cache images and videos in media cache
+            // Only cache static assets
             if (url.includes('.png') || url.includes('.jpg') || url.includes('.jpeg') || 
                 url.includes('.webp') || url.includes('.mp4') || url.includes('.webm')) {
               caches.open(MEDIA_CACHE)
@@ -81,8 +91,8 @@ self.addEventListener('fetch', (event) => {
                   cache.put(event.request, responseToCache);
                 });
             }
-            // Cache JS/CSS in dynamic cache
-            else if (url.includes('.js') || url.includes('.css')) {
+            // Cache production JS/CSS only
+            else if (!url.includes('localhost') && (url.includes('.js') || url.includes('.css'))) {
               caches.open(DYNAMIC_CACHE)
                 .then((cache) => {
                   cache.put(event.request, responseToCache);
@@ -94,7 +104,7 @@ self.addEventListener('fetch', (event) => {
           .catch(() => {
             // Offline fallback
             if (event.request.destination === 'document') {
-              return caches.match('/offline.html');
+              return caches.match('/offline.html') || caches.match('/spectra/');
             }
           });
       })

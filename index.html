@@ -25,12 +25,121 @@
     <!-- Optimize font loading -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <script type="module" crossorigin src="/spectra/assets/index-Dxwlcs46.js"></script>
+    <script type="module" crossorigin src="/spectra/assets/index-BeF724HA.js"></script>
     <link rel="modulepreload" crossorigin href="/spectra/assets/vendor-DrQQ9EdB.js">
     <link rel="modulepreload" crossorigin href="/spectra/assets/ui-DpYI8S8p.js">
-    <link rel="stylesheet" crossorigin href="/spectra/assets/index-CvmVEit_.css">
+    <link rel="stylesheet" crossorigin href="/spectra/assets/index-CQjRxQKI.css">
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!-- Fallback loading screen -->
+      <div style="
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+      ">
+        <div style="text-align: center;">
+          <div style="
+            width: 40px;
+            height: 40px;
+            border: 3px solid #e2e8f0;
+            border-top: 3px solid #1f2937;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+          "></div>
+          <div style="
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+          ">SPECTRA</div>
+          <div style="color: #64748b; font-size: 0.9rem;">Loading application...</div>
+        </div>
+      </div>
+      <style>
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      </style>
+    </div>
+    
+    <!-- Error handling script -->
+    <script>
+      // Global error handler
+      window.addEventListener('error', function(e) {
+        console.error('Global error:', e.error);
+        
+        // Show fallback UI if root element is still showing loading
+        const root = document.getElementById('root');
+        if (root && root.innerHTML.includes('Loading application')) {
+          root.innerHTML = `
+            <div style="
+              min-height: 100vh;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+              font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+              padding: 1rem;
+            ">
+              <div style="text-align: center; max-width: 400px;">
+                <div style="
+                  font-size: 1.5rem;
+                  font-weight: bold;
+                  color: #dc2626;
+                  margin-bottom: 1rem;
+                ">⚠️ Loading Failed</div>
+                <div style="color: #7f1d1d; margin-bottom: 1.5rem; line-height: 1.5;">
+                  Sorry, we couldn't load the application. Please try refreshing the page or check your internet connection.
+                </div>
+                <button onclick="window.location.reload()" style="
+                  background: #dc2626;
+                  color: white;
+                  border: none;
+                  padding: 0.75rem 1.5rem;
+                  border-radius: 0.5rem;
+                  font-size: 0.9rem;
+                  cursor: pointer;
+                  margin-right: 0.5rem;
+                ">Refresh Page</button>
+                <a href="${window.location.origin}/spectra/" style="
+                  background: #f3f4f6;
+                  color: #374151;
+                  text-decoration: none;
+                  padding: 0.75rem 1.5rem;
+                  border-radius: 0.5rem;
+                  font-size: 0.9rem;
+                  display: inline-block;
+                ">Go Home</a>
+              </div>
+            </div>
+          `;
+        }
+      });
+
+      // Unhandled promise rejection handler
+      window.addEventListener('unhandledrejection', function(e) {
+        console.error('Unhandled promise rejection:', e.reason);
+      });
+      
+      // GitHub Pages SPA routing fix
+      (function() {
+        var l = window.location;
+        if (l.search[1] === '/' ) {
+          var decoded = l.search.slice(1).split('&').map(function(s) { 
+            return s.replace(/~and~/g, '&')
+          }).join('?');
+          window.history.replaceState(null, null,
+            l.pathname.slice(0, -1) + decoded + l.hash
+          );
+        }
+      })();
+    </script>
+    
   </body>
 </html>
