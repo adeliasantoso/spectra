@@ -79,17 +79,29 @@ self.addEventListener('fetch', (event) => {
               return response;
             }
 
+            // Skip caching for video files to avoid cache errors
+            if (event.request.url.includes('.mp4') || 
+                event.request.url.includes('.webm') || 
+                event.request.url.includes('.mov')) {
+              return response;
+            }
+
             // Clone the response for caching
             const responseToCache = response.clone();
             const url = event.request.url;
 
-            // Only cache static assets
+            // Only cache images, NOT videos (videos are too large and cause cache errors)
             if (url.includes('.png') || url.includes('.jpg') || url.includes('.jpeg') || 
-                url.includes('.webp') || url.includes('.mp4') || url.includes('.webm')) {
-              caches.open(MEDIA_CACHE)
-                .then((cache) => {
-                  cache.put(event.request, responseToCache);
-                });
+                url.includes('.webp') || url.includes('.gif') || url.includes('.svg')) {
+              // Skip very large images
+              const contentLength = response.headers.get('content-length');
+              if (!contentLength || parseInt(contentLength) < 5 * 1024 * 1024) { // Skip if > 5MB
+                caches.open(MEDIA_CACHE)
+                  .then((cache) => {
+                    cache.put(event.request, responseToCache);
+                  })
+                  .catch(e => console.warn('Cache put failed:', e));
+              }
             }
             // Cache production JS/CSS only
             else if (!url.includes('localhost') && (url.includes('.js') || url.includes('.css'))) {
@@ -101,11 +113,22 @@ self.addEventListener('fetch', (event) => {
 
             return response;
           })
-          .catch(() => {
+          .catch((error) => {
+            console.warn('Service Worker: Network request failed', event.request.url, error);
+            
             // Offline fallback
             if (event.request.destination === 'document') {
               return caches.match('/offline.html') || caches.match('/spectra/');
             }
+            
+            // For failed video requests, don't show error
+            if (event.request.url.includes('.mp4') || 
+                event.request.url.includes('.webm') || 
+                event.request.url.includes('.mov')) {
+              return new Response('', { status: 404, statusText: 'Video not available' });
+            }
+            
+            return caches.match(event.request);
           });
       })
   );
