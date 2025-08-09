@@ -26,7 +26,7 @@ npm run lint      # Run ESLint (if configured)
 ```
 src/
 ├── components/          # Reusable UI components
-│   ├── Navigation.jsx   # Header navigation
+│   ├── Navigation.jsx   # Smart navbar with scroll animations
 │   ├── Footer.jsx       # Footer component
 │   ├── CartIcon.jsx     # Shopping cart icon
 │   ├── Breadcrumb.jsx   # Navigation breadcrumbs
@@ -34,18 +34,28 @@ src/
 │   ├── FAQ.jsx          # FAQ accordion component
 │   ├── ProductQuickView.jsx # Product quick view modal
 │   ├── LoadingSpinner.jsx # Loading indicator
-│   └── OptimizedImage.jsx # Performance optimized images
+│   ├── OptimizedImage.jsx # Performance optimized images
+│   ├── OptimizedVideo.jsx # Performance optimized videos
+│   ├── CustomCursor.jsx # Custom cursor interactions
+│   ├── InteractiveButton.jsx # Enhanced button components
+│   ├── LoadingScreen.jsx # Loading screen component
+│   ├── MagneticElement.jsx # Magnetic hover effects
+│   ├── ParallaxSection.jsx # Parallax scroll effects
+│   ├── ScrollIndicator.jsx # Scroll progress indicator
+│   └── TiltCard.jsx     # 3D tilt card effects
 ├── context/             # React Context providers
 │   ├── CartContext.jsx  # Shopping cart state
 │   ├── ToastContext.jsx # Toast notification system
 │   └── WishlistContext.jsx # Wishlist management
 ├── pages/               # Route-level components
-│   ├── Home.jsx         # Homepage
+│   ├── Home.jsx         # Homepage with video carousel
 │   ├── Shop.jsx         # Product catalog
 │   ├── About.jsx        # About page
 │   ├── Contact.jsx      # Contact page
 │   ├── Cart.jsx         # Shopping cart
-│   └── ProductDetail.jsx # Product detail page
+│   ├── ProductDetail.jsx # Product detail page
+│   ├── Checkout.jsx     # Checkout process
+│   └── OrderSuccess.jsx # Order confirmation page
 ├── sections/            # Homepage sections
 │   ├── Hero.jsx         # Hero video section
 │   ├── ProductIntro.jsx # Product introduction
@@ -53,6 +63,8 @@ src/
 │   ├── CallToAction.jsx # CTA section
 │   ├── About.jsx        # About section
 │   └── SocialGallery.jsx # Social media gallery
+├── utils/               # Utility functions
+│   └── performance.js   # Performance monitoring utilities
 └── assets/              # Static assets
     └── images/          # Image placeholders
 ```
@@ -78,9 +90,11 @@ Routes:
 
 ### 🏠 Homepage
 - **Hero Section**: Video background with animated title
+- **Smart Navigation**: Auto-hide/show navbar on scroll with smooth animations
+- **Video Carousel**: Interactive carousel with 4 product videos and navigation
 - **Product Introduction**: "Introducing new Spectra 1.0" with animations
 - **Background Textures**: Subtle patterns for visual interest
-- **Interactive Elements**: Clickable product, hover effects
+- **Interactive Elements**: Clickable product, hover effects, play/pause controls
 - **FAQ Section**: Expandable accordion with fade-in animations
 - **Responsive Design**: Mobile-first approach
 
@@ -158,11 +172,11 @@ info('Color selection updated');
 npm run deploy
 
 # Builds project and pushes to gh-pages branch
-# Live URL: https://alwiam.github.io/spectra-vision-fe
+# Live URL: https://adeliasantoso.github.io/spectra
 ```
 
 ### Build Configuration
-- **Base Path**: `/spectra-vision-fe/` for GitHub Pages
+- **Base Path**: `/spectra/` for GitHub Pages
 - **Asset Optimization**: Automatic image and code splitting
 - **Browser Support**: Modern browsers (ES6+)
 
@@ -198,12 +212,16 @@ const { addToCart } = useCart();
 ## Recent Updates & Improvements
 
 ### ✅ Completed Features
+- **Smart Navigation Bar**: Auto-hide/show navbar on scroll with smooth animations, stays visible during hero section
+- **Video Carousel System**: Interactive 4-video carousel with dots navigation, auto-advance, and 3D transitions
+- **Video Play/Pause Controls**: Working play/pause buttons on all USP section videos with proper state management
+- **Performance Optimization**: Added RequestAnimationFrame for smooth 60fps scroll handling and debounced interactions
 - **FAQ Section**: Added comprehensive FAQ with 11 Q&A items, expandable accordion design
 - **Product Detail Enhancements**: Updated positioning copy, customer testimonials, optimized image gallery
 - **Cart Page Fix**: Resolved navbar overlap issue with proper padding
 - **Wishlist Integration**: Full wishlist context and functionality
 - **Contact Page**: Fixed syntax errors, functional contact form
-- **Performance**: Removed duplicate images, cleaned unused imports
+- **Enhanced Components**: Added OptimizedVideo, performance utilities, and modern UI components
 
 ### FAQ Content Areas Covered:
 1. Product introduction and capabilities
@@ -287,11 +305,16 @@ All videos hosted on ImageKit CDN (https://ik.imagekit.io/ohyemuffin/asset/video
    - Used in: Hero background, main landing page video
    - Source: ImageKit CDN
 
-2. **Video Carousel Section (NEW)**
-   - **AI TV Tailors Content**: `AI_TV_Tailors_Content_for_Family.mp4?updatedAt=1754214349805`
-   - **Watch Tracks Lifestyle**: `Watch_Tracks_Active_Lifestyle.mp4?updatedAt=1754214349971`
-   - **Immersive Audio**: `Immersive_Audio_on_a_Busy_Street.mp4?updatedAt=1754214349985`
-   - **Smart Recognition**: `smart-recognition.mp4?updatedAt=1753676355632`
+2. **Video Carousel Section**
+   - **Expand the Universe**: `expand-the-universe.mp4?updatedAt=1753676355743`
+   - **Unlock Life Without Barriers**: `unlock.mp4?updatedAt=1753676356747` 
+   - **See Through Your Thoughts**: `AI_Fashion_Design_Assistance_Video.mp4?updatedAt=1753676356653`
+   - **Cancel Unwanted Noise**: `cancel-unwanted-noice.mp4?updatedAt=1753676357536`
+   - **Previous Carousel Videos (BACKUP)**:
+     - `AI_TV_Tailors_Content_for_Family.mp4?updatedAt=1754214349805`
+     - `Watch_Tracks_Active_Lifestyle.mp4?updatedAt=1754214349971` 
+     - `Immersive_Audio_on_a_Busy_Street.mp4?updatedAt=1754214349985`
+     - `smart-recognition.mp4?updatedAt=1753676355632`
    - Used in: Interactive video carousel with 8-second auto-advance
    - Features: Animated black texture background, dots navigation, smooth transitions
 
@@ -311,7 +334,8 @@ All videos hosted on ImageKit CDN (https://ik.imagekit.io/ohyemuffin/asset/video
    - Used in: "Cancel the unwanted noise" section
 
 6. **See Through Your Thoughts**
-   - `look-through-your-head.mp4?updatedAt=1753676357987`
+   - **Current**: `AI_Fashion_Design_Assistance_Video.mp4?updatedAt=1753676356653` (Used in carousel)
+   - **Previous**: `look-through-your-head.mp4?updatedAt=1753676357987`
    - Used in: "See through your thoughts" section
 
 7. **Intuitive Insights**

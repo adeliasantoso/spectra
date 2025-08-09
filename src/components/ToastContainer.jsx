@@ -3,7 +3,7 @@ import { useToast } from '../context/ToastContext';
 
 const Toast = ({ toast, onRemove }) => {
   const getToastStyles = () => {
-    const baseStyles = "flex items-start px-5 py-4 rounded-3xl backdrop-blur-xl border transform transition-all duration-700 ease-out animate-slide-in hover:scale-[1.02] shadow-2xl";
+    const baseStyles = "flex items-center px-4 py-3 rounded-xl backdrop-blur-xl border transform transition-all duration-300 ease-out animate-slide-in hover:scale-[1.02] shadow-lg";
     
     switch (toast.type) {
       case 'success':
@@ -23,40 +23,40 @@ const Toast = ({ toast, onRemove }) => {
     switch (toast.type) {
       case 'success':
         return (
-          <div className="w-10 h-10 mr-4 flex-shrink-0 bg-gradient-to-br from-green-400 to-emerald-500 rounded-2xl flex items-center justify-center shadow-lg shadow-green-200/60">
-            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+          <div className="w-8 h-8 mr-3 flex-shrink-0 bg-gradient-to-br from-green-400 to-emerald-500 rounded-lg flex items-center justify-center">
+            <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
             </svg>
           </div>
         );
       case 'error':
         return (
-          <div className="w-10 h-10 mr-4 flex-shrink-0 bg-gradient-to-br from-red-400 to-rose-500 rounded-2xl flex items-center justify-center shadow-lg shadow-red-200/60">
-            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+          <div className="w-8 h-8 mr-3 flex-shrink-0 bg-gradient-to-br from-red-400 to-rose-500 rounded-lg flex items-center justify-center shadow-red-200/60">
+            <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </div>
         );
       case 'warning':
         return (
-          <div className="w-10 h-10 mr-4 flex-shrink-0 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl flex items-center justify-center shadow-lg shadow-amber-200/60">
-            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+          <div className="w-8 h-8 mr-3 flex-shrink-0 bg-gradient-to-br from-amber-400 to-orange-500 rounded-lg flex items-center justify-center shadow-amber-200/60">
+            <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
             </svg>
           </div>
         );
       case 'info':
         return (
-          <div className="w-10 h-10 mr-4 flex-shrink-0 bg-gradient-to-br from-blue-400 to-indigo-500 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-200/60">
-            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+          <div className="w-8 h-8 mr-3 flex-shrink-0 bg-gradient-to-br from-blue-400 to-indigo-500 rounded-lg flex items-center justify-center shadow-blue-200/60">
+            <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
         );
       default:
         return (
-          <div className="w-10 h-10 mr-4 flex-shrink-0 bg-gradient-to-br from-gray-400 to-gray-500 rounded-2xl flex items-center justify-center shadow-lg shadow-gray-200/60">
-            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+          <div className="w-8 h-8 mr-3 flex-shrink-0 bg-gradient-to-br from-gray-400 to-gray-500 rounded-lg flex items-center justify-center shadow-gray-200/60">
+            <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
@@ -66,21 +66,18 @@ const Toast = ({ toast, onRemove }) => {
 
   return (
     <div className={getToastStyles()}>
-      <div className="flex items-start flex-1">
+      <div className="flex items-center flex-1">
         {getIcon()}
-        <div className="flex-1 pt-1">
-          {toast.title && (
-            <div className="font-semibold text-gray-800 text-sm mb-1 tracking-wide">{toast.title}</div>
-          )}
-          <div className="text-gray-600 text-sm leading-relaxed font-medium">{toast.message}</div>
+        <div className="flex-1">
+          <div className="text-gray-800 text-sm font-medium">{toast.message}</div>
         </div>
       </div>
       
       <button
         onClick={() => onRemove(toast.id)}
-        className="ml-4 flex-shrink-0 w-8 h-8 rounded-full hover:bg-gray-100/80 transition-all duration-200 flex items-center justify-center group hover:scale-110 active:scale-95"
+        className="ml-2 flex-shrink-0 w-6 h-6 rounded-full hover:bg-gray-100/80 transition-all duration-200 flex items-center justify-center group"
       >
-        <svg className="w-4 h-4 text-gray-400 group-hover:text-gray-600 transition-colors" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+        <svg className="w-3 h-3 text-gray-400 group-hover:text-gray-600 transition-colors" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
         </svg>
       </button>
@@ -94,7 +91,7 @@ const ToastContainer = () => {
   if (toasts.length === 0) return null;
 
   return (
-    <div className="fixed bottom-8 right-8 z-50 space-y-4 max-w-md w-full">
+    <div className="fixed top-20 right-4 z-50 space-y-3 max-w-sm w-full">
       {toasts.map(toast => (
         <Toast 
           key={toast.id} 

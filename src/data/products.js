@@ -86,7 +86,7 @@ export const PRODUCTS = {
     ],
     colors: ['Black', 'White', 'Silver'],
     inStock: true,
-    description: 'Welcome to audio that learns you. Spectra Buds are next-generation wireless earbuds that bring intelligent personalization to your listening experience. Designed to adapt in real time, they enhance every moment of your day with perfectly tuned spatial audio that understands your environment and preferences.',
+    description: 'Audio, attuned to you. Spectra Buds redefines your relationship with sound. These next-generation wireless earbuds adapt intelligently to your environment, delivering rich, spatial audio that shifts seamlessly with your day from focus to movement, from silence to cityscape.',
     features: [
       'Adaptive spatial audio with real-time environment detection',
       'Active noise cancellation with transparency mode',
@@ -127,7 +127,7 @@ export const PRODUCTS = {
     ],
     colors: ['Black', 'Silver'],
     inStock: true,
-    description: 'Welcome to entertainment that knows your family. Spectra Display is a next-generation smart TV that brings the power of intelligent personalization into your living room. Designed to recognize and adapt to each family member, it transforms your viewing experience with content that understands everyone\'s unique preferences.',
+    description: 'Entertainment that adjusts to your household. Spectra Display brings intelligent personalization to the heart of your home. More than a smart TV, it\'s a shared interface that learns the rhythms, tastes, and moments that make your family unique and curates an experience to reflect them.',
     features: [
       'Multi-user recognition with simultaneous personalization',
       '55" 4K QLED display with HDR10+ support',
@@ -169,7 +169,7 @@ export const PRODUCTS = {
     ],
     colors: ['Black', 'Silver', 'Gold'],
     inStock: true,
-    description: 'Welcome to wellness that adapts to you. Spectra Watch is a next-generation smartwatch that brings intelligent personalization to your health and productivity journey. Designed to learn your patterns and respond in real time, it enhances every aspect of your daily rhythm with insights tailored just for you.',
+    description: 'Health that learns your rhythm. Spectra Watch transforms the way you engage with health and productivity. More than tracking steps and stats, it learns the unique patterns of your body and schedule, offering insights that are not only personalized but predictive.',
     features: [
       'Advanced health monitoring with AI insights',
       'Seamless ecosystem integration with handoffs',

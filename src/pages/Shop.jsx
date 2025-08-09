@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
 import CartIcon from "../components/CartIcon";
@@ -8,6 +8,7 @@ import OptimizedImage from "../components/OptimizedImage";
 import { getAllProducts, getProductsByCategory, CATEGORIES } from "../data/products";
 
 const Shop = () => {
+  const navigate = useNavigate();
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -77,7 +78,7 @@ const Shop = () => {
         className="py-6 sm:py-8 md:py-12"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 text-center">
-          <h1 className={`text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-black mb-6 sm:mb-8 transition-all duration-700 ${
+          <h1 className={`text-2xl md:text-4xl font-semibold text-black mb-6 sm:mb-8 transition-all duration-700 ${
             visibleSections.has('shop-header') ? 'animate-fade-up opacity-100' : 'opacity-0 translate-y-8'
           }`}>
             Explore Our Latest Products
@@ -92,7 +93,7 @@ const Shop = () => {
                 <button
                   key={key}
                   onClick={() => handleCategoryChange(key)}
-                  className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-md font-medium transition-all duration-200 text-sm sm:text-base ${
+                  className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-md font-medium transition-all duration-200 text-sm md:text-base ${
                     selectedCategory === key
                       ? 'bg-black text-white shadow-md'
                       : 'bg-transparent text-gray-600 hover:bg-gray-200'
@@ -133,44 +134,53 @@ const Shop = () => {
                   transitionDelay: isTransitioning ? '0ms' : visibleSections.has('products-grid') ? `${index * 150}ms` : '0ms'
                 }}
               >
-                {/* Product Image with Quick View overlay */}
-                <div className="relative overflow-hidden mb-3 md:mb-4">
-                  <Link to={`/product/${product.id}`}>
-                    <OptimizedImage
-                      src={product.images[0]}
-                      alt={product.name}
-                      width={400}
-                      height={400}
-                      className="w-full aspect-square object-cover group-hover:scale-105 transition-transform duration-300 rounded-2xl"
-                    />
-                  </Link>
+                {/* Product Image with Quick View icon */}
+                <div className="relative overflow-hidden mb-3 md:mb-4 cursor-pointer" onClick={() => navigate(`/product/${product.id}`)}>
+                  <OptimizedImage
+                    src={product.images[0]}
+                    alt={product.name}
+                    width={400}
+                    height={400}
+                    className="w-full aspect-square object-cover group-hover:scale-105 transition-transform duration-300 rounded-2xl"
+                  />
                   
-                  {/* Quick View Button - appears on hover */}
-                  <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 rounded-2xl flex items-center justify-center opacity-0 group-hover:opacity-100">
-                    <button
-                      onClick={() => {
-                        setSelectedProduct(product);
-                        setIsQuickViewOpen(true);
-                      }}
-                      className="bg-white text-black px-6 py-2 rounded-full font-medium hover:bg-gray-100 transition-colors shadow-lg transform translate-y-2 group-hover:translate-y-0"
+                  {/* Quick View Icon - small floating button */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedProduct(product);
+                      setIsQuickViewOpen(true);
+                    }}
+                    className="absolute top-3 right-3 w-10 h-10 bg-white bg-opacity-90 hover:bg-opacity-100 rounded-full flex items-center justify-center shadow-md opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 active:scale-95"
+                    title="Quick View"
+                  >
+                    <svg 
+                      className="w-5 h-5 text-gray-700" 
+                      fill="none" 
+                      stroke="currentColor" 
+                      viewBox="0 0 24 24"
                     >
-                      Quick View
-                    </button>
-                  </div>
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                  </button>
                 </div>
 
-                <Link to={`/product/${product.id}`} className="block">
+                <div 
+                  className="block cursor-pointer" 
+                  onClick={() => navigate(`/product/${product.id}`)}
+                >
                   {/* Product Category */}
-                  <p className="text-sm text-gray-500 mb-1">{product.tagline}</p>
+                  <p className="text-xs md:text-sm text-gray-500 mb-1">{product.tagline}</p>
                   
                   {/* Product Name */}
-                  <h3 className="text-base md:text-lg lg:text-xl font-medium text-black mb-1 md:mb-2">
+                  <h3 className="text-base md:text-lg font-medium text-black mb-1 md:mb-2">
                     {product.name}
                   </h3>
 
                   {/* Product Price */}
-                  <p className="text-base md:text-lg lg:text-xl text-black">£{product.price.toLocaleString()}</p>
-                </Link>
+                  <p className="text-base md:text-lg font-semibold text-black">£{product.price.toLocaleString()}</p>
+                </div>
               </div>
             ))}
           </div>

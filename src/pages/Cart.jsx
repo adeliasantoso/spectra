@@ -40,16 +40,10 @@ const Cart = () => {
   const handleQuantityChange = (productId, newQuantity) => {
     if (newQuantity <= 0) {
       removeFromCart(productId);
-      info('Item removed', {
-        title: 'Cart Updated',
-        message: 'Item has been removed from your cart'
-      });
+      info('Removed');
     } else {
       updateQuantity(productId, newQuantity);
-      info('Quantity updated', {
-        title: 'Cart Updated',
-        message: `Quantity has been updated to ${newQuantity}`
-      });
+      info('Updated');
     }
   };
 
@@ -58,10 +52,7 @@ const Cart = () => {
     
     setTimeout(() => {
       removeFromCart(productId);
-      warning('Item removed', {
-        title: 'Cart Updated',
-        message: `${productName} has been removed from your cart`
-      });
+      warning('Removed');
       setRemovingItems(prev => {
         const newSet = new Set(prev);
         newSet.delete(productId);
@@ -72,10 +63,7 @@ const Cart = () => {
 
   const handleClearCart = () => {
     clearCart();
-    warning('Cart cleared', {
-      title: 'Cart Empty',
-      message: 'All items have been removed from your cart'
-    });
+    warning('Cart cleared');
   };
 
   const formatPrice = (price) => {
@@ -112,7 +100,7 @@ const Cart = () => {
           className="pt-24 md:pt-32 pb-12 md:pb-20"
         >
           <div className="max-w-4xl mx-auto px-6 md:px-8 lg:px-12 text-center">
-            <h1 className={`text-3xl md:text-4xl lg:text-5xl font-light text-black mb-6 md:mb-8 transition-all duration-700 ${
+            <h1 className={`text-2xl md:text-4xl font-light text-black mb-6 md:mb-8 transition-all duration-700 ${
               visibleSections.has('empty-cart') ? 'animate-fade-up opacity-100' : 'opacity-0 translate-y-8'
             }`}>Your Cart</h1>
             <div className={`py-8 md:py-16 transition-all duration-700 delay-200 ${
@@ -121,11 +109,11 @@ const Cart = () => {
               <svg className="w-16 h-16 md:w-24 md:h-24 mx-auto mb-4 md:mb-6 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m1.6 8L5 3H3m4 10v6a1 1 0 001 1h10a1 1 0 001-1v-6m-8 6V9a1 1 0 011-1h6a1 1 0 011 1v8" />
               </svg>
-              <h2 className="text-xl md:text-2xl font-light text-gray-600 mb-3 md:mb-4">Your cart is empty</h2>
+              <h2 className="text-lg md:text-xl font-light text-gray-600 mb-3 md:mb-4">Your cart is empty</h2>
               <p className="text-sm md:text-base text-gray-500 mb-6 md:mb-8">Add some products to get started</p>
               <Link
                 to="/shop"
-                className="inline-block bg-black text-white px-6 md:px-8 py-2.5 md:py-3 font-medium hover:bg-gray-800 transition-colors duration-200 rounded-lg text-sm md:text-base"
+                className="inline-block bg-black text-white px-6 md:px-8 py-2.5 md:py-3 font-medium hover:bg-gray-800 transition-colors duration-200 rounded-lg text-base"
               >
                 Continue Shopping
               </Link>
@@ -148,7 +136,7 @@ const Cart = () => {
         className="pt-24 md:pt-32 pb-12 md:pb-20"
       >
         <div className="max-w-6xl mx-auto px-6 md:px-8 lg:px-12">
-          <h1 className={`text-3xl md:text-4xl lg:text-5xl font-light text-black mb-8 md:mb-12 text-center transition-all duration-700 ${
+          <h1 className={`text-2xl md:text-4xl font-light text-black mb-8 md:mb-12 text-center transition-all duration-700 ${
             visibleSections.has('cart-main') ? 'animate-fade-up opacity-100' : 'opacity-0 translate-y-8'
           }`}>Your Cart</h1>
           
@@ -193,14 +181,14 @@ const Cart = () => {
                       <div className="flex items-center justify-center space-x-3">
                         <button
                           onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
-                          className="w-8 h-8 border border-gray-300 rounded flex items-center justify-center hover:bg-gray-100 hover:scale-105 active:scale-95 transition-all duration-150 text-sm"
+                          className="w-8 h-8 border border-gray-300 rounded flex items-center justify-center text-gray-600 hover:bg-gray-100 hover:scale-105 active:scale-95 transition-all duration-150 text-sm"
                         >
                           −
                         </button>
-                        <span className="w-8 text-center font-medium text-sm md:text-base transition-all duration-200">{item.quantity}</span>
+                        <span className="w-8 text-center font-medium text-base transition-all duration-200">{item.quantity}</span>
                         <button
                           onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
-                          className="w-8 h-8 border border-gray-300 rounded flex items-center justify-center hover:bg-gray-100 hover:scale-105 active:scale-95 transition-all duration-150 text-sm"
+                          className="w-8 h-8 border border-gray-300 rounded flex items-center justify-center text-gray-600 hover:bg-gray-100 hover:scale-105 active:scale-95 transition-all duration-150 text-sm"
                         >
                           +
                         </button>
@@ -208,7 +196,7 @@ const Cart = () => {
 
                       {/* Item Total */}
                       <div className="text-center sm:text-right">
-                        <p className="text-base md:text-lg font-medium text-black">
+                        <p className="text-base md:text-lg font-semibold text-black">
                           £{(parseFloat(formatPrice(item.price)) * item.quantity).toFixed(2)}
                         </p>
                       </div>
@@ -232,7 +220,7 @@ const Cart = () => {
               <div className="mt-6 md:mt-8 text-center sm:text-left">
                 <button
                   onClick={handleClearCart}
-                  className="text-gray-500 hover:text-red-500 transition-colors text-sm md:text-base"
+                  className="text-gray-600 hover:text-red-500 transition-colors text-sm md:text-base"
                 >
                   Clear all items
                 </button>

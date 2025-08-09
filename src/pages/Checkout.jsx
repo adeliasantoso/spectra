@@ -148,15 +148,9 @@ const Checkout = () => {
   const handleNextStep = () => {
     if (validateStep(currentStep)) {
       setCurrentStep(prev => prev + 1);
-      info('Proceeding to next step', {
-        title: 'Step Progress',
-        message: `Moving to step ${currentStep + 1} of 3`
-      });
+      info('Next step');
     } else {
-      error('Information required', {
-        title: 'Form Incomplete',
-        message: 'Please complete all required fields to continue'
-      });
+      error('Fill required fields');
     }
   };
 
@@ -178,18 +172,12 @@ const Checkout = () => {
 
   const handleSubmitOrder = async () => {
     if (!validateStep(2)) {
-      error('Information required', {
-        title: 'Form Incomplete',
-        message: 'Please complete all required fields to continue'
-      });
+      error('Fill required fields');
       return;
     }
 
     setIsProcessing(true);
-    info('Processing payment', {
-      title: 'Please Wait',
-      message: 'Your payment is being processed securely'
-    });
+    info('Processing payment...');
 
     try {
       const paymentSuccess = await simulatePaymentProcessing();
@@ -228,26 +216,17 @@ const Checkout = () => {
         
         // Clear cart and redirect to success page
         clearCart();
-        success('Payment completed successfully', {
-          title: 'Order Confirmed',
-          message: 'Thank you for your purchase. Redirecting to confirmation...'
-        });
+        success('Order confirmed');
         
         setTimeout(() => {
           navigate('/order-success');
         }, 1500);
         
       } else {
-        error('Payment could not be processed', {
-          title: 'Payment Failed',
-          message: 'Please verify your card details and try again'
-        });
+        error('Payment failed');
       }
     } catch (err) {
-      error('Processing error occurred', {
-        title: 'Payment Error',
-        message: 'An unexpected error occurred. Please try again'
-      });
+      error('Payment error');
     } finally {
       setIsProcessing(false);
     }
@@ -265,7 +244,7 @@ const Checkout = () => {
             step === currentStep 
               ? 'bg-black text-white border-black' 
               : step < currentStep 
-                ? 'bg-green-500 text-white border-green-500'
+                ? 'bg-green-600 text-white border-green-600'
                 : 'bg-white text-gray-400 border-gray-300'
           }`}>
             {step < currentStep ? (
@@ -278,7 +257,7 @@ const Checkout = () => {
           </div>
           {index < 2 && (
             <div className={`w-12 h-0.5 mx-2 transition-all duration-300 ${
-              step < currentStep ? 'bg-green-500' : 'bg-gray-300'
+              step < currentStep ? 'bg-green-600' : 'bg-gray-300'
             }`} />
           )}
         </React.Fragment>
@@ -718,7 +697,7 @@ const Checkout = () => {
                     {currentStep > 1 && (
                       <button
                         onClick={handlePreviousStep}
-                        className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                        className="px-6 py-3 border-2 border-gray-300 text-gray-700 rounded-lg hover:border-gray-400 hover:bg-gray-50 transition-colors"
                       >
                         Previous
                       </button>

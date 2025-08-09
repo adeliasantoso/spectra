@@ -42,7 +42,7 @@ const Navigation = memo(() => {
           <div className="flex-shrink-0">
             <Link
               to="/"
-              className="text-white text-xl md:text-2xl font-bold tracking-wider hover:text-gray-300 transition-colors duration-200"
+              className="text-white text-lg md:text-xl font-semibold tracking-wider hover:text-gray-300 transition-colors duration-200"
             >
               SPECTRA
             </Link>
@@ -52,19 +52,19 @@ const Navigation = memo(() => {
           <div className="hidden md:flex items-center space-x-8 ml-auto">
             <Link
               to="/shop"
-              className="text-white hover:text-gray-300 transition-colors duration-200 font-medium"
+              className="text-white hover:text-gray-300 transition-colors duration-200 font-medium text-base"
             >
               Shop
             </Link>
             <Link
               to="/about"
-              className="text-white hover:text-gray-300 transition-colors duration-200 font-medium"
+              className="text-white hover:text-gray-300 transition-colors duration-200 font-medium text-base"
             >
               About
             </Link>
             <Link
               to="/contact"
-              className="text-white hover:text-gray-300 transition-colors duration-200 font-medium"
+              className="text-white hover:text-gray-300 transition-colors duration-200 font-medium text-base"
             >
               Contact
             </Link>
@@ -72,7 +72,7 @@ const Navigation = memo(() => {
             {/* CTA Button */}
             <Link 
               to="/product/spectra-vision" 
-              className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-1.5 rounded-full font-medium hover:from-blue-600 hover:to-purple-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl ml-4"
+              className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-1.5 rounded-full font-medium hover:from-blue-600 hover:to-purple-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl ml-4 text-sm"
             >
               Buy Now
             </Link>
@@ -107,21 +107,21 @@ const Navigation = memo(() => {
             <div className="flex flex-col space-y-3 pt-4">
               <Link
                 to="/shop"
-                className="text-white hover:text-gray-300 transition-colors duration-200 font-medium py-2 px-2 rounded hover:bg-white/10"
+                className="text-white hover:text-gray-300 transition-colors duration-200 font-medium py-2 px-2 rounded hover:bg-white/10 text-base"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Shop
               </Link>
               <Link
                 to="/about"
-                className="text-white hover:text-gray-300 transition-colors duration-200 font-medium py-2 px-2 rounded hover:bg-white/10"
+                className="text-white hover:text-gray-300 transition-colors duration-200 font-medium py-2 px-2 rounded hover:bg-white/10 text-base"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 About
               </Link>
               <Link
                 to="/contact"
-                className="text-white hover:text-gray-300 transition-colors duration-200 font-medium py-2 px-2 rounded hover:bg-white/10"
+                className="text-white hover:text-gray-300 transition-colors duration-200 font-medium py-2 px-2 rounded hover:bg-white/10 text-base"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Contact
@@ -130,7 +130,7 @@ const Navigation = memo(() => {
               {/* Mobile CTA Button */}
               <Link 
                 to="/product/spectra-vision" 
-                className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-3 rounded-full font-medium hover:from-blue-600 hover:to-purple-700 transition-all duration-300 text-center mt-4 shadow-lg"
+                className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-3 rounded-full font-medium hover:from-blue-600 hover:to-purple-700 transition-all duration-300 text-center mt-4 shadow-lg text-base"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Buy Now

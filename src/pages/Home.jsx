@@ -138,9 +138,9 @@ const Home = React.memo(() => {
 
   // Spectra Vision product data for quick view
   const spectraProduct = {
-    id: 1,
+    id: 'spectra-vision',
     name: "Spectra Vision",
-    price: "£2,499",
+    price: 2499,
     image: spectraGlassesImage,
     description: "Revolutionary AR smart glasses that seamlessly blend into your routine and deliver helpful, personalized suggestions. Experience the future of wearable technology with advanced AI integration and stunning visual clarity."
   };
@@ -250,14 +250,14 @@ const Home = React.memo(() => {
         {/* Content */}
         <div className="relative z-30 flex items-end justify-center h-full pb-12 sm:pb-16 md:pb-16">
           <div className="text-center text-white px-4 sm:px-6 md:px-6 max-w-4xl mx-auto">
-            <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-light mb-4 md:mb-6 leading-tight relative z-40">
-              <div>
-                <span className="animate-word-1 inline-block">A</span>{' '}
-                <span className="animate-word-2 inline-block">world</span>{' '}
-                <span className="animate-word-3 inline-block">tailored</span>{' '}
-                <span className="animate-word-3 inline-block">to</span>
+            <h1 className="text-5xl md:text-7xl font-light mb-4 md:mb-6 leading-tight relative z-40">
+              <div className="mb-2">
+                <span className="animate-word-1 inline-block opacity-0">A</span>{' '}
+                <span className="animate-word-2 inline-block opacity-0">world</span>{' '}
+                <span className="animate-word-3 inline-block opacity-0">tailored</span>{' '}
+                <span className="animate-word-4 inline-block opacity-0">to</span>
               </div>
-              <div className="font-bold animate-fade-up-2 animate-subtle-glow -mt-1 sm:-mt-2 md:-mt-4">your mind</div>
+              <div className="font-bold text-6xl md:text-8xl -mt-2 md:-mt-4 animate-word-5 opacity-0">your mind</div>
             </h1>
           </div>
         </div>
@@ -283,9 +283,8 @@ const Home = React.memo(() => {
               priority={true}
             />
             <div className="absolute top-0 left-0 right-0 flex items-start justify-center pt-8 sm:pt-12 md:pt-16 px-4">
-              <h2 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-black drop-shadow-2xl text-center max-w-full">
-                <span className="block sm:inline">Introducing the new</span>
-                <span className="block sm:inline sm:ml-2">Spectra Vision</span>
+              <h2 className="text-3xl md:text-5xl font-bold text-black drop-shadow-2xl text-center max-w-full whitespace-nowrap">
+                Introducing the new Spectra Vision
               </h2>
             </div>
           </div>
@@ -331,13 +330,13 @@ const Home = React.memo(() => {
                 muted
                 loop
                 playsInline
-                className={`absolute inset-0 w-full h-full object-cover transition-all duration-1000 ease-out ${
+                className={`absolute inset-0 w-full h-full transition-all duration-1000 ease-out ${
                   index === activeVideoIndex 
                     ? 'opacity-100 scale-100 transform-gpu' 
                     : index < activeVideoIndex 
                       ? 'opacity-0 scale-95 -translate-x-full rotate-y-12' 
                       : 'opacity-0 scale-95 translate-x-full rotate-y-12'
-                }`}
+                } ${index === 1 ? 'object-cover' : 'object-cover'}`}
                 style={{
                   transform: index === activeVideoIndex 
                     ? `perspective(1000px) rotateY(0deg) rotateX(0deg) scale(1) translateZ(0px)`
@@ -345,7 +344,7 @@ const Home = React.memo(() => {
                       ? `perspective(1000px) rotateY(-15deg) rotateX(5deg) scale(0.95) translateZ(-100px) translateX(-100%)`
                       : `perspective(1000px) rotateY(15deg) rotateX(5deg) scale(0.95) translateZ(-100px) translateX(100%)`,
                   filter: index === activeVideoIndex ? 'brightness(1) blur(0px)' : 'brightness(0.7) blur(2px)',
-                  objectPosition: video.id === 2 ? 'center 15o%' : 'center center'
+                  objectPosition: index === 1 ? '50% 25%' : index === 2 ? '50% 35%' : 'center'
                 }}
               >
                 <source src={video.videoUrl} type="video/mp4" />
@@ -360,7 +359,7 @@ const Home = React.memo(() => {
               }}
             >
               <div className="text-center text-white px-4 sm:px-6 pb-2 sm:pb-3 md:pb-4 max-w-4xl mx-auto">
-                <h3 className={`text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold mb-2 sm:mb-4 leading-tight transition-all duration-700 ${
+                <h3 className={`text-2xl md:text-4xl font-semibold mb-2 sm:mb-4 leading-tight transition-all duration-700 ${
                   visibleSections.has('video-carousel') ? 'animate-text-stagger opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
                 }`}
                 style={{
@@ -484,14 +483,14 @@ const Home = React.memo(() => {
             <div className={`lg:col-span-2 space-y-6 md:space-y-8 order-1 lg:order-2 ${
               visibleSections.has('expand-universe') ? 'scroll-animate visible' : 'scroll-animate'
             }`}>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-gray-900 leading-tight">
+              <h2 className="text-3xl md:text-5xl font-light text-gray-900 leading-tight">
                 Expand your universe
               </h2>
               <div className="space-y-4 md:space-y-6">
-                <p className="text-base md:text-lg text-gray-600 leading-relaxed">
+                <p className="text-sm md:text-base text-gray-600 leading-relaxed">
                   Seamlessly integrated across all your platforms, Spectra builds tailored recommendations that reflect your unique preferences, even those you haven't yet put into words.
                 </p>
-                <p className="text-base md:text-lg text-gray-600 leading-relaxed">
+                <p className="text-sm md:text-base text-gray-600 leading-relaxed">
                   Whether you're searching for places to go, meals to try, videos to watch, or ways to stay productive, every suggestion is carefully customized to your needs.
                 </p>
               </div>
@@ -511,14 +510,14 @@ const Home = React.memo(() => {
             <div className={`lg:col-span-2 space-y-6 md:space-y-8 ${
               visibleSections.has('unlock-barriers') ? 'scroll-animate visible' : 'scroll-animate'
             }`}>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-gray-900 leading-tight">
+              <h2 className="text-3xl md:text-5xl font-light text-gray-900 leading-tight">
                 Unlock a life without barriers
               </h2>
               <div className="space-y-4 md:space-y-6">
-                <p className="text-base md:text-lg text-gray-600 leading-relaxed">
+                <p className="text-sm md:text-base text-gray-600 leading-relaxed">
                   Powered by our latest AI model, Spectra uses ambient insights to help you move beyond everyday limitations.
                 </p>
-                <p className="text-base md:text-lg text-gray-600 leading-relaxed">
+                <p className="text-sm md:text-base text-gray-600 leading-relaxed">
                   From navigating locations to assisting in everyday conversations, Spectra provides intuitive insights that keep you connected and in control.
                 </p>
               </div>
@@ -532,7 +531,7 @@ const Home = React.memo(() => {
                 muted
                 loop
                 playsInline
-                className="w-full h-auto aspect-video object-contain rounded-2xl bg-black"
+                className="w-full h-auto aspect-video object-cover object-bottom rounded-2xl bg-black"
               >
                 <source src="https://ik.imagekit.io/ohyemuffin/asset/video/Watch_Tracks_Active_Lifestyle.mp4?updatedAt=1754214349971" type="video/mp4" />
                 <div className="w-full h-full bg-gray-900 rounded-2xl"></div>
@@ -604,12 +603,12 @@ const Home = React.memo(() => {
             </button>
             <div className="absolute inset-0 bg-black bg-opacity-20 flex items-end justify-center">
               <div className="text-center text-white px-4 pb-8 md:pb-12 lg:pb-16">
-                <h3 className={`text-2xl md:text-4xl lg:text-5xl font-bold mb-4 ${
+                <h3 className={`text-2xl md:text-4xl font-bold mb-4 ${
                   visibleSections.has('smart-recognition') ? 'animate-caption-reveal stagger-1' : ''
                 }`}>
                   Smart Recognition
                 </h3>
-                <p className={`text-lg md:text-xl max-w-2xl mx-auto ${
+                <p className={`text-base md:text-lg max-w-2xl mx-auto ${
                   visibleSections.has('smart-recognition') ? 'animate-caption-reveal stagger-2' : ''
                 }`}>
                   See how Spectra identifies and adapts to your environment in real-time
@@ -662,14 +661,14 @@ const Home = React.memo(() => {
             <div className={`lg:col-span-2 space-y-6 md:space-y-8 order-1 lg:order-2 ${
               visibleSections.has('cancel-noise') ? 'scroll-animate visible' : 'scroll-animate'
             }`}>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-gray-900 leading-tight">
+              <h2 className="text-3xl md:text-5xl font-light text-gray-900 leading-tight">
                 Cancel the unwanted noise
               </h2>
               <div className="space-y-4 md:space-y-6">
-                <p className="text-base md:text-lg text-gray-600 leading-relaxed">
+                <p className="text-sm md:text-base text-gray-600 leading-relaxed">
                   Spectra cuts through the noise and shows you only what matters to you, even when it comes to ads and product suggestions.
                 </p>
-                <p className="text-base md:text-lg text-gray-600 leading-relaxed">
+                <p className="text-sm md:text-base text-gray-600 leading-relaxed">
                   While using Spectra, you'll only hear from the brands you care about and see products that serve your needs. No intrusive content. Just relevance, always.
                 </p>
               </div>
@@ -683,14 +682,14 @@ const Home = React.memo(() => {
         <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-8 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 md:gap-20 items-center">
             <div className="lg:col-span-2 space-y-6 md:space-y-8">
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-gray-900 leading-tight">
+              <h2 className="text-3xl md:text-5xl font-light text-gray-900 leading-tight">
                 See through your thoughts
               </h2>
               <div className="space-y-4 md:space-y-6">
-                <p className="text-base md:text-lg text-gray-600 leading-relaxed">
+                <p className="text-sm md:text-base text-gray-600 leading-relaxed">
                   Spectra anticipates your needs by spotting patterns in your real-time activity.
                 </p>
-                <p className="text-base md:text-lg text-gray-600 leading-relaxed">
+                <p className="text-sm md:text-base text-gray-600 leading-relaxed">
                   As your trusted assistant, it creates hyper-personalized suggestions made just for you. Whatever you need—an app, product, or service—it's always just one tap away.
                 </p>
               </div>
@@ -764,7 +763,7 @@ const Home = React.memo(() => {
             </button>
             <div className="absolute inset-0 bg-black bg-opacity-20 flex items-end justify-center">
               <div className="text-center text-white px-4 pb-8 md:pb-12 lg:pb-16">
-                <h3 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-4">
+                <h3 className="text-2xl md:text-4xl font-bold mb-4">
                   Intuitive Insights
                 </h3>
                 <p className="text-lg md:text-xl max-w-2xl mx-auto">
@@ -800,7 +799,7 @@ const Home = React.memo(() => {
               </div>
             </div>
             <div className="lg:col-span-2 space-y-8 md:space-y-12 order-1 lg:order-2 text-center lg:text-left">
-              <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 leading-tight">
+              <h2 className="text-4xl md:text-6xl font-bold text-gray-900 leading-tight">
                 Experience
                 <br />
                 the future,
@@ -827,17 +826,17 @@ const Home = React.memo(() => {
         <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-gray-75/80 to-transparent"></div>
         <div className="relative z-10 max-w-3xl mx-auto px-6 md:px-8 lg:px-12 text-center">
           <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-12 md:p-16 lg:p-20 shadow-xl">
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-12 md:mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-12 md:mb-16">
               About us
             </h2>
             <div className="space-y-4 md:space-y-6 mb-12 md:mb-20 max-w-4xl mx-auto">
-              <p className="text-lg md:text-xl text-gray-600 leading-loose">
+              <p className="text-base md:text-lg text-gray-600 leading-loose">
                 At the forefront of modern innovation, we design technology that puts people first.
               </p>
-              <p className="text-lg md:text-xl text-gray-600 leading-loose">
+              <p className="text-base md:text-lg text-gray-600 leading-loose">
                 Combining intelligence with intention, we believe technology should adapt to your needs, not the other way around.
               </p>
-              <p className="text-lg md:text-xl text-gray-600 leading-loose">
+              <p className="text-base md:text-lg text-gray-600 leading-loose">
                 Our vision is grounded in building a more intuitive future, one device at a time.
               </p>
             </div>
@@ -857,7 +856,7 @@ const Home = React.memo(() => {
         <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-gray-75/80 to-transparent"></div>
         <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-white/90 to-transparent"></div>
         <div className="relative z-10 max-w-full mx-auto px-6 md:px-8 lg:px-12">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 text-center mb-12 md:mb-20">
+          <h2 className="text-3xl md:text-5xl font-bold text-gray-900 text-center mb-12 md:mb-20">
             Follow us on social
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">

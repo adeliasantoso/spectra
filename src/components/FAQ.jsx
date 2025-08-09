@@ -62,7 +62,7 @@ const FAQ = React.memo(() => {
       <div className="relative z-10">
       <div className="max-w-4xl mx-auto px-6 md:px-8 lg:px-12">
         <div className="text-center mb-12 md:mb-16">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-black">
+          <h2 className="text-3xl md:text-5xl font-bold text-black">
             <span className="font-bold">Frequently Asked Questions</span>
           </h2>
         </div>
@@ -74,7 +74,7 @@ const FAQ = React.memo(() => {
                 onClick={() => toggleItem(index)}
                 className="w-full text-left flex justify-between items-center group"
               >
-                <span className="text-lg md:text-xl lg:text-2xl font-medium text-black pr-4 group-hover:text-gray-700 transition-colors duration-200">
+                <span className="text-base md:text-lg font-medium text-black pr-4 group-hover:text-gray-700 transition-colors duration-200">
                   {item.question}
                 </span>
                 <div className="flex-shrink-0">
@@ -98,7 +98,7 @@ const FAQ = React.memo(() => {
               </button>
               {openItem === index && (
                 <div className="mt-4 animate-fadeIn">
-                  <p className="text-base md:text-lg text-gray-700 leading-relaxed">
+                  <p className="text-sm md:text-base text-gray-700 leading-relaxed">
                     {item.answer}
                   </p>
                 </div>

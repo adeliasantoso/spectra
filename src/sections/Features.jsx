@@ -67,7 +67,7 @@ const Features = () => {
           return (
             <motion.div 
               key={index} 
-              className={`${feature.bgColor} py-24 px-6 relative overflow-hidden backdrop-blur-sm`}
+              className={`${feature.bgColor} py-16 lg:py-20 px-6 relative overflow-hidden backdrop-blur-sm`}
               style={{ y: yOffset }}
             >
               {/* XR-style background elements */}
@@ -101,7 +101,7 @@ const Features = () => {
               />
               
               <div className="max-w-7xl mx-auto relative z-10">
-                <div className={`grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center ${
+                <div className={`grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center ${
                   feature.layout === 'right' ? 'lg:grid-flow-col-dense' : ''
                 }`}>
                   {/* XR Image Card */}
@@ -158,7 +158,7 @@ const Features = () => {
                   >
                     <motion.div className="space-y-6">
                       <motion.h3 
-                        className={`text-4xl md:text-5xl lg:text-6xl font-light ${feature.textColor} mb-8 leading-tight`}
+                        className={`text-5xl md:text-6xl lg:text-7xl font-light ${feature.textColor} mb-8 leading-tight`}
                         whileInView={{ 
                           backgroundImage: [
                             'linear-gradient(90deg, #ffffff, #ffffff)',

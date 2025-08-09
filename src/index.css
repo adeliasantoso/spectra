@@ -53,11 +53,6 @@ img, video {
   will-change: transform, opacity;
 }
 
-/* Smooth scrolling */
-html {
-  scroll-behavior: smooth;
-}
-
 /* Optimize animations */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -196,19 +191,34 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Hide all scrollbars completely */
+/* Custom scrollbar styling */
 ::-webkit-scrollbar {
-  display: none;
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 
 /* For Firefox */
 html {
-  scrollbar-width: none;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f1f1f1;
 }
 
 /* For Internet Explorer and Edge */
 body {
-  -ms-overflow-style: none;
+  -ms-overflow-style: auto;
 }
 
 /* Selection color */
@@ -881,6 +891,16 @@ html {
   animation: gentle-fade-up 0.4s ease-out 0.8s forwards;
 }
 
+.animate-word-4 {
+  opacity: 0;
+  animation: gentle-fade-up 0.4s ease-out 1.1s forwards;
+}
+
+.animate-word-5 {
+  opacity: 0;
+  animation: gentle-fade-up 0.8s ease-out 1.4s forwards;
+}
+
 .animate-fade-up-2 {
   opacity: 0;
   animation: gentle-fade-up 1.2s ease-out 1.0s forwards;
@@ -1097,4 +1117,14 @@ html {
 
 .animate-scale-in {
   animation: modal-scale-in 0.5s ease-out forwards;
+}
+
+/* Hide scrollbar for product detail tabs only */
+.product-tabs-container {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.product-tabs-container::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }

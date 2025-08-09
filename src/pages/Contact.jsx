@@ -61,10 +61,7 @@ const Contact = () => {
       console.log('Form submitted:', formData);
       
       // Show success message
-      success('Message sent successfully', {
-        title: 'Thank You',
-        message: 'We have received your message and will get back to you soon'
-      });
+      success('Message sent');
       
       // Clear form
       setFormData({
@@ -92,7 +89,7 @@ const Contact = () => {
       >
         <div className="max-w-4xl mx-auto px-6 md:px-8 lg:px-12">
           <div className="text-center mb-12 md:mb-16">
-            <h1 className={`text-4xl sm:text-5xl md:text-6xl font-medium text-black mb-8 md:mb-12 transition-all duration-700 ${
+            <h1 className={`text-4xl md:text-6xl font-semibold text-black mb-8 md:mb-12 transition-all duration-700 ${
               visibleSections.has('contact-hero') ? 'animate-fade-up opacity-100' : 'opacity-0 translate-y-8'
             }`}>
               Connect with us
@@ -100,10 +97,10 @@ const Contact = () => {
             <div className={`max-w-2xl mx-auto space-y-4 md:space-y-6 transition-all duration-700 delay-200 ${
               visibleSections.has('contact-hero') ? 'animate-fade-up opacity-100' : 'opacity-0 translate-y-8'
             }`}>
-              <p className="text-base md:text-lg text-gray-700 leading-relaxed">
+              <p className="text-sm md:text-base text-gray-700 leading-relaxed">
                 Connect with our team to explore how Spectra's innovations can support tailored solutions for you or your organization. We also welcome inquiries about potential collaborations or career opportunities.
               </p>
-              <p className="text-base md:text-lg text-gray-700 leading-relaxed">
+              <p className="text-sm md:text-base text-gray-700 leading-relaxed">
                 For general inquiries, our <span onClick={() => { navigate('/'); setTimeout(() => { const faqSection = document.getElementById('faq'); if (faqSection) faqSection.scrollIntoView({ behavior: 'smooth' }); }, 500); }} className="text-blue-600 hover:text-blue-800 underline cursor-pointer">FAQ section</span> offers detailed answers to the most common questions and is a good place to begin.
               </p>
             </div>
@@ -121,11 +118,11 @@ const Contact = () => {
               {/* Name Section */}
               <div>
                 <div className="mb-2 md:mb-3">
-                  <span className="text-base md:text-lg font-medium text-gray-900">Name</span>
+                  <span className="text-base md:text-lg font-semibold text-gray-900">Name</span>
                 </div>
                 <div className="space-y-3 md:space-y-4">
                   <div>
-                    <label htmlFor="firstName" className="block text-sm md:text-base text-gray-600 mb-1 md:mb-2">
+                    <label htmlFor="firstName" className="block text-sm text-gray-600 mb-1 md:mb-2">
                       First Name
                     </label>
                     <input
@@ -134,7 +131,7 @@ const Contact = () => {
                       name="firstName"
                       value={formData.firstName}
                       onChange={handleInputChange}
-                      className="w-full px-3 md:px-4 py-2 md:py-3 border border-gray-400 rounded-full bg-white focus:outline-none focus:border-gray-600 transition-colors text-sm md:text-base"
+                      className="w-full px-3 md:px-4 py-2 md:py-3 border border-gray-400 rounded-full bg-white focus:outline-none focus:border-gray-600 transition-colors text-base"
                       required
                     />
                   </div>
@@ -148,7 +145,7 @@ const Contact = () => {
                       name="lastName"
                       value={formData.lastName}
                       onChange={handleInputChange}
-                      className="w-full px-3 md:px-4 py-2 md:py-3 border border-gray-400 rounded-full bg-white focus:outline-none focus:border-gray-600 transition-colors text-sm md:text-base"
+                      className="w-full px-3 md:px-4 py-2 md:py-3 border border-gray-400 rounded-full bg-white focus:outline-none focus:border-gray-600 transition-colors text-base"
                       required
                     />
                   </div>
@@ -158,7 +155,7 @@ const Contact = () => {
               {/* Email */}
               <div>
                 <div className="mb-2 md:mb-3">
-                  <span className="text-base md:text-lg font-medium text-gray-900">Email</span>
+                  <span className="text-base md:text-lg font-semibold text-gray-900">Email</span>
                 </div>
                 <input
                   type="email"
@@ -174,7 +171,7 @@ const Contact = () => {
               {/* Message */}
               <div>
                 <div className="mb-2 md:mb-3">
-                  <span className="text-base md:text-lg font-medium text-gray-900">Message</span>
+                  <span className="text-base md:text-lg font-semibold text-gray-900">Message</span>
                 </div>
                 <textarea
                   id="message"

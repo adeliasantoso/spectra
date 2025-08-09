@@ -36,15 +36,15 @@ const InteractiveButton = ({
   const getVariantClasses = () => {
     switch (variant) {
       case 'primary':
-        return 'bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700';
+        return 'bg-black text-white hover:bg-gray-800';
       case 'secondary':
         return 'bg-gray-200 text-gray-800 hover:bg-gray-300';
       case 'outline':
-        return 'border-2 border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white';
+        return 'border-2 border-black text-black hover:bg-black hover:text-white';
       case 'ghost':
         return 'text-gray-600 hover:bg-gray-100';
       default:
-        return 'bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700';
+        return 'bg-black text-white hover:bg-gray-800';
     }
   };
 

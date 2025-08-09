@@ -229,15 +229,9 @@ const ProductDetail = () => {
         quantity: quantity
       });
 
-      success('Product added successfully', {
-        title: 'Added to Cart',
-        message: `${product.name} in ${selectedColor} has been added to your cart`
-      });
+      success('Added to cart');
     } catch (err) {
-      error('Could not add to cart', {
-        title: 'Add to Cart Failed',
-        message: 'An error occurred while adding this item. Please try again'
-      });
+      error('Failed to add');
     } finally {
       setIsAddingToCart(false);
     }
@@ -256,17 +250,9 @@ const ProductDetail = () => {
     const wasAdded = toggleWishlist(product);
     
     if (wasAdded) {
-      success('Added to wishlist', {
-        title: 'Wishlist Updated',
-        message: 'This item has been saved to your wishlist',
-        duration: 3000
-      });
+      success('Wishlist saved');
     } else {
-      info('Removed from wishlist', {
-        title: 'Wishlist Updated',
-        message: 'This item has been removed from your wishlist',
-        duration: 2000
-      });
+      info('Wishlist removed');
     }
 
     // Reset animation
@@ -334,15 +320,15 @@ const ProductDetail = () => {
           }`}>
             {/* Header */}
             <div>
-              <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-2">{product.name}</h1>
-              <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-4">{product.tagline}</p>
+              <h1 className="text-2xl md:text-4xl font-semibold text-gray-900 mb-3">{product.name}</h1>
+              <p className="text-base md:text-lg text-gray-600 mb-6">{product.tagline}</p>
               
 
               {/* Price */}
-              <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-4 mb-6">
-                <span className="text-2xl md:text-3xl font-bold text-gray-900">${product.price}</span>
-                <span className="text-lg md:text-xl text-gray-500 line-through">${product.originalPrice}</span>
-                <span className="bg-red-100 text-red-800 text-xs md:text-sm font-medium px-2.5 py-0.5 rounded w-fit">
+              <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-4 mb-8">
+                <span className="text-xl md:text-2xl font-semibold text-gray-900">${product.price}</span>
+                <span className="text-base md:text-lg text-gray-500 line-through">${product.originalPrice}</span>
+                <span className="bg-red-100 text-red-800 text-sm font-medium px-2.5 py-0.5 rounded w-fit">
                   Save ${product.originalPrice - product.price}
                 </span>
               </div>
@@ -350,7 +336,7 @@ const ProductDetail = () => {
 
             {/* Color Selection */}
             <div>
-              <h3 className="text-lg font-semibold mb-3">Color</h3>
+              <h3 className="text-base md:text-lg font-semibold mb-3">Color</h3>
               <div className="flex space-x-3">
                 {product.colors.map((color) => (
                   <button
@@ -358,8 +344,8 @@ const ProductDetail = () => {
                     onClick={() => handleColorChange(color)}
                     className={`px-4 py-2 rounded-lg font-medium transition-all ${
                       selectedColor === color 
-                        ? 'bg-blue-500 text-white' 
-                        : 'bg-gray-100 hover:bg-gray-200'
+                        ? 'bg-black text-white' 
+                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                     }`}
                   >
                     {color}
@@ -370,33 +356,33 @@ const ProductDetail = () => {
 
             {/* Quantity */}
             <div>
-              <h3 className="text-lg font-semibold mb-3">Quantity</h3>
+              <h3 className="text-base md:text-lg font-semibold mb-3">Quantity</h3>
               <div className="flex items-center space-x-3">
                 <button
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center hover:bg-gray-200 hover:scale-105 active:scale-95 transition-all duration-150"
+                  className="w-10 h-10 rounded-lg bg-gray-100 text-gray-600 flex items-center justify-center hover:bg-gray-200 hover:scale-105 active:scale-95 transition-all duration-150"
                 >
                   -
                 </button>
-                <span className="text-lg font-semibold w-12 text-center transition-all duration-200">{quantity}</span>
+                <span className="text-base md:text-lg font-semibold w-12 text-center transition-all duration-200">{quantity}</span>
                 <button
                   onClick={() => setQuantity(quantity + 1)}
-                  className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center hover:bg-gray-200 hover:scale-105 active:scale-95 transition-all duration-150"
+                  className="w-10 h-10 rounded-lg bg-gray-100 text-gray-600 flex items-center justify-center hover:bg-gray-200 hover:scale-105 active:scale-95 transition-all duration-150"
                 >
                   +
                 </button>
               </div>
             </div>
 
-            {/* Add to Cart */}
-            <div className="flex flex-col space-y-3">
+            {/* Add to Cart & Wishlist */}
+            <div className="flex space-x-3">
               <button
                 onClick={handleAddToCart}
                 disabled={isAddingToCart}
-                className={`w-full py-3 md:py-4 px-4 sm:px-6 md:px-8 rounded-lg font-semibold transition-all duration-200 text-sm sm:text-base md:text-base ${
+                className={`flex-1 py-3 md:py-4 px-4 sm:px-6 md:px-8 rounded-lg font-medium transition-all duration-200 text-base ${
                   isAddingToCart 
                     ? 'bg-gray-400 text-white cursor-not-allowed' 
-                    : 'bg-blue-600 text-white hover:bg-blue-700 hover:scale-105 active:scale-95 hover:shadow-lg'
+                    : 'bg-black text-white hover:bg-gray-800 hover:scale-105 active:scale-95 hover:shadow-lg'
                 }`}
               >
                 {isAddingToCart ? (
@@ -413,13 +399,13 @@ const ProductDetail = () => {
               </button>
               <button 
                 onClick={handleWishlistToggle}
-                className={`px-4 sm:px-6 md:px-8 py-3 md:py-4 rounded-lg font-semibold transition-all text-base sm:text-lg md:text-xl w-full group relative overflow-hidden ${
+                className={`w-12 h-12 md:w-14 md:h-14 rounded-lg font-semibold transition-all group relative overflow-hidden flex items-center justify-center ${
                   isInWishlist(product.id) 
                     ? 'bg-red-50 text-red-500 hover:bg-red-100' 
-                    : 'bg-gray-100 hover:bg-gray-200 hover:text-red-500'
+                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-red-500'
                 } ${isHeartAnimating ? 'animate-pulse scale-110' : 'hover:scale-105'}`}
               >
-                <span className={`transition-all duration-300 ${isHeartAnimating ? 'animate-bounce' : ''}`}>
+                <span className={`text-lg transition-all duration-300 ${isHeartAnimating ? 'animate-bounce' : ''}`}>
                   {isInWishlist(product.id) ? '❤️' : '🤍'}
                 </span>
                 
@@ -433,17 +419,17 @@ const ProductDetail = () => {
             {/* Stock Status */}
             <div className="flex items-center space-x-2">
               <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-              <span className="text-lg text-green-600 font-medium">In Stock - Ships in 1-2 business days</span>
+              <span className="text-sm md:text-base text-green-600 font-medium">In Stock - Ships in 1-2 business days</span>
             </div>
 
             {/* Key Features */}
             <div className="bg-blue-50 rounded-lg p-6">
-              <h3 className="text-xl md:text-2xl font-semibold mb-4">Key Features</h3>
+              <h3 className="text-lg md:text-xl font-semibold mb-4">Key Features</h3>
               <ul className="space-y-3">
                 {product.features.slice(0, 3).map((feature, index) => (
                   <li key={index} className="flex items-start space-x-3">
-                    <span className="text-blue-500 mt-1 text-lg">✓</span>
-                    <span className="text-base md:text-lg">{feature}</span>
+                    <span className="text-blue-500 mt-1 text-base">✓</span>
+                    <span className="text-sm md:text-base">{feature}</span>
                   </li>
                 ))}
               </ul>
@@ -453,33 +439,33 @@ const ProductDetail = () => {
 
         {/* Sticky Navigation with Scroll Spy */}
         <div className="mt-12 sm:mt-16 sticky top-16 sm:top-20 z-30 bg-white/95 backdrop-blur-sm py-4 sm:py-6 mb-12 sm:mb-16">
-          <div className="flex justify-center space-x-2 sm:space-x-4 md:space-x-8 px-4 overflow-x-auto">
+          <div className="flex justify-center space-x-2 sm:space-x-4 md:space-x-8 px-4 overflow-x-auto product-tabs-container">
             <button
               onClick={() => scrollToSection(descriptionRef, 'description')}
-              className={`px-4 sm:px-6 md:px-8 py-2 sm:py-3 rounded-full font-semibold text-sm sm:text-base md:text-lg transition-all duration-300 whitespace-nowrap ${
+              className={`px-4 sm:px-6 md:px-8 py-2 sm:py-3 rounded-full font-medium text-sm md:text-base transition-all duration-300 whitespace-nowrap ${
                 activeSection === 'description'
-                  ? 'bg-blue-600 text-white shadow-lg scale-105'
-                  : 'text-gray-600 hover:text-blue-600 hover:bg-blue-50'
+                  ? 'bg-black text-white shadow-lg scale-105'
+                  : 'text-gray-600 hover:text-black hover:bg-gray-100'
               }`}
             >
               Description
             </button>
             <button
               onClick={() => scrollToSection(specificationsRef, 'specifications')}
-              className={`px-4 sm:px-6 md:px-8 py-2 sm:py-3 rounded-full font-semibold text-sm sm:text-base md:text-lg transition-all duration-300 whitespace-nowrap ${
+              className={`px-4 sm:px-6 md:px-8 py-2 sm:py-3 rounded-full font-medium text-sm md:text-base transition-all duration-300 whitespace-nowrap ${
                 activeSection === 'specifications'
-                  ? 'bg-blue-600 text-white shadow-lg scale-105'
-                  : 'text-gray-600 hover:text-blue-600 hover:bg-blue-50'
+                  ? 'bg-black text-white shadow-lg scale-105'
+                  : 'text-gray-600 hover:text-black hover:bg-gray-100'
               }`}
             >
               Specifications
             </button>
             <button
               onClick={() => scrollToSection(reviewsRef, 'reviews')}
-              className={`px-4 sm:px-6 md:px-8 py-2 sm:py-3 rounded-full font-semibold text-sm sm:text-base md:text-lg transition-all duration-300 whitespace-nowrap ${
+              className={`px-4 sm:px-6 md:px-8 py-2 sm:py-3 rounded-full font-medium text-sm md:text-base transition-all duration-300 whitespace-nowrap ${
                 activeSection === 'reviews'
-                  ? 'bg-blue-600 text-white shadow-lg scale-105'
-                  : 'text-gray-600 hover:text-blue-600 hover:bg-blue-50'
+                  ? 'bg-black text-white shadow-lg scale-105'
+                  : 'text-gray-600 hover:text-black hover:bg-gray-100'
               }`}
             >
               Reviews
@@ -496,7 +482,7 @@ const ProductDetail = () => {
           }}
           className="scroll-mt-32"
         >
-          <h2 className={`text-3xl font-bold text-gray-900 mb-8 transition-all duration-700 ${
+          <h2 className={`text-xl md:text-2xl font-bold text-gray-900 mb-8 transition-all duration-700 ${
             visibleSections.has('description-section') ? 'animate-fade-up opacity-100' : 'opacity-100'
           }`}>Description</h2>
           <div className={`bg-white rounded-2xl shadow-sm p-8 transition-all duration-700 delay-200 ${
@@ -506,33 +492,33 @@ const ProductDetail = () => {
               <div className="space-y-8 text-gray-700 leading-loose tracking-wide">
                 {product.id === 'spectra-vision' ? (
                   <>
-                    <p className="text-lg md:text-xl font-medium">
+                    <p className="text-base md:text-lg font-medium">
                       <strong>Welcome to a new dimension of personalization.</strong>
                     </p>
                     
-                    <p className="text-lg md:text-xl">
+                    <p className="text-base md:text-lg">
                       Spectra Vision is a next-generation wearable that brings the power of intelligent personalization into your everyday life. Designed to adapt and respond in real time, it enhances your experience across work, leisure, and everything in between. By learning from your habits, Spectra Vision offers insights and suggestions tailored to your preferences and environment. Supported by our powerful AI model, it presents what matters, exactly when you need it. Expand your universe with Spectra Vision.
                     </p>
                     
                     {isDescriptionExpanded && (
                       <div key={expandAnimationKey} className="space-y-8 animate-fade-in">
-                        <p className="text-base md:text-lg">
+                        <p className="text-sm md:text-base">
                           Spectra Vision was born from a simple belief: technology should understand more than it serves. It pays attention to the rhythms of your life—what you linger on, what you skip, and turns that awareness into moment-to-moment relevance. More than just a device, it's an intelligent companion that learns from you to help make each day feel smoother and more intentional.
                         </p>
                         
-                        <p className="text-base md:text-lg">
+                        <p className="text-sm md:text-base">
                           Built with a sleek, lightweight design, Spectra integrates effortlessly into your routine, delivering personalized recommendations directly into your view. Whether you're navigating a busy day or winding down in the evening, Spectra acts as your reliable, ever-present assistant. It processes your preferences to generate thoughtful, timely suggestions—from recommending what to watch next to guiding you toward smarter purchases.
                         </p>
                         
-                        <p className="text-base md:text-lg">
+                        <p className="text-sm md:text-base">
                           Spectra doesn't require constant input to be effective. Drawing on ambient data and contextual insights, it learns what you love and when you need it most. This enables Spectra Vision to help you discover the right product, service, or spark of inspiration, often before you even think to ask. With intuitive controls and seamless connectivity, Spectra Vision offers a more intelligent way to engage with the world around you.
                         </p>
                         
-                        <p className="text-base md:text-lg">
+                        <p className="text-sm md:text-base">
                           Privacy and trust are foundational to Spectra's design. With on-device AI processing and secure encryption, all data is handled locally to avoid cloud syncing or third-party access. It stores only what's necessary and learns solely for your benefit. Spectra Vision is equipped with intelligence and care to enrich your world.
                         </p>
                         
-                        <p className="text-lg md:text-xl font-medium text-left pt-6">
+                        <p className="text-base md:text-lg font-medium text-left pt-6">
                           <em>A world tailored to your mind.</em>
                         </p>
                       </div>
@@ -544,7 +530,7 @@ const ProductDetail = () => {
                           setIsDescriptionExpanded(!isDescriptionExpanded);
                           setExpandAnimationKey(prev => prev + 1);
                         }}
-                        className="w-12 h-12 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-full font-medium transition-all hover:scale-105 flex items-center justify-center"
+                        className="w-12 h-12 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-full font-medium transition-all hover:scale-105 flex items-center justify-center"
                       >
                         <svg 
                           className={`w-6 h-6 transition-transform duration-300 ${isDescriptionExpanded ? 'rotate-180' : ''}`} 
@@ -559,34 +545,38 @@ const ProductDetail = () => {
                   </>
                 ) : product.id === 'spectra-buds' ? (
                   <>
-                    <p className="text-lg md:text-xl font-medium">
-                      <strong>Welcome to audio that learns you.</strong>
+                    <p className="text-base md:text-lg font-medium">
+                      <strong>Audio, attuned to you.</strong>
                     </p>
                     
-                    <p className="text-lg md:text-xl">
-                      Spectra Buds are next-generation wireless earbuds that bring intelligent personalization to your listening experience. Designed to adapt in real time, they enhance every moment of your day with perfectly tuned spatial audio that understands your environment and preferences. By learning from your listening habits, Spectra Buds deliver immersive soundscapes tailored to your unique audio fingerprint.
+                    <p className="text-base md:text-lg">
+                      Spectra Buds redefines your relationship with sound. These next-generation wireless earbuds adapt intelligently to your environment, delivering rich, spatial audio that shifts seamlessly with your day from focus to movement, from silence to cityscape.
                     </p>
                     
                     {isDescriptionExpanded && (
                       <div key={expandAnimationKey} className="space-y-8 animate-fade-in">
-                        <p className="text-base md:text-lg">
-                          Spectra Buds were born from a simple belief: audio should understand more than it plays. They pay attention to the rhythms of your listening—what makes you focus, what helps you relax, and turns that awareness into moment-to-moment audio perfection. More than just earbuds, they're intelligent companions that learn from your preferences to make each listening session feel effortlessly immersive.
+                        <p className="text-sm md:text-base">
+                          They don't just play what you love; they understand how you listen. By detecting ambient noise, your movement, and even your routine, Spectra Buds tailor their output in real time to suit the moment whether you're deep in work mode, on a call, or simply unwinding.
                         </p>
                         
-                        <p className="text-base md:text-lg">
-                          Built with cutting-edge adaptive technology, Spectra Buds seamlessly integrate into your daily routine, delivering personalized audio experiences directly to your ears. Whether you're navigating a busy commute or unwinding at home, they act as your reliable audio assistant, automatically adjusting noise cancellation, EQ settings, and spatial positioning based on your environment and mood.
+                        <p className="text-sm md:text-base">
+                          Spectra Buds were created from a vision that audio should respond, not interrupt. Rather than forcing you to adapt, they tune themselves around you letting sound become a natural extension of how you live.
                         </p>
                         
-                        <p className="text-base md:text-lg">
-                          Spectra Buds don't require constant adjustment to be effective. Drawing on ambient noise analysis and contextual listening patterns, they learn what sounds best for each moment. This enables them to cancel unwanted noise while amplifying what matters, often anticipating your audio needs before you even think to adjust them. With intuitive touch controls and seamless device handoffs, Spectra Buds offer a more intelligent way to experience sound.
+                        <p className="text-sm md:text-base">
+                          The transitions feel almost invisible. As you leave a quiet café and step into the street, the earbuds automatically shift to prioritize clarity and awareness. During commutes, they balance immersive sound with the outside world. In every shift, Spectra Buds know what you need to hear and what you don't.
                         </p>
                         
-                        <p className="text-base md:text-lg">
-                          Privacy and trust are foundational to Spectra's design. With on-device audio processing and secure encryption, all listening data is handled locally to avoid cloud syncing or third-party access. They store only what's necessary and learn solely for your benefit. Spectra Buds are equipped with intelligence and care to enrich your audio world.
+                        <p className="text-sm md:text-base">
+                          Designed to work in harmony with your Spectra devices, audio follows you fluidly between contexts. Take a call on your Watch, continue on your Vision glasses without ever losing clarity or connection.
                         </p>
                         
-                        <p className="text-lg md:text-xl font-medium text-left pt-6">
-                          <em>Audio tailored to your rhythm.</em>
+                        <p className="text-sm md:text-base">
+                          With smart charging, adaptive battery modes, and intuitive gestures, Spectra Buds disappear into your flow. No friction, just fidelity.
+                        </p>
+                        
+                        <p className="text-base md:text-lg font-medium text-left pt-6">
+                          <em>A soundtrack shaped around your life.</em>
                         </p>
                       </div>
                     )}
@@ -597,7 +587,7 @@ const ProductDetail = () => {
                           setIsDescriptionExpanded(!isDescriptionExpanded);
                           setExpandAnimationKey(prev => prev + 1);
                         }}
-                        className="w-12 h-12 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-full font-medium transition-all hover:scale-105 flex items-center justify-center"
+                        className="w-12 h-12 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-full font-medium transition-all hover:scale-105 flex items-center justify-center"
                       >
                         <svg 
                           className={`w-6 h-6 transition-transform duration-300 ${isDescriptionExpanded ? 'rotate-180' : ''}`} 
@@ -612,34 +602,34 @@ const ProductDetail = () => {
                   </>
                 ) : product.id === 'spectra-display' ? (
                   <>
-                    <p className="text-lg md:text-xl font-medium">
-                      <strong>Welcome to entertainment that knows your family.</strong>
+                    <p className="text-base md:text-lg font-medium">
+                      <strong>Entertainment that adjusts to your household.</strong>
                     </p>
                     
-                    <p className="text-lg md:text-xl">
-                      Spectra Display is a next-generation smart TV that brings the power of intelligent personalization into your living room. Designed to recognize and adapt to each family member, it transforms your viewing experience with content that understands everyone's unique preferences. By learning from viewing patterns, Spectra Display creates harmonious entertainment moments that bring families together.
+                    <p className="text-base md:text-lg">
+                      Spectra Display brings intelligent personalization to the heart of your home. More than a smart TV, it's a shared interface that learns the rhythms, tastes, and moments that make your family unique and curates an experience to reflect them.
                     </p>
                     
                     {isDescriptionExpanded && (
                       <div key={expandAnimationKey} className="space-y-8 animate-fade-in">
-                        <p className="text-base md:text-lg">
-                          Spectra Display was born from a simple belief: entertainment should understand more than it shows. It pays attention to the rhythms of your family life—what brings you together, what each person enjoys, and turns that awareness into moment-to-moment viewing relevance. More than just a TV, it's an intelligent hub that learns from your household to make each viewing session feel perfectly curated.
+                        <p className="text-sm md:text-base">
+                          Every member of the household is recognized instantly. Spectra adjusts content suggestions, brightness, even sound profiles based on who's watching and when. Parents catch up on the news in the morning, kids jump into animation in the afternoon, and everyone winds down together in the evening with content tuned to shared interests.
                         </p>
                         
-                        <p className="text-base md:text-lg">
-                          Built with advanced recognition technology, Spectra Display seamlessly integrates into your family routine, delivering personalized content recommendations for everyone in the room. Whether it's movie night or solo viewing, it acts as your reliable entertainment assistant, automatically adjusting content suggestions, picture settings, and audio profiles based on who's watching and the time of day.
+                        <p className="text-sm md:text-base">
+                          This isn't just entertainment it's attunement. Spectra Display adapts the room's lighting, balances volume dynamically based on seating patterns, and even offers subtle wellness cues for screen time awareness.
                         </p>
                         
-                        <p className="text-base md:text-lg">
-                          Spectra Display doesn't require complex setup to be effective. Drawing on viewing habits and family interaction patterns, it learns what content works best for different combinations of viewers. This enables it to suggest the perfect show for family time while respecting individual preferences, often anticipating what everyone will enjoy before you even browse. With voice control and smart home integration, Spectra Display offers a more intelligent way to experience entertainment.
+                        <p className="text-sm md:text-base">
+                          We designed Spectra Display with one question in mind: Can a screen feel more like part of the family? The answer is in how it listens, responds, and gently organizes your digital world around your home's real life.
                         </p>
                         
-                        <p className="text-base md:text-lg">
-                          Privacy and trust are foundational to Spectra's design. With on-device processing and secure encryption, all viewing data is handled locally to avoid cloud syncing or third-party access. It stores only what's necessary and learns solely for your family's benefit. Spectra Display is equipped with intelligence and care to enrich your home entertainment.
+                        <p className="text-sm md:text-base">
+                          Integrated reminders, seamless calendar sync, and ambient information make Spectra Display a central hub not just for watching, but for living.
                         </p>
                         
-                        <p className="text-lg md:text-xl font-medium text-left pt-6">
-                          <em>Entertainment tailored to your family.</em>
+                        <p className="text-base md:text-lg font-medium text-left pt-6">
+                          <em>A living room that listens, and responds.</em>
                         </p>
                       </div>
                     )}
@@ -650,7 +640,7 @@ const ProductDetail = () => {
                           setIsDescriptionExpanded(!isDescriptionExpanded);
                           setExpandAnimationKey(prev => prev + 1);
                         }}
-                        className="w-12 h-12 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-full font-medium transition-all hover:scale-105 flex items-center justify-center"
+                        className="w-12 h-12 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-full font-medium transition-all hover:scale-105 flex items-center justify-center"
                       >
                         <svg 
                           className={`w-6 h-6 transition-transform duration-300 ${isDescriptionExpanded ? 'rotate-180' : ''}`} 
@@ -665,34 +655,38 @@ const ProductDetail = () => {
                   </>
                 ) : product.id === 'spectra-watch' ? (
                   <>
-                    <p className="text-lg md:text-xl font-medium">
-                      <strong>Welcome to wellness that adapts to you.</strong>
+                    <p className="text-base md:text-lg font-medium">
+                      <strong>Health that learns your rhythm.</strong>
                     </p>
                     
-                    <p className="text-lg md:text-xl">
-                      Spectra Watch is a next-generation smartwatch that brings intelligent personalization to your health and productivity journey. Designed to learn your patterns and respond in real time, it enhances every aspect of your daily rhythm with insights tailored just for you. By understanding your lifestyle, Spectra Watch delivers health guidance and productivity support that evolves with your needs.
+                    <p className="text-base md:text-lg">
+                      Spectra Watch transforms the way you engage with health and productivity. More than tracking steps and stats, it learns the unique patterns of your body and schedule, offering insights that are not only personalized but predictive.
                     </p>
                     
                     {isDescriptionExpanded && (
                       <div key={expandAnimationKey} className="space-y-8 animate-fade-in">
-                        <p className="text-base md:text-lg">
-                          Spectra Watch was born from a simple belief: wellness should understand more than it measures. It pays attention to the rhythms of your life—when you're most active, when you need rest, and turns that awareness into moment-to-moment health insights. More than just a smartwatch, it's an intelligent wellness companion that learns from your patterns to make each day feel more balanced and intentional.
+                        <p className="text-sm md:text-base">
+                          Rather than giving you generic goals, Spectra Watch recognizes what balance looks like for you. It identifies subtle deviations like rising stress levels before you feel them, or changes in sleep before they impact your energy. It guides with just the right nudge, at just the right time.
                         </p>
                         
-                        <p className="text-base md:text-lg">
-                          Built with advanced health monitoring, Spectra Watch seamlessly integrates into your daily routine, delivering personalized wellness insights directly to your wrist. Whether you're tackling a busy workday or focusing on fitness goals, it acts as your reliable health assistant, automatically tracking vitals, suggesting optimal workout times, and providing gentle reminders based on your unique biorhythms.
+                        <p className="text-sm md:text-base">
+                          Built to flow with your day, Spectra Watch adapts how it operates. On work-heavy days, it highlights focus tools and meetings. During downtime, it leans into fitness, recovery, and mindfulness. This isn't a feature list it's a companion calibrated to your intent.
                         </p>
                         
-                        <p className="text-base md:text-lg">
-                          Spectra Watch doesn't require constant input to be effective. Drawing on continuous health monitoring and activity patterns, it learns what wellness approaches work best for your lifestyle. This enables it to provide personalized health insights and productivity suggestions, often anticipating your needs before you even realize them. With seamless ecosystem integration and intelligent notifications, Spectra Watch offers a more thoughtful way to manage your wellbeing.
+                        <p className="text-sm md:text-base">
+                          Spectra Watch was born from the belief that wellness shouldn't be reactive. By sensing, interpreting, and adapting, it brings intelligence to your wrist not to overwhelm, but to support.
                         </p>
                         
-                        <p className="text-base md:text-lg">
-                          Privacy and trust are foundational to Spectra's design. With on-device health processing and secure encryption, all wellness data is handled locally to avoid cloud syncing or third-party access. It stores only what's necessary and learns solely for your benefit. Spectra Watch is equipped with intelligence and care to enrich your health journey.
+                        <p className="text-sm md:text-base">
+                          In sync with your other Spectra devices, Watch extends its insights across your ecosystem: visualize heart rate trends on Display, receive workout cues in Vision, or review recovery recommendations with Buds on.
                         </p>
                         
-                        <p className="text-lg md:text-xl font-medium text-left pt-6">
-                          <em>Wellness tailored to your rhythm.</em>
+                        <p className="text-sm md:text-base">
+                          Data stays where it belongs: with you. On-device learning and encrypted processing ensure privacy by default, not as an afterthought.
+                        </p>
+                        
+                        <p className="text-base md:text-lg font-medium text-left pt-6">
+                          <em>The better you know yourself, the better you move through the world.</em>
                         </p>
                       </div>
                     )}
@@ -703,7 +697,7 @@ const ProductDetail = () => {
                           setIsDescriptionExpanded(!isDescriptionExpanded);
                           setExpandAnimationKey(prev => prev + 1);
                         }}
-                        className="w-12 h-12 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-full font-medium transition-all hover:scale-105 flex items-center justify-center"
+                        className="w-12 h-12 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-full font-medium transition-all hover:scale-105 flex items-center justify-center"
                       >
                         <svg 
                           className={`w-6 h-6 transition-transform duration-300 ${isDescriptionExpanded ? 'rotate-180' : ''}`} 
@@ -717,11 +711,9 @@ const ProductDetail = () => {
                     </div>
                   </>
                 ) : (
-                  <>
-                    <p className="text-lg md:text-xl">
-                      {product.description}
-                    </p>
-                  </>
+                  <p className="text-base md:text-lg">
+                    {product.description}
+                  </p>
                 )}
               </div>
             </div>
@@ -735,23 +727,21 @@ const ProductDetail = () => {
             specificationsRef.current = el;
             sectionRefs.current['specifications-section'] = el;
           }}
-          className="mt-24 scroll-mt-32"
+          className="scroll-mt-32 mt-16 sm:mt-20"
         >
-          <h2 className={`text-3xl font-bold text-gray-900 mb-8 transition-all duration-700 ${
+          <h2 className={`text-xl md:text-2xl font-bold text-gray-900 mb-8 transition-all duration-700 ${
             visibleSections.has('specifications-section') ? 'animate-fade-up opacity-100' : 'opacity-100'
           }`}>Specifications</h2>
           <div className={`bg-white rounded-2xl shadow-sm p-8 transition-all duration-700 delay-200 ${
             visibleSections.has('specifications-section') ? 'animate-fade-up opacity-100' : 'opacity-100'
           }`}>
-            <div className="max-w-4xl mx-auto">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {Object.entries(product.specifications).map(([key, value], index) => (
-                  <div key={key} className="flex flex-col space-y-3 p-6 bg-gray-50 rounded-xl hover:bg-gray-100 transition-all duration-300 hover:shadow-md">
-                    <span className="font-bold text-gray-900 text-base uppercase tracking-wide">{key}</span>
-                    <span className="text-gray-700 text-base leading-relaxed">{value}</span>
-                  </div>
-                ))}
-              </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {Object.entries(product.specifications).map(([key, value], index) => (
+                <div key={key} className="flex flex-col space-y-3 p-6 bg-gray-50 rounded-xl hover:bg-gray-100 transition-all duration-300 hover:shadow-md">
+                  <dt className="font-semibold text-gray-800 text-base md:text-lg">{key}</dt>
+                  <dd className="text-gray-600 text-sm md:text-base leading-relaxed">{value}</dd>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -763,12 +753,12 @@ const ProductDetail = () => {
             reviewsRef.current = el;
             sectionRefs.current['reviews-section'] = el;
           }}
-          className="mt-24 scroll-mt-32"
+          className="scroll-mt-32 mt-16 sm:mt-20"
         >
-          <h2 className={`text-3xl font-bold text-gray-900 mb-8 transition-all duration-700 ${
+          <h2 className={`text-xl md:text-2xl font-bold text-gray-900 mb-12 text-center transition-all duration-700 ${
             visibleSections.has('reviews-section') ? 'animate-fade-up opacity-100' : 'opacity-100'
-          }`}>Reviews</h2>
-          <div className={`bg-white rounded-2xl shadow-sm p-8 transition-all duration-700 delay-200 ${
+          }`}>Customer Reviews</h2>
+          <div className={`transition-all duration-700 delay-200 ${
             visibleSections.has('reviews-section') ? 'animate-fade-up opacity-100' : 'opacity-100'
           }`}>
             {/* Testimonial Carousel */}
@@ -786,14 +776,14 @@ const ProductDetail = () => {
                           className="w-full h-full object-cover"
                         />
                       </div>
-                      <p className="font-bold text-gray-900 text-lg text-center leading-tight">{testimonials[currentTestimonialIndex].name}</p>
+                      <p className="font-semibold text-gray-900 text-sm md:text-base text-center leading-tight">{testimonials[currentTestimonialIndex].name}</p>
                     </div>
                     <div className="flex-1 min-w-0 pt-2">
                       <div className="mb-6">
-                        <h5 className="font-bold text-3xl text-gray-900 mb-3 leading-tight">{testimonials[currentTestimonialIndex].headline}</h5>
-                        <p className="text-base text-blue-600 font-semibold">{testimonials[currentTestimonialIndex].date}</p>
+                        <h5 className="font-semibold text-xl md:text-2xl text-gray-900 mb-3 leading-tight">{testimonials[currentTestimonialIndex].headline}</h5>
+                        <p className="text-xs text-blue-600 font-medium">{testimonials[currentTestimonialIndex].date}</p>
                       </div>
-                      <p className="text-gray-700 leading-relaxed text-xl font-light">{testimonials[currentTestimonialIndex].review}</p>
+                      <p className="text-gray-700 leading-relaxed text-sm md:text-base font-normal">{testimonials[currentTestimonialIndex].review}</p>
                     </div>
                   </div>
                 </div>
@@ -837,53 +827,32 @@ const ProductDetail = () => {
             </div>
           </div>
         </div>
+      </div>
 
-
-        {/* Related Products */}
-        <div 
-          id="related-products"
-          ref={(el) => sectionRefs.current['related-products'] = el}
-          className="mt-16"
-        >
-          <h3 className={`text-2xl font-semibold mb-8 transition-all duration-700 ${
-            visibleSections.has('related-products') ? 'animate-fade-up opacity-100' : 'opacity-100'
-          }`}>You might also like</h3>
-          <div className={`grid grid-cols-1 md:grid-cols-3 gap-8 transition-all duration-700 delay-200 ${
-            visibleSections.has('related-products') ? 'animate-fade-up opacity-100' : 'opacity-100'
-          }`}>
-            {relatedProducts.map((relatedProduct, index) => (
-              <Link 
-                key={relatedProduct.id} 
+      {/* Related Products */}
+      <div className="bg-gray-50 py-16">
+        <div className="max-w-6xl mx-auto px-6 md:px-8 lg:px-12">
+          <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-12 text-center">You might also like</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {relatedProducts.map((relatedProduct) => (
+              <Link
+                key={relatedProduct.id}
                 to={`/product/${relatedProduct.id}`}
-                onClick={() => {
-                  console.log('Clicking on related product:', relatedProduct.id);
-                  console.log('Current product ID:', id);
-                }}
-                className={`bg-white rounded-xl shadow-sm overflow-hidden group hover:shadow-lg transition-all duration-700 hover:-translate-y-1 ${
-                  visibleSections.has('related-products') 
-                    ? 'opacity-100 translate-y-0 animate-fade-up' 
-                    : 'opacity-100'
-                }`}
-                style={{
-                  animationDelay: visibleSections.has('related-products') ? `${400 + (index * 150)}ms` : '0ms'
-                }}
+                className="group bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden hover:scale-[1.02]"
               >
-                <div className="aspect-square bg-gradient-radial from-blue-50 via-purple-50 to-gray-100">
+                <div className="aspect-square bg-gray-100 overflow-hidden">
                   <img
-                    src={relatedProduct.images?.[0] || relatedProduct.image}
+                    src={relatedProduct.images[0]}
                     alt={relatedProduct.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    onError={(e) => {
-                      e.target.style.display = 'none';
-                    }}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
                 </div>
                 <div className="p-6">
-                  <h4 className="font-semibold mb-2">{relatedProduct.name}</h4>
-                  <p className="text-gray-600 text-sm mb-3">{relatedProduct.tagline}</p>
+                  <h3 className="text-lg md:text-xl font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">{relatedProduct.name}</h3>
+                  <p className="text-gray-600 text-sm md:text-base mb-3">{relatedProduct.tagline}</p>
                   <div className="flex items-center justify-between">
-                    <span className="text-lg font-bold">£{relatedProduct.price.toLocaleString()}</span>
-                    <span className="text-blue-600 group-hover:text-blue-700 font-medium transition-colors">
+                    <span className="text-base md:text-lg font-semibold">£{relatedProduct.price.toLocaleString()}</span>
+                    <span className="text-blue-600 group-hover:text-blue-700 font-medium transition-colors text-sm md:text-base">
                       View Details →
                     </span>
                   </div>
