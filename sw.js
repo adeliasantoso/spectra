@@ -1,20 +1,20 @@
-// Force cache clear - updated version
-const CACHE_VERSION = 'v1.0.1';
+// Force cache clear - aggressive version
+const CACHE_VERSION = 'v1.0.2';
 const CACHE_NAME = `spectra-${CACHE_VERSION}`;
 const STATIC_ASSETS = [
   '/spectra/',
   '/spectra/index.html'
 ];
 
-// Updated cache names to force refresh
-const MEDIA_CACHE = `spectra-media-v2`;
-const API_CACHE = `spectra-api-v2`;
-const DYNAMIC_CACHE = `spectra-dynamic-v2`;
+// Updated cache names to force complete refresh
+const MEDIA_CACHE = `spectra-media-v3`;
+const API_CACHE = `spectra-api-v3`;
+const DYNAMIC_CACHE = `spectra-dynamic-v3`;
 
 // Version check endpoint
 const VERSION_ENDPOINT = '/version.json';
 
-// Install event - cache static assets (no aggressive cache clearing)
+// Install event - aggressive installation
 self.addEventListener('install', (event) => {
   console.log('Service Worker: Installing version', CACHE_VERSION);
   
@@ -23,7 +23,8 @@ self.addEventListener('install', (event) => {
       return cache.addAll(STATIC_ASSETS);
     }).then(() => {
       console.log('Service Worker: Installation complete');
-      // Don't skip waiting - let user refresh naturally
+      // Force skip waiting to take control immediately
+      return self.skipWaiting();
     })
   );
 });
