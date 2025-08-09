@@ -8,6 +8,7 @@ import FAQ from "../components/FAQ";
 import OptimizedImage from "../components/OptimizedImage";
 import OptimizedVideo from "../components/OptimizedVideo";
 import { measurePerformance, monitorBundleSize } from "../utils/performance";
+import { useAutoRefresh } from "../hooks/useAutoRefresh";
 import spectraGlassesImage from "../assets/images/landing-page/spectra1.png";
 import aboutImage from "../assets/images/about-page/hero-about.png";
 import expandUniverseImage from "../assets/images/landing-page/expandtheuniverseandcanceltheunwanted.png";
@@ -20,6 +21,9 @@ import social3Image from "../assets/images/landing-page/social3.png";
 const Home = React.memo(() => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
+
+  // Auto-refresh for development
+  useAutoRefresh();
 
   // Performance monitoring
   useEffect(() => {

@@ -6,11 +6,13 @@
   "homepage": "https://adeliasantoso.github.io/spectra",
   "scripts": {
     "dev": "vite",
+    "dev:fresh": "npm run clear-cache && vite --force",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist",
+    "clear-cache": "node -e \"console.log('Clearing Vite cache...'); require('fs').rmSync('node_modules/.vite', {recursive: true, force: true}); console.log('Cache cleared!')\""
   },
   "dependencies": {
     "framer-motion": "^12.23.9",
