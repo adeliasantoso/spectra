@@ -361,20 +361,20 @@ const Home = React.memo(() => {
                 </svg>
               )}
             </button>
-            <div className="absolute inset-0 bg-black bg-opacity-20 flex items-end justify-center">
-              <div className="text-center text-white px-4 pb-8 md:pb-12 lg:pb-16">
-                <h3 className={`text-2xl md:text-4xl font-bold mb-4 ${
-                  visibleSections.has('smart-recognition') ? 'animate-caption-reveal stagger-1' : ''
-                }`}>
-                  Smart Recognition
-                </h3>
-                <p className={`text-base md:text-lg max-w-2xl mx-auto ${
-                  visibleSections.has('smart-recognition') ? 'animate-caption-reveal stagger-2' : ''
-                }`}>
-                  See how Spectra identifies and adapts to your environment in real-time
-                </p>
-              </div>
-            </div>
+          </div>
+          
+          {/* Caption moved below video */}
+          <div className="text-center px-4 py-8 md:py-12">
+            <h3 className={`text-2xl md:text-4xl font-bold text-gray-900 mb-4 ${
+              visibleSections.has('smart-recognition') ? 'animate-caption-reveal stagger-1' : ''
+            }`}>
+              Smart Recognition
+            </h3>
+            <p className={`text-base md:text-lg text-gray-600 max-w-2xl mx-auto ${
+              visibleSections.has('smart-recognition') ? 'animate-caption-reveal stagger-2' : ''
+            }`}>
+              See how Spectra identifies and adapts to your environment in real-time
+            </p>
           </div>
         </div>
       </section>
@@ -509,7 +509,7 @@ const Home = React.memo(() => {
             {/* Play/Pause Button */}
             <button
               onClick={() => toggleVideoPlayPause('intuitive-insights')}
-              className="absolute bottom-2 right-2 w-12 h-12 bg-black/30 hover:bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 group z-10"
+              className="absolute bottom-4 right-4 w-12 h-12 bg-black/30 hover:bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 group z-10"
             >
               {videoPaused['intuitive-insights'] ? (
                 <svg className="w-6 h-6 text-white group-hover:scale-110 transition-transform duration-200" fill="currentColor" viewBox="0 0 24 24">
@@ -521,16 +521,16 @@ const Home = React.memo(() => {
                 </svg>
               )}
             </button>
-            <div className="absolute inset-0 bg-black bg-opacity-20 flex items-end justify-center">
-              <div className="text-center text-white px-4 pb-8 md:pb-12 lg:pb-16">
-                <h3 className="text-2xl md:text-4xl font-bold mb-4">
-                  Intuitive Insights
-                </h3>
-                <p className="text-lg md:text-xl max-w-2xl mx-auto">
-                  Experience personalized recommendations that understand your lifestyle
-                </p>
-              </div>
-            </div>
+          </div>
+          
+          {/* Caption moved below video */}
+          <div className="text-center px-4 py-8 md:py-12">
+            <h3 className="text-2xl md:text-4xl font-bold text-gray-900 mb-4">
+              Intuitive Insights
+            </h3>
+            <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto">
+              Experience personalized recommendations that understand your lifestyle
+            </p>
           </div>
         </div>
       </section>
