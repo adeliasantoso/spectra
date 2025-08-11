@@ -4,7 +4,12 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: process.env.NODE_ENV === 'production' ? '/spectra/' : '/',
+  base: process.env.GITHUB_PAGES === 'true' ? '/spectra/' : '/',
+  define: {
+    // Fix for __DEFINES__ error
+    global: 'globalThis',
+    __DEV__: JSON.stringify(process.env.NODE_ENV !== 'production'),
+  },
   build: {
     // Optimize chunk splitting
     rollupOptions: {
@@ -22,7 +27,15 @@ export default defineConfig({
     // Enable compression
     minify: 'esbuild',
     // Set chunk size warning limit
-    chunkSizeWarningLimit: 1000
+    chunkSizeWarningLimit: 1000,
+    // Better error handling
+    sourcemap: false,
+    // Ensure proper asset handling
+    assetsDir: 'assets',
+    // Output directory
+    outDir: 'dist',
+    // Empty output directory before build
+    emptyOutDir: true
   },
   // Optimize dependencies
   optimizeDeps: {
@@ -33,5 +46,4 @@ export default defineConfig({
     open: true,
     cors: true
   }
-}
 })

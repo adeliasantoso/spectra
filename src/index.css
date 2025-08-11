@@ -2,11 +2,65 @@
 @tailwind components;
 @tailwind utilities;
 
-/* FAQ fade-in animation */
+/* CSS Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* FAQ simple fade-in animation */
 @keyframes fadeIn {
   from {
-    opacity: 0;
-    transform: translateY(-10px);
+    opacity: 0.8;
+    transform: translateY(5px);
   }
   to {
     opacity: 1;
@@ -43,9 +97,6 @@ img, video {
 }
 
 /* Critical CSS optimizations */
-* {
-  box-sizing: border-box;
-}
 
 /* Reduce repaints and reflows */
 .gpu-accelerated {
@@ -285,16 +336,75 @@ html {
   transform: scale(1.01);
 }
 
-/* Intersection observer ready classes */
+/* Intersection observer ready classes - Enhanced for better visibility */
 .animate-on-scroll {
   opacity: 0;
-  transform: translateY(50px);
-  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform: translateY(60px);
+  transition: all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .animate-on-scroll.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+.animate-on-scroll.animate-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Scroll animations - animate in when visible, reset when not */
+.scroll-fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.scroll-fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scroll-slide-left {
+  opacity: 0;
+  transform: translateX(-50px);
+  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.scroll-slide-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.scroll-slide-right {
+  opacity: 0;
+  transform: translateX(50px);
+  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.scroll-slide-right.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.scroll-scale-up {
+  opacity: 0;
+  transform: scale(0.9) translateY(20px);
+  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.scroll-scale-up.visible {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+.scroll-fade-in {
+  opacity: 0;
+  transition: opacity 0.6s ease-out;
+}
+
+.scroll-fade-in.visible {
+  opacity: 1;
 }
 
 /* Hero Section Animations */
@@ -956,11 +1066,11 @@ html {
   animation: video-carousel-enter 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }
 
-/* Scroll-triggered animation utility */
+/* Simple scroll-triggered animation utilities */
 .scroll-animate {
-  opacity: 0;
-  transform: translateY(50px);
-  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.3s ease-out;
 }
 
 .scroll-animate.visible {
@@ -968,15 +1078,37 @@ html {
   transform: translateY(0);
 }
 
+.scroll-animate.animate-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .scroll-animate-video {
-  opacity: 0;
-  transform: translateY(80px) scale(0.95);
-  transition: all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  transition: all 0.3s ease-out;
 }
 
 .scroll-animate-video.visible {
   opacity: 1;
   transform: translateY(0) scale(1);
+}
+
+.scroll-animate-video.animate-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Simple staggered animations */
+.stagger-container > * {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.3s ease-out;
+}
+
+.stagger-container > *.animate-visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* Staggered text animations */
@@ -1127,4 +1259,118 @@ html {
 
 .product-tabs-container::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
+}
+
+/* Simple page animations - no loading effects */
+.page-wrapper {
+  opacity: 1;
+}
+
+.page-entering {
+  overflow-x: hidden;
+}
+
+/* Parallax effects */
+.parallax-slow {
+  will-change: transform;
+}
+
+.hero-fade-on-scroll {
+  transition: opacity 0.3s ease-out;
+}
+
+/* Interactive hover effects throughout pages */
+.interactive-hover {
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.interactive-hover:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* Enhanced button animations */
+.btn-enhanced {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.btn-enhanced::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.6s;
+}
+
+.btn-enhanced:hover::before {
+  left: 100%;
+}
+
+.btn-enhanced:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Text reveal animations */
+.text-reveal {
+  overflow: hidden;
+  position: relative;
+}
+
+.text-reveal::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: currentColor;
+  transform: translateX(-100%);
+  transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.text-reveal.animate-visible::after {
+  transform: translateX(100%);
+}
+
+/* Enhanced loading states */
+.loading-skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading-shimmer 2s infinite;
+}
+
+@keyframes loading-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Scroll progress indicator - hidden */
+.scroll-progress {
+  display: none;
+}
+
+/* Mobile-specific animations */
+@media (max-width: 768px) {
+  .scroll-fade-up,
+  .scroll-slide-left,
+  .scroll-slide-right,
+  .scroll-scale-up {
+    transform: translateY(40px);
+    transition-duration: 1s;
+  }
+  
+  .interactive-hover:hover {
+    transform: none;
+    box-shadow: none;
+  }
 }

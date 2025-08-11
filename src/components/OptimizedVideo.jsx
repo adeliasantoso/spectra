@@ -67,9 +67,10 @@ const OptimizedVideo = React.memo(({
     setCanPlay(true);
   }, []);
 
-  const handleError = useCallback(() => {
+  const handleError = useCallback((e) => {
+    console.warn('Video load error:', src, e.target?.error);
     setHasError(true);
-  }, []);
+  }, [src]);
 
   const handleCanPlay = useCallback(() => {
     setCanPlay(true);

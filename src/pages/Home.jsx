@@ -183,17 +183,27 @@ const Home = React.memo(() => {
       </section>
 
       {/* Introducing Spectra 1.0 */}
-      <section className="pt-0 pb-0 bg-white relative">
+      <section 
+        id="product-intro"
+        ref={(el) => sectionRefs.current['product-intro'] = el}
+        className="pt-0 pb-0 bg-white relative -mb-40 md:-mb-56"
+      >
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 text-center">
           <div className="mb-0 max-w-3xl mx-auto relative">
             <OptimizedImage
               src={spectraGlassesImage}
               alt="Spectra 1.0"
-              className="w-full h-auto rounded-xl sm:rounded-2xl"
+              className="w-full h-auto rounded-xl sm:rounded-2xl object-cover"
               priority={true}
+              style={{
+                maskImage: 'linear-gradient(to bottom, transparent 0%, black 40%, black 60%, transparent 100%)',
+                WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 40%, black 60%, transparent 100%)'
+              }}
             />
-            <div className="absolute top-0 left-0 right-0 flex items-start justify-center pt-8 sm:pt-12 md:pt-16 px-4">
-              <h2 className="text-3xl md:text-5xl font-bold text-black drop-shadow-2xl text-center max-w-full whitespace-nowrap">
+            <div className="absolute top-0 left-0 right-0 flex items-start justify-center pt-16 sm:pt-24 md:pt-32 px-4">
+              <h2 className={`text-3xl md:text-5xl font-bold text-black drop-shadow-2xl text-center max-w-full whitespace-nowrap transform transition-all duration-1000 ease-out ${
+                visibleSections.has('product-intro') ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+              }`} style={{ transitionDelay: '200ms' }}>
                 Introducing the new Spectra 1.0
               </h2>
             </div>
@@ -208,11 +218,13 @@ const Home = React.memo(() => {
         ref={(el) => sectionRefs.current['expand-universe'] = el}
         className="py-16 md:py-32 bg-gradient-to-br from-gray-50 via-white to-gray-100 relative"
       >
+        {/* Asymmetric radial gradient texture */}
+        <div className="absolute inset-0 opacity-15">
+          <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_70%_20%,rgba(156,163,175,0.1)_0%,transparent_45%),radial-gradient(ellipse_at_15%_80%,rgba(209,213,219,0.08)_0%,transparent_40%),radial-gradient(ellipse_at_85%_60%,rgba(156,163,175,0.06)_0%,transparent_35%)]"></div>
+        </div>
         <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-8 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 md:gap-20 items-center">
-            <div className={`lg:col-span-3 lg:pr-8 order-2 lg:order-1 relative ${
-              visibleSections.has('expand-universe') ? 'scroll-animate-video visible' : 'scroll-animate-video'
-            }`}>
+            <div className="scroll-slide-right lg:col-span-3 lg:pr-8 order-2 lg:order-1 relative">
               <video
                 ref={(el) => (uspVideoRefs.current['expand-universe'] = el)}
                 autoPlay
@@ -221,14 +233,14 @@ const Home = React.memo(() => {
                 playsInline
                 className="w-full h-auto aspect-video object-contain rounded-2xl bg-black"
               >
-                <source src="https://ik.imagekit.io/ohyemuffin/asset/video/AI_TV_Tailors_Content_for_Family.mp4?updatedAt=1754214349805" type="video/mp4" />
+                <source src="https://ik.imagekit.io/ohyemuffin/asset/video/expand-the-universe.mp4?updatedAt=1753676355743" type="video/mp4" />
                 <div className="w-full h-full bg-gray-900 rounded-2xl"></div>
               </video>
               
               {/* Play/Pause Button */}
               <button
                 onClick={() => toggleVideoPlayPause('expand-universe')}
-                className="absolute bottom-2 right-8 w-12 h-12 bg-black/30 hover:bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 group"
+                className="absolute bottom-2 right-12 w-12 h-12 bg-black/30 hover:bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 group"
               >
                 {videoPaused['expand-universe'] ? (
                   <svg className="w-6 h-6 text-white group-hover:scale-110 transition-transform duration-200" fill="currentColor" viewBox="0 0 24 24">
@@ -241,10 +253,10 @@ const Home = React.memo(() => {
                 )}
               </button>
             </div>
-            <div className={`lg:col-span-2 space-y-6 md:space-y-8 order-1 lg:order-2 ${
-              visibleSections.has('expand-universe') ? 'scroll-animate visible' : 'scroll-animate'
-            }`}>
-              <h2 className="text-3xl md:text-5xl font-light text-gray-900 leading-tight">
+            <div className="scroll-slide-left lg:col-span-2 space-y-6 md:space-y-8 order-1 lg:order-2">
+              <h2 className={`text-3xl md:text-5xl font-light text-gray-900 leading-tight transform transition-all duration-1000 ease-out ${
+                visibleSections.has('expand-universe') ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+              }`} style={{ transitionDelay: '200ms' }}>
                 Expand your universe
               </h2>
               <div className="space-y-4 md:space-y-6">
@@ -266,12 +278,18 @@ const Home = React.memo(() => {
         ref={(el) => sectionRefs.current['unlock-barriers'] = el}
         className="py-16 md:py-32 bg-gradient-to-bl from-gray-50 via-white to-gray-100 relative"
       >
+        {/* Asymmetric radial gradient texture */}
+        <div className="absolute inset-0 opacity-18">
+          <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_25%_15%,rgba(156,163,175,0.12)_0%,transparent_42%),radial-gradient(ellipse_at_90%_85%,rgba(209,213,219,0.1)_0%,transparent_38%),radial-gradient(ellipse_at_60%_50%,rgba(156,163,175,0.07)_0%,transparent_32%)]"></div>
+        </div>
         <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-8 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 md:gap-20 items-center">
             <div className={`lg:col-span-2 space-y-6 md:space-y-8 ${
               visibleSections.has('unlock-barriers') ? 'scroll-animate visible' : 'scroll-animate'
             }`}>
-              <h2 className="text-3xl md:text-5xl font-light text-gray-900 leading-tight">
+              <h2 className={`text-3xl md:text-5xl font-light text-gray-900 leading-tight transform transition-all duration-1000 ease-out ${
+                visibleSections.has('unlock-barriers') ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+              }`} style={{ transitionDelay: '200ms' }}>
                 Unlock a life without barriers
               </h2>
               <div className="space-y-4 md:space-y-6">
@@ -294,7 +312,7 @@ const Home = React.memo(() => {
                 playsInline
                 className="w-full h-auto aspect-video object-cover object-bottom rounded-2xl bg-black"
               >
-                <source src="https://ik.imagekit.io/ohyemuffin/asset/video/Watch_Tracks_Active_Lifestyle.mp4?updatedAt=1754214349971" type="video/mp4" />
+                <source src="https://ik.imagekit.io/ohyemuffin/asset/video/unlock.mp4?updatedAt=1753676356747" type="video/mp4" />
                 <div className="w-full h-full bg-gray-900 rounded-2xl"></div>
               </video>
               
@@ -322,9 +340,14 @@ const Home = React.memo(() => {
       <section 
         id="smart-recognition"
         ref={(el) => sectionRefs.current['smart-recognition'] = el}
-        className="py-16 md:py-24 bg-gray-50"
+        className="py-16 md:py-24 bg-gradient-to-br from-gray-100 via-gray-50 to-gray-75 relative"
       >
-        <div className="w-full">
+        {/* Asymmetric radial gradient texture */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-100 via-gray-50 to-gray-75"></div>
+          <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_20%_30%,rgba(156,163,175,0.15)_0%,transparent_40%),radial-gradient(ellipse_at_80%_70%,rgba(209,213,219,0.12)_0%,transparent_35%),radial-gradient(ellipse_at_90%_10%,rgba(156,163,175,0.08)_0%,transparent_25%),radial-gradient(ellipse_at_10%_90%,rgba(209,213,219,0.1)_0%,transparent_30%)]"></div>
+        </div>
+        <div className="w-full relative z-10">
           <div className={`relative w-full h-[50vh] md:h-[60vh] lg:h-[70vh] overflow-hidden ${
             visibleSections.has('smart-recognition') ? 'animate-video-load-in' : ''
           }`}>
@@ -364,18 +387,29 @@ const Home = React.memo(() => {
             </button>
           </div>
           
-          {/* Caption moved below video */}
-          <div className="text-center px-4 py-8 md:py-12">
-            <h3 className={`text-2xl md:text-4xl font-bold text-gray-900 mb-4 ${
-              visibleSections.has('smart-recognition') ? 'animate-caption-reveal stagger-1' : ''
-            }`}>
-              Smart Recognition
-            </h3>
-            <p className={`text-base md:text-lg text-gray-600 max-w-2xl mx-auto ${
-              visibleSections.has('smart-recognition') ? 'animate-caption-reveal stagger-2' : ''
-            }`}>
-              See how Spectra identifies and adapts to your environment in real-time
-            </p>
+          {/* Caption with darker contrasting background */}
+          <div className="text-center px-4 py-8 md:py-12 relative bg-gradient-to-b from-gray-800 via-gray-850 to-gray-900">
+            {/* Dark background with subtle texture */}
+            <div className="absolute inset-0">
+              <div className="absolute inset-0 bg-gradient-to-br from-gray-800/95 via-gray-850/98 to-gray-900"></div>
+              <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_30%_20%,rgba(75,85,99,0.3)_0%,transparent_40%),radial-gradient(ellipse_at_80%_80%,rgba(55,65,81,0.2)_0%,transparent_35%)]"></div>
+            </div>
+            
+            {/* Subtle top border separator */}
+            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gray-600/50 to-transparent"></div>
+            
+            <div className="relative z-10">
+              <h3 className={`text-2xl md:text-4xl font-bold text-white mb-4 transform transition-all duration-1000 ease-out ${
+                visibleSections.has('smart-recognition') ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+              }`} style={{ transitionDelay: '200ms' }}>
+                Smart Recognition
+              </h3>
+              <p className={`text-base md:text-lg text-gray-300 max-w-2xl mx-auto transform transition-all duration-1000 ease-out ${
+                visibleSections.has('smart-recognition') ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+              }`} style={{ transitionDelay: '400ms' }}>
+                See how Spectra identifies and adapts to your environment in real-time
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -386,6 +420,10 @@ const Home = React.memo(() => {
         ref={(el) => sectionRefs.current['cancel-noise'] = el}
         className="py-16 md:py-32 bg-gradient-to-br from-gray-50 via-white to-gray-100 relative"
       >
+        {/* Asymmetric radial gradient texture */}
+        <div className="absolute inset-0 opacity-16">
+          <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_80%_25%,rgba(156,163,175,0.11)_0%,transparent_48%),radial-gradient(ellipse_at_20%_75%,rgba(209,213,219,0.09)_0%,transparent_43%),radial-gradient(ellipse_at_95%_90%,rgba(156,163,175,0.05)_0%,transparent_28%)]"></div>
+        </div>
         <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-8 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 md:gap-20 items-center">
             <div className={`lg:col-span-3 lg:pr-8 order-2 lg:order-1 relative ${
@@ -399,7 +437,7 @@ const Home = React.memo(() => {
                 playsInline
                 className="w-full h-auto aspect-video object-contain rounded-2xl bg-black"
               >
-                <source src="https://ik.imagekit.io/ohyemuffin/asset/video/Immersive_Audio_on_a_Busy_Street.mp4?updatedAt=1754214349985" type="video/mp4" />
+                <source src="https://ik.imagekit.io/ohyemuffin/asset/video/cancel-unwanted-noice.mp4?updatedAt=1753676357536" type="video/mp4" />
                 <div className="w-full h-full bg-gray-900 rounded-2xl"></div>
               </video>
               
@@ -422,7 +460,9 @@ const Home = React.memo(() => {
             <div className={`lg:col-span-2 space-y-6 md:space-y-8 order-1 lg:order-2 ${
               visibleSections.has('cancel-noise') ? 'scroll-animate visible' : 'scroll-animate'
             }`}>
-              <h2 className="text-3xl md:text-5xl font-light text-gray-900 leading-tight">
+              <h2 className={`text-3xl md:text-5xl font-light text-gray-900 leading-tight transform transition-all duration-1000 ease-out ${
+                visibleSections.has('cancel-noise') ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+              }`} style={{ transitionDelay: '200ms' }}>
                 Cancel the unwanted noise
               </h2>
               <div className="space-y-4 md:space-y-6">
@@ -439,11 +479,21 @@ const Home = React.memo(() => {
       </section>
 
       {/* Look Through Your Head */}
-      <section className="py-16 md:py-32 bg-gradient-to-bl from-gray-50 via-white to-gray-100 relative">
+      <section 
+        id="see-through-thoughts"
+        ref={(el) => sectionRefs.current['see-through-thoughts'] = el}
+        className="py-16 md:py-32 bg-gradient-to-bl from-gray-50 via-white to-gray-100 relative"
+      >
+        {/* Asymmetric radial gradient texture */}
+        <div className="absolute inset-0 opacity-14">
+          <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_30%_10%,rgba(156,163,175,0.1)_0%,transparent_50%),radial-gradient(ellipse_at_85%_70%,rgba(209,213,219,0.08)_0%,transparent_45%),radial-gradient(ellipse_at_10%_85%,rgba(156,163,175,0.06)_0%,transparent_30%)]"></div>
+        </div>
         <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-8 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 md:gap-20 items-center">
             <div className="lg:col-span-2 space-y-6 md:space-y-8">
-              <h2 className="text-3xl md:text-5xl font-light text-gray-900 leading-tight">
+              <h2 className={`text-3xl md:text-5xl font-light text-gray-900 leading-tight transform transition-all duration-1000 ease-out ${
+                visibleSections.has('see-through-thoughts') ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+              }`} style={{ transitionDelay: '200ms' }}>
                 See through your thoughts
               </h2>
               <div className="space-y-4 md:space-y-6">
@@ -451,7 +501,7 @@ const Home = React.memo(() => {
                   Spectra anticipates your needs by spotting patterns in your real-time activity.
                 </p>
                 <p className="text-sm md:text-base text-gray-600 leading-relaxed">
-                  As your trusted assistant, it creates hyper-personalized suggestions made just for you. Whatever you need—an app, product, or service—it's always just one tap away.
+                  As your trusted assistant, it creates hyper-personalized suggestions made just for you. Whatever you need, from an app to a product or service, it's always just one tap away.
                 </p>
               </div>
             </div>
@@ -489,7 +539,11 @@ const Home = React.memo(() => {
       </section>
 
       {/* Video USP Section 2 */}
-      <section className="py-16 md:py-24 bg-white">
+      <section 
+        id="intuitive-insights"
+        ref={(el) => sectionRefs.current['intuitive-insights'] = el}
+        className="py-16 md:py-24 bg-white"
+      >
         <div className="w-full">
           <div className="relative w-full h-[40vh] sm:h-[50vh] md:h-[60vh] lg:h-[70vh] overflow-hidden">
             <video
@@ -524,43 +578,97 @@ const Home = React.memo(() => {
             </button>
           </div>
           
-          {/* Caption moved below video */}
-          <div className="text-center px-4 py-8 md:py-12">
-            <h3 className="text-2xl md:text-4xl font-bold text-gray-900 mb-4">
-              Intuitive Insights
-            </h3>
-            <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto">
-              Experience personalized recommendations that understand your lifestyle
-            </p>
+          {/* Caption with darker contrasting background */}
+          <div className="text-center px-4 py-8 md:py-12 relative bg-gradient-to-b from-gray-800 via-gray-850 to-gray-900">
+            {/* Dark background with subtle texture */}
+            <div className="absolute inset-0">
+              <div className="absolute inset-0 bg-gradient-to-br from-gray-800/95 via-gray-850/98 to-gray-900"></div>
+              <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_40%_30%,rgba(75,85,99,0.3)_0%,transparent_40%),radial-gradient(ellipse_at_70%_70%,rgba(55,65,81,0.2)_0%,transparent_35%)]"></div>
+            </div>
+            
+            {/* Subtle top border separator */}
+            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gray-600/50 to-transparent"></div>
+            
+            <div className="relative z-10">
+              <h3 className={`text-2xl md:text-4xl font-bold text-white mb-4 transform transition-all duration-1000 ease-out ${
+                visibleSections.has('intuitive-insights') ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+              }`} style={{ transitionDelay: '200ms' }}>
+                Intuitive Insights
+              </h3>
+              <p className={`text-base md:text-lg text-gray-300 max-w-2xl mx-auto transform transition-all duration-1000 ease-out ${
+                visibleSections.has('intuitive-insights') ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+              }`} style={{ transitionDelay: '400ms' }}>
+                Experience personalized recommendations that understand your lifestyle
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Experience the Future, Today */}
-      <section className="pt-16 md:pt-24 pb-16 md:pb-32 bg-white relative">
+      <section 
+        id="experience-future"
+        ref={(el) => sectionRefs.current['experience-future'] = el}
+        className="pt-16 md:pt-24 pb-16 md:pb-32 bg-white relative"
+      >
+        {/* Asymmetric radial gradient texture */}
+        <div className="absolute inset-0 opacity-12">
+          <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_60%_30%,rgba(156,163,175,0.08)_0%,transparent_55%),radial-gradient(ellipse_at_15%_70%,rgba(209,213,219,0.06)_0%,transparent_48%),radial-gradient(ellipse_at_90%_15%,rgba(156,163,175,0.04)_0%,transparent_35%)]"></div>
+        </div>
         <div className="relative z-10 max-w-6xl mx-auto px-6 md:px-8 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 md:gap-12 items-center">
             <div className="order-2 lg:order-1 lg:col-span-3 relative group flex justify-center">
-              <div className="relative max-w-md lg:max-w-lg xl:max-w-xl">
-                <img
-                  src={experienceDudeImage}
-                  alt="Experience Dude"
-                  className="w-full h-auto transition-transform duration-300 group-hover:scale-105 rounded-2xl"
-                />
+              <div className="relative max-w-md lg:max-w-lg xl:max-w-xl overflow-hidden rounded-2xl">
+                {/* Background glow effect */}
+                <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 rounded-2xl opacity-0 group-hover:opacity-75 transition-all duration-500 blur-lg group-hover:blur-xl"></div>
                 
-                {/* Hover overlay with Quick View button */}
-                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
-                  <button
-                    onClick={handleQuickView}
-                    className="bg-white text-black px-4 md:px-6 py-1.5 md:py-2 font-medium opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300 hover:bg-gray-100 text-sm md:text-base"
-                  >
-                    Quick View
-                  </button>
+                {/* Image container */}
+                <div className="relative bg-white rounded-2xl overflow-hidden">
+                  <img
+                    src={experienceDudeImage}
+                    alt="Experience Dude"
+                    className="w-full h-auto transition-all duration-500 group-hover:scale-110 group-hover:brightness-110"
+                  />
+                  
+                  {/* Animated overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+                  
+                  {/* Floating particles effect */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-700">
+                    <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-white/60 rounded-full animate-pulse"></div>
+                    <div className="absolute top-3/4 right-1/4 w-1 h-1 bg-blue-400/80 rounded-full animate-bounce" style={{animationDelay: '0.5s'}}></div>
+                    <div className="absolute top-1/2 right-1/3 w-1.5 h-1.5 bg-purple-400/60 rounded-full animate-pulse" style={{animationDelay: '1s'}}></div>
+                  </div>
+                  
+                  {/* Quick View button with enhanced styling - positioned at bottom */}
+                  <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2">
+                    <button
+                      onClick={handleQuickView}
+                      className="group/btn relative overflow-hidden bg-gradient-to-r from-gray-900 to-black text-white px-6 md:px-8 py-3 md:py-4 font-bold opacity-0 group-hover:opacity-100 transform translate-y-8 group-hover:translate-y-0 transition-all duration-500 hover:scale-105 text-sm md:text-base rounded-full shadow-2xl border border-white/20 backdrop-blur-sm btn-enhanced interactive-hover"
+                    >
+                      {/* Button background shine effect */}
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-700"></div>
+                      
+                      <span className="relative z-10 flex items-center space-x-2">
+                        <span>Quick View</span>
+                        <svg className="w-4 h-4 transition-transform duration-300 group-hover/btn:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                      </span>
+                    </button>
+                  </div>
+                  
+                  {/* Corner accent */}
+                  <div className="absolute top-4 right-4 w-8 h-8 border-t-2 border-r-2 border-white/40 opacity-0 group-hover:opacity-100 transition-all duration-500 transform scale-75 group-hover:scale-100"></div>
+                  <div className="absolute bottom-4 left-4 w-8 h-8 border-b-2 border-l-2 border-white/40 opacity-0 group-hover:opacity-100 transition-all duration-500 transform scale-75 group-hover:scale-100"></div>
                 </div>
               </div>
             </div>
             <div className="lg:col-span-2 space-y-8 md:space-y-12 order-1 lg:order-2 text-center lg:text-left">
-              <h2 className="text-4xl md:text-6xl font-bold text-gray-900 leading-tight">
+              <h2 className={`text-4xl md:text-6xl font-bold text-gray-900 leading-tight transform transition-all duration-1000 ease-out ${
+                visibleSections.has('experience-future') ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+              }`} style={{ transitionDelay: '200ms' }}>
                 Experience
                 <br />
                 the future,
@@ -581,13 +689,19 @@ const Home = React.memo(() => {
       </section>
 
       {/* About Us */}
-      <section className="py-16 md:py-32 bg-gradient-to-b from-gray-200 via-gray-100 to-gray-75 relative">
+      <section 
+        id="about-us"
+        ref={(el) => sectionRefs.current['about-us'] = el}
+        className="py-16 md:py-32 bg-gradient-to-b from-gray-200 via-gray-100 to-gray-75 relative"
+      >
         <div className="absolute inset-0 bg-gradient-to-b from-gray-300/20 via-transparent to-gray-200/30"></div>
         <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-gray-200/80 to-transparent"></div>
         <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-gray-75/80 to-transparent"></div>
         <div className="relative z-10 max-w-3xl mx-auto px-6 md:px-8 lg:px-12 text-center">
           <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-12 md:p-16 lg:p-20 shadow-xl">
-            <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-12 md:mb-16">
+            <h2 className={`text-3xl md:text-5xl font-bold text-gray-900 mb-12 md:mb-16 transform transition-all duration-1000 ease-out ${
+              visibleSections.has('about-us') ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+            }`} style={{ transitionDelay: '200ms' }}>
               About us
             </h2>
             <div className="space-y-4 md:space-y-6 mb-12 md:mb-20 max-w-4xl mx-auto">
@@ -612,12 +726,18 @@ const Home = React.memo(() => {
       </section>
 
       {/* Follow Us on Social */}
-      <section className="py-16 md:py-32 bg-gradient-to-b from-gray-75 via-gray-50 to-white relative">
+      <section 
+        id="social-section"
+        ref={(el) => sectionRefs.current['social-section'] = el}
+        className="py-16 md:py-32 bg-gradient-to-b from-gray-75 via-gray-50 to-white relative"
+      >
         <div className="absolute inset-0 bg-gradient-to-b from-gray-100/25 via-transparent to-white/50"></div>
         <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-gray-75/80 to-transparent"></div>
         <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-white/90 to-transparent"></div>
         <div className="relative z-10 max-w-full mx-auto px-6 md:px-8 lg:px-12">
-          <h2 className="text-3xl md:text-5xl font-bold text-gray-900 text-center mb-12 md:mb-20">
+          <h2 className={`text-3xl md:text-5xl font-bold text-gray-900 text-center mb-12 md:mb-20 transform transition-all duration-1000 ease-out ${
+            visibleSections.has('social-section') ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+          }`} style={{ transitionDelay: '200ms' }}>
             Follow us on social
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">

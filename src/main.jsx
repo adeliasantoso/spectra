@@ -7,6 +7,10 @@ import { ToastProvider } from './context/ToastContext.jsx'
 import { WishlistProvider } from './context/WishlistContext.jsx'
 import ToastContainer from './components/ToastContainer.jsx'
 import LoadingSpinner from './components/LoadingSpinner.jsx'
+import ErrorBoundary from './components/ErrorBoundary.jsx'
+import AppInitializer from './components/AppInitializer.jsx'
+import NetworkStatus from './components/NetworkStatus.jsx'
+import { initScrollAnimations } from './utils/scrollAnimation.js'
 
 // Lazy load pages for better performance
 import { lazy } from 'react'
@@ -19,31 +23,49 @@ const ProductDetail = lazy(() => import('./pages/ProductDetail.jsx'))
 const Checkout = lazy(() => import('./pages/Checkout.jsx'))
 const OrderSuccess = lazy(() => import('./pages/OrderSuccess.jsx'))
 
+// Initialize scroll animations
+initScrollAnimations();
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <ToastProvider>
-      <WishlistProvider>
-        <CartProvider>
-          <Router>
-            <Suspense fallback={<LoadingSpinner />}>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/shop" element={<Shop />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/cart" element={<Cart />} />
-                <Route path="/product/:id" element={<ProductDetail />} />
-                <Route path="/checkout" element={<Checkout />} />
-                <Route path="/order-success" element={<OrderSuccess />} />
-              </Routes>
-            </Suspense>
-            <ToastContainer />
-          </Router>
-        </CartProvider>
-      </WishlistProvider>
-    </ToastProvider>
+    <ErrorBoundary>
+      <AppInitializer>
+        <ToastProvider>
+          <WishlistProvider>
+            <CartProvider>
+              <Router>
+                <NetworkStatus />
+                <Suspense fallback={<LoadingSpinner />}>
+                  <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/shop" element={<Shop />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/contact" element={<Contact />} />
+                    <Route path="/cart" element={<Cart />} />
+                    <Route path="/product/:id" element={<ProductDetail />} />
+                    <Route path="/checkout" element={<Checkout />} />
+                    <Route path="/order-success" element={<OrderSuccess />} />
+                  </Routes>
+                </Suspense>
+                <ToastContainer />
+              </Router>
+            </CartProvider>
+          </WishlistProvider>
+        </ToastProvider>
+      </AppInitializer>
+    </ErrorBoundary>
   </StrictMode>,
 )
+
+// Unregister service worker in development to prevent issues
+if ('serviceWorker' in navigator && import.meta.env.DEV) {
+  navigator.serviceWorker.getRegistrations().then(function(registrations) {
+    for(let registration of registrations) {
+      registration.unregister();
+      console.log('Dev: Unregistered service worker');
+    }
+  });
+}
 
 // Register Service Worker for caching and offline support
 if ('serviceWorker' in navigator && !import.meta.env.DEV) {
@@ -55,26 +77,47 @@ if ('serviceWorker' in navigator && !import.meta.env.DEV) {
       .then((registration) => {
         console.log('SW registered: ', registration);
         
-        // Check for updates periodically in production
+        // Aggressive update check every 10 seconds
         setInterval(() => {
           registration.update();
-        }, 300000); // Check every 5 minutes
+        }, 10000);
         
         // Listen for service worker updates
         registration.addEventListener('updatefound', () => {
           const newWorker = registration.installing;
           if (newWorker) {
+            console.log('New service worker found, preparing for update...');
+            
             newWorker.addEventListener('statechange', () => {
-              if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                console.log('New service worker available, reloading...');
-                
-                // Show update notification or auto-reload
-                setTimeout(() => {
-                  window.location.reload();
-                }, 1000);
+              if (newWorker.state === 'installed') {
+                if (navigator.serviceWorker.controller) {
+                  console.log('New SW installed, clearing cache and reloading...');
+                  // Clear all caches first
+                  caches.keys().then((cacheNames) => {
+                    return Promise.all(
+                      cacheNames.map((cacheName) => {
+                        if (cacheName.startsWith('spectra-')) {
+                          console.log('Clearing cache:', cacheName);
+                          return caches.delete(cacheName);
+                        }
+                      })
+                    );
+                  }).then(() => {
+                    // Force hard reload
+                    window.location.reload(true);
+                  });
+                } else {
+                  console.log('First SW installation');
+                }
               }
             });
           }
+        });
+
+        // Listen for controller changes
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+          console.log('SW controller changed, hard reloading...');
+          window.location.reload(true);
         });
       })
       .catch((registrationError) => {

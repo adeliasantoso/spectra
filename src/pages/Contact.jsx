@@ -89,14 +89,10 @@ const Contact = () => {
       >
         <div className="max-w-4xl mx-auto px-6 md:px-8 lg:px-12">
           <div className="text-center mb-12 md:mb-16">
-            <h1 className={`text-4xl md:text-6xl font-semibold text-black mb-8 md:mb-12 transition-all duration-700 ${
-              visibleSections.has('contact-hero') ? 'animate-fade-up opacity-100' : 'opacity-0 translate-y-8'
-            }`}>
+            <h1 className="scroll-fade-up text-4xl md:text-6xl font-semibold text-black mb-8 md:mb-12">
               Connect with us
             </h1>
-            <div className={`max-w-2xl mx-auto space-y-4 md:space-y-6 transition-all duration-700 delay-200 ${
-              visibleSections.has('contact-hero') ? 'animate-fade-up opacity-100' : 'opacity-0 translate-y-8'
-            }`}>
+            <div className="scroll-fade-up max-w-2xl mx-auto space-y-4 md:space-y-6">
               <p className="text-sm md:text-base text-gray-700 leading-relaxed">
                 Connect with our team to explore how Spectra's innovations can support tailored solutions for you or your organization. We also welcome inquiries about potential collaborations or career opportunities.
               </p>
@@ -107,14 +103,8 @@ const Contact = () => {
           </div>
 
           {/* Contact Form */}
-          <div 
-            id="contact-form"
-            ref={(el) => sectionRefs.current['contact-form'] = el}
-            className="max-w-3xl mx-auto"
-          >
-            <form onSubmit={handleSubmit} className={`space-y-6 md:space-y-8 transition-all duration-700 delay-400 ${
-              visibleSections.has('contact-form') ? 'animate-fade-up opacity-100' : 'opacity-0 translate-y-8'
-            }`}>
+          <div className="scroll-fade-up max-w-3xl mx-auto">
+            <form onSubmit={handleSubmit} className="space-y-6 md:space-y-8">
               {/* Name Section */}
               <div>
                 <div className="mb-2 md:mb-3">

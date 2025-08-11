@@ -40,6 +40,10 @@ const ProductDetail = () => {
   const [visibleSections, setVisibleSections] = useState(new Set());
   const sectionRefs = useRef({});
 
+  // Track navbar visibility for sticky tabs positioning
+  const [isNavbarVisible, setIsNavbarVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
   const handleTestimonialChange = (newIndex) => {
     if (isTransitioning || newIndex === currentTestimonialIndex) return;
     
@@ -84,20 +88,27 @@ const ProductDetail = () => {
     }
   }, [id, product]);
 
-  // Redirect to shop if product not found
+  // Redirect to shop if product not found or not Spectra 1.0
   useEffect(() => {
     if (!product) {
       // Could redirect to shop page or show 404
       console.warn(`Product with ID ${id} not found`);
+    } else if (id !== 'spectra-1-0') {
+      console.warn(`Access restricted: Only Spectra 1.0 is accessible`);
     }
   }, [id, product]);
   
-  // Return early if product not found
-  if (!product) {
+  // Return early if product not found or not Spectra 1.0
+  if (!product || id !== 'spectra-1-0') {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">Product Not Found</h1>
+          <h1 className="text-2xl font-bold text-gray-900 mb-4">
+            {!product ? 'Product Not Found' : 'Access Restricted'}
+          </h1>
+          <p className="text-gray-600 mb-6">
+            {!product ? 'The requested product could not be found.' : 'Only Spectra 1.0 details are available at this time.'}
+          </p>
           <Link to="/shop" className="text-blue-600 hover:text-blue-800">
             Return to Shop
           </Link>
@@ -180,6 +191,35 @@ const ProductDetail = () => {
     
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Track navbar visibility for sticky tabs positioning
+  useEffect(() => {
+    let ticking = false;
+    
+    const controlNavbar = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const currentScrollY = window.scrollY;
+          const heroSectionHeight = window.innerHeight * 0.8; // Reduced threshold for smoother transition
+          
+          if (currentScrollY > lastScrollY && currentScrollY > heroSectionHeight) {
+            // Scrolling down & past hero section - navbar hidden
+            setIsNavbarVisible(false);
+          } else if (currentScrollY < lastScrollY || currentScrollY <= heroSectionHeight) {
+            // Scrolling up or still in hero section - navbar visible
+            setIsNavbarVisible(true);
+          }
+          
+          setLastScrollY(currentScrollY);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', controlNavbar, { passive: true });
+    return () => window.removeEventListener('scroll', controlNavbar);
+  }, [lastScrollY]);
 
   // Animation observer for scroll-triggered animations
   useEffect(() => {
@@ -419,7 +459,7 @@ const ProductDetail = () => {
             {/* Stock Status */}
             <div className="flex items-center space-x-2">
               <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-              <span className="text-sm md:text-base text-green-600 font-medium">In Stock - Ships in 1-2 business days</span>
+              <span className="text-base md:text-lg text-green-600 font-medium">In Stock - Ships in 1-2 business days</span>
             </div>
 
             {/* Key Features */}
@@ -429,7 +469,7 @@ const ProductDetail = () => {
                 {product.features.slice(0, 3).map((feature, index) => (
                   <li key={index} className="flex items-start space-x-3">
                     <span className="text-blue-500 mt-1 text-base">✓</span>
-                    <span className="text-sm md:text-base">{feature}</span>
+                    <span className="text-base md:text-lg">{feature}</span>
                   </li>
                 ))}
               </ul>
@@ -438,11 +478,13 @@ const ProductDetail = () => {
         </div>
 
         {/* Sticky Navigation with Scroll Spy */}
-        <div className="mt-12 sm:mt-16 sticky top-16 sm:top-20 z-30 bg-white/95 backdrop-blur-sm py-4 sm:py-6 mb-12 sm:mb-16">
-          <div className="flex justify-center space-x-2 sm:space-x-4 md:space-x-8 px-4 overflow-x-auto product-tabs-container">
+        <div className={`mt-12 sm:mt-16 sticky z-30 bg-white/95 backdrop-blur-sm ${
+          isNavbarVisible ? 'top-[52px] md:top-[64px] transition-all duration-300' : 'top-0 transition-all duration-300'
+        }`}>
+          <div className="flex justify-center space-x-2 sm:space-x-4 md:space-x-8 px-4 overflow-x-auto product-tabs-container py-6 sm:py-8">
             <button
               onClick={() => scrollToSection(descriptionRef, 'description')}
-              className={`px-4 sm:px-6 md:px-8 py-2 sm:py-3 rounded-full font-medium text-sm md:text-base transition-all duration-300 whitespace-nowrap ${
+              className={`px-4 sm:px-6 md:px-8 py-2 sm:py-3 rounded-full font-medium text-base md:text-lg transition-all duration-300 whitespace-nowrap ${
                 activeSection === 'description'
                   ? 'bg-black text-white shadow-lg scale-105'
                   : 'text-gray-600 hover:text-black hover:bg-gray-100'
@@ -452,7 +494,7 @@ const ProductDetail = () => {
             </button>
             <button
               onClick={() => scrollToSection(specificationsRef, 'specifications')}
-              className={`px-4 sm:px-6 md:px-8 py-2 sm:py-3 rounded-full font-medium text-sm md:text-base transition-all duration-300 whitespace-nowrap ${
+              className={`px-4 sm:px-6 md:px-8 py-2 sm:py-3 rounded-full font-medium text-base md:text-lg transition-all duration-300 whitespace-nowrap ${
                 activeSection === 'specifications'
                   ? 'bg-black text-white shadow-lg scale-105'
                   : 'text-gray-600 hover:text-black hover:bg-gray-100'
@@ -462,7 +504,7 @@ const ProductDetail = () => {
             </button>
             <button
               onClick={() => scrollToSection(reviewsRef, 'reviews')}
-              className={`px-4 sm:px-6 md:px-8 py-2 sm:py-3 rounded-full font-medium text-sm md:text-base transition-all duration-300 whitespace-nowrap ${
+              className={`px-4 sm:px-6 md:px-8 py-2 sm:py-3 rounded-full font-medium text-base md:text-lg transition-all duration-300 whitespace-nowrap ${
                 activeSection === 'reviews'
                   ? 'bg-black text-white shadow-lg scale-105'
                   : 'text-gray-600 hover:text-black hover:bg-gray-100'
@@ -480,9 +522,9 @@ const ProductDetail = () => {
             descriptionRef.current = el;
             sectionRefs.current['description-section'] = el;
           }}
-          className="scroll-mt-32"
+          className="scroll-mt-32 mt-8 md:mt-12"
         >
-          <h2 className={`text-xl md:text-2xl font-bold text-gray-900 mb-8 transition-all duration-700 ${
+          <h2 className={`text-xl md:text-2xl font-bold text-gray-900 mb-8 text-center transition-all duration-700 ${
             visibleSections.has('description-section') ? 'animate-fade-up opacity-100' : 'opacity-100'
           }`}>Description</h2>
           <div className={`bg-white rounded-2xl shadow-sm p-8 transition-all duration-700 delay-200 ${
@@ -502,19 +544,19 @@ const ProductDetail = () => {
                     
                     {isDescriptionExpanded && (
                       <div key={expandAnimationKey} className="space-y-8 animate-fade-in">
-                        <p className="text-sm md:text-base">
+                        <p className="text-base md:text-lg">
                           Spectra 1.0 was born from a simple belief: technology should understand more than it serves. It pays attention to the rhythms of your life—what you linger on, what you skip, and turns that awareness into moment-to-moment relevance. More than just a device, it's an intelligent companion that learns from you to help make each day feel smoother and more intentional.
                         </p>
                         
-                        <p className="text-sm md:text-base">
+                        <p className="text-base md:text-lg">
                           Built with a sleek, lightweight design, Spectra integrates effortlessly into your routine, delivering personalized recommendations directly into your view. Whether you're navigating a busy day or winding down in the evening, Spectra acts as your reliable, ever-present assistant. It processes your preferences to generate thoughtful, timely suggestions—from recommending what to watch next to guiding you toward smarter purchases.
                         </p>
                         
-                        <p className="text-sm md:text-base">
+                        <p className="text-base md:text-lg">
                           Spectra doesn't require constant input to be effective. Drawing on ambient data and contextual insights, it learns what you love and when you need it most. This enables Spectra 1.0 to help you discover the right product, service, or spark of inspiration, often before you even think to ask. With intuitive controls and seamless connectivity, Spectra 1.0 offers a more intelligent way to engage with the world around you.
                         </p>
                         
-                        <p className="text-sm md:text-base">
+                        <p className="text-base md:text-lg">
                           Privacy and trust are foundational to Spectra's design. With on-device AI processing and secure encryption, all data is handled locally to avoid cloud syncing or third-party access. It stores only what's necessary and learns solely for your benefit. Spectra 1.0 is equipped with intelligence and care to enrich your world.
                         </p>
                         
@@ -555,23 +597,23 @@ const ProductDetail = () => {
                     
                     {isDescriptionExpanded && (
                       <div key={expandAnimationKey} className="space-y-8 animate-fade-in">
-                        <p className="text-sm md:text-base">
+                        <p className="text-base md:text-lg">
                           They don't just play what you love; they understand how you listen. By detecting ambient noise, your movement, and even your routine, Spectra Buds tailor their output in real time to suit the moment whether you're deep in work mode, on a call, or simply unwinding.
                         </p>
                         
-                        <p className="text-sm md:text-base">
+                        <p className="text-base md:text-lg">
                           Spectra Buds were created from a vision that audio should respond, not interrupt. Rather than forcing you to adapt, they tune themselves around you letting sound become a natural extension of how you live.
                         </p>
                         
-                        <p className="text-sm md:text-base">
+                        <p className="text-base md:text-lg">
                           The transitions feel almost invisible. As you leave a quiet café and step into the street, the earbuds automatically shift to prioritize clarity and awareness. During commutes, they balance immersive sound with the outside world. In every shift, Spectra Buds know what you need to hear and what you don't.
                         </p>
                         
-                        <p className="text-sm md:text-base">
+                        <p className="text-base md:text-lg">
                           Designed to work in harmony with your Spectra devices, audio follows you fluidly between contexts. Take a call on your Watch, continue on your Vision glasses without ever losing clarity or connection.
                         </p>
                         
-                        <p className="text-sm md:text-base">
+                        <p className="text-base md:text-lg">
                           With smart charging, adaptive battery modes, and intuitive gestures, Spectra Buds disappear into your flow. No friction, just fidelity.
                         </p>
                         
@@ -612,19 +654,19 @@ const ProductDetail = () => {
                     
                     {isDescriptionExpanded && (
                       <div key={expandAnimationKey} className="space-y-8 animate-fade-in">
-                        <p className="text-sm md:text-base">
+                        <p className="text-base md:text-lg">
                           Every member of the household is recognized instantly. Spectra adjusts content suggestions, brightness, even sound profiles based on who's watching and when. Parents catch up on the news in the morning, kids jump into animation in the afternoon, and everyone winds down together in the evening with content tuned to shared interests.
                         </p>
                         
-                        <p className="text-sm md:text-base">
+                        <p className="text-base md:text-lg">
                           This isn't just entertainment it's attunement. Spectra Display adapts the room's lighting, balances volume dynamically based on seating patterns, and even offers subtle wellness cues for screen time awareness.
                         </p>
                         
-                        <p className="text-sm md:text-base">
+                        <p className="text-base md:text-lg">
                           We designed Spectra Display with one question in mind: Can a screen feel more like part of the family? The answer is in how it listens, responds, and gently organizes your digital world around your home's real life.
                         </p>
                         
-                        <p className="text-sm md:text-base">
+                        <p className="text-base md:text-lg">
                           Integrated reminders, seamless calendar sync, and ambient information make Spectra Display a central hub not just for watching, but for living.
                         </p>
                         
@@ -665,23 +707,23 @@ const ProductDetail = () => {
                     
                     {isDescriptionExpanded && (
                       <div key={expandAnimationKey} className="space-y-8 animate-fade-in">
-                        <p className="text-sm md:text-base">
+                        <p className="text-base md:text-lg">
                           Rather than giving you generic goals, Spectra Watch recognizes what balance looks like for you. It identifies subtle deviations like rising stress levels before you feel them, or changes in sleep before they impact your energy. It guides with just the right nudge, at just the right time.
                         </p>
                         
-                        <p className="text-sm md:text-base">
+                        <p className="text-base md:text-lg">
                           Built to flow with your day, Spectra Watch adapts how it operates. On work-heavy days, it highlights focus tools and meetings. During downtime, it leans into fitness, recovery, and mindfulness. This isn't a feature list it's a companion calibrated to your intent.
                         </p>
                         
-                        <p className="text-sm md:text-base">
+                        <p className="text-base md:text-lg">
                           Spectra Watch was born from the belief that wellness shouldn't be reactive. By sensing, interpreting, and adapting, it brings intelligence to your wrist not to overwhelm, but to support.
                         </p>
                         
-                        <p className="text-sm md:text-base">
+                        <p className="text-base md:text-lg">
                           In sync with your other Spectra devices, Watch extends its insights across your ecosystem: visualize heart rate trends on Display, receive workout cues in Vision, or review recovery recommendations with Buds on.
                         </p>
                         
-                        <p className="text-sm md:text-base">
+                        <p className="text-base md:text-lg">
                           Data stays where it belongs: with you. On-device learning and encrypted processing ensure privacy by default, not as an afterthought.
                         </p>
                         
@@ -727,9 +769,9 @@ const ProductDetail = () => {
             specificationsRef.current = el;
             sectionRefs.current['specifications-section'] = el;
           }}
-          className="scroll-mt-32 mt-16 sm:mt-20"
+          className="scroll-mt-32 mt-16 md:mt-24"
         >
-          <h2 className={`text-xl md:text-2xl font-bold text-gray-900 mb-8 transition-all duration-700 ${
+          <h2 className={`text-xl md:text-2xl font-bold text-gray-900 mb-8 text-center transition-all duration-700 ${
             visibleSections.has('specifications-section') ? 'animate-fade-up opacity-100' : 'opacity-100'
           }`}>Specifications</h2>
           <div className={`bg-white rounded-2xl shadow-sm p-8 transition-all duration-700 delay-200 ${
@@ -739,7 +781,7 @@ const ProductDetail = () => {
               {Object.entries(product.specifications).map(([key, value], index) => (
                 <div key={key} className="flex flex-col space-y-3 p-6 bg-gray-50 rounded-xl hover:bg-gray-100 transition-all duration-300 hover:shadow-md">
                   <dt className="font-semibold text-gray-800 text-base md:text-lg">{key}</dt>
-                  <dd className="text-gray-600 text-sm md:text-base leading-relaxed">{value}</dd>
+                  <dd className="text-gray-600 text-base md:text-lg leading-relaxed">{value}</dd>
                 </div>
               ))}
             </div>
@@ -753,11 +795,11 @@ const ProductDetail = () => {
             reviewsRef.current = el;
             sectionRefs.current['reviews-section'] = el;
           }}
-          className="scroll-mt-32 mt-16 sm:mt-20"
+          className="scroll-mt-32 mt-16 md:mt-24"
         >
-          <h2 className={`text-xl md:text-2xl font-bold text-gray-900 mb-12 text-center transition-all duration-700 ${
+          <h2 className={`text-xl md:text-2xl font-bold text-gray-900 mb-8 text-center transition-all duration-700 ${
             visibleSections.has('reviews-section') ? 'animate-fade-up opacity-100' : 'opacity-100'
-          }`}>Customer Reviews</h2>
+          }`}>Reviews</h2>
           <div className={`transition-all duration-700 delay-200 ${
             visibleSections.has('reviews-section') ? 'animate-fade-up opacity-100' : 'opacity-100'
           }`}>
@@ -776,53 +818,65 @@ const ProductDetail = () => {
                           className="w-full h-full object-cover"
                         />
                       </div>
-                      <p className="font-semibold text-gray-900 text-sm md:text-base text-center leading-tight">{testimonials[currentTestimonialIndex].name}</p>
+                      <p className="font-semibold text-gray-900 text-base md:text-lg text-center leading-tight">{testimonials[currentTestimonialIndex].name}</p>
                     </div>
                     <div className="flex-1 min-w-0 pt-2">
                       <div className="mb-6">
                         <h5 className="font-semibold text-xl md:text-2xl text-gray-900 mb-3 leading-tight">{testimonials[currentTestimonialIndex].headline}</h5>
                         <p className="text-xs text-blue-600 font-medium">{testimonials[currentTestimonialIndex].date}</p>
                       </div>
-                      <p className="text-gray-700 leading-relaxed text-sm md:text-base font-normal">{testimonials[currentTestimonialIndex].review}</p>
+                      <p className="text-gray-700 leading-relaxed text-base md:text-lg font-normal">{testimonials[currentTestimonialIndex].review}</p>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Navigation Buttons */}
-              <button
-                onClick={() => handleTestimonialChange(currentTestimonialIndex === 0 ? testimonials.length - 1 : currentTestimonialIndex - 1)}
-                disabled={isTransitioning}
-                className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-6 w-14 h-14 bg-white rounded-full flex items-center justify-center hover:bg-blue-50 transition-all duration-300 shadow-lg hover:shadow-xl disabled:opacity-50 group"
-              >
-                <svg className="w-6 h-6 text-gray-600 group-hover:text-blue-600 transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-              </button>
-              <button
-                onClick={() => handleTestimonialChange(currentTestimonialIndex === testimonials.length - 1 ? 0 : currentTestimonialIndex + 1)}
-                disabled={isTransitioning}
-                className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-6 w-14 h-14 bg-white rounded-full flex items-center justify-center hover:bg-blue-50 transition-all duration-300 shadow-lg hover:shadow-xl disabled:opacity-50 group"
-              >
-                <svg className="w-6 h-6 text-gray-600 group-hover:text-blue-600 transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
 
-              {/* Elegant Dots Indicator */}
-              <div className="flex justify-center mt-8 space-x-3">
-                {testimonials.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => handleTestimonialChange(index)}
-                    disabled={isTransitioning}
-                    className={`h-2 rounded-full transition-all duration-300 disabled:opacity-50 ${
-                      index === currentTestimonialIndex 
-                        ? 'w-8 bg-blue-600 shadow-md' 
-                        : 'w-2 bg-gray-300 hover:bg-gray-400 hover:scale-125'
-                    }`}
-                  />
+              {/* Navigation Controls */}
+              <div className="flex justify-center items-center mt-8 space-x-6">
+                {/* Previous Arrow */}
+                <button
+                  onClick={() => {
+                    const prevIndex = currentTestimonialIndex === 0 ? testimonials.length - 1 : currentTestimonialIndex - 1;
+                    handleTestimonialChange(prevIndex);
+                  }}
+                  disabled={isTransitioning}
+                  className="w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-gray-800 transition-all duration-300 disabled:opacity-50 flex items-center justify-center hover:scale-110"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
+
+                {/* Dots Indicator */}
+                <div className="flex space-x-3">
+                  {testimonials.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => handleTestimonialChange(index)}
+                      disabled={isTransitioning}
+                      className={`h-2 rounded-full transition-all duration-300 disabled:opacity-50 ${
+                        index === currentTestimonialIndex 
+                          ? 'w-8 bg-blue-600 shadow-md' 
+                          : 'w-2 bg-gray-300 hover:bg-gray-400 hover:scale-125'
+                      }`}
+                    />
                   ))}
+                </div>
+
+                {/* Next Arrow */}
+                <button
+                  onClick={() => {
+                    const nextIndex = currentTestimonialIndex === testimonials.length - 1 ? 0 : currentTestimonialIndex + 1;
+                    handleTestimonialChange(nextIndex);
+                  }}
+                  disabled={isTransitioning}
+                  className="w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-gray-800 transition-all duration-300 disabled:opacity-50 flex items-center justify-center hover:scale-110"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
               </div>
             </div>
           </div>
@@ -835,29 +889,54 @@ const ProductDetail = () => {
           <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-12 text-center">You might also like</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {relatedProducts.map((relatedProduct) => (
-              <Link
-                key={relatedProduct.id}
-                to={`/product/${relatedProduct.id}`}
-                className="group bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden hover:scale-[1.02]"
-              >
-                <div className="aspect-square bg-gray-100 overflow-hidden">
-                  <img
-                    src={relatedProduct.images[0]}
-                    alt={relatedProduct.name}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-lg md:text-xl font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">{relatedProduct.name}</h3>
-                  <p className="text-gray-600 text-sm md:text-base mb-3">{relatedProduct.tagline}</p>
-                  <div className="flex items-center justify-between">
-                    <span className="text-base md:text-lg font-semibold">£{relatedProduct.price.toLocaleString()}</span>
-                    <span className="text-blue-600 group-hover:text-blue-700 font-medium transition-colors text-sm md:text-base">
-                      View Details →
-                    </span>
+              relatedProduct.id === 'spectra-1-0' ? (
+                <Link
+                  key={relatedProduct.id}
+                  to={`/product/${relatedProduct.id}`}
+                  className="group bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden hover:scale-[1.02]"
+                >
+                  <div className="aspect-square bg-gray-100 overflow-hidden">
+                    <img
+                      src={relatedProduct.images[0]}
+                      alt={relatedProduct.name}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    />
+                  </div>
+                  <div className="p-6">
+                    <h3 className="text-lg md:text-xl font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">{relatedProduct.name}</h3>
+                    <p className="text-gray-600 text-base md:text-lg mb-3">{relatedProduct.tagline}</p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-base md:text-lg font-semibold">${relatedProduct.price.toLocaleString()}</span>
+                      <span className="text-blue-600 group-hover:text-blue-700 font-medium transition-colors text-base md:text-lg">
+                        View Details →
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              ) : (
+                <div
+                  key={relatedProduct.id}
+                  className="group bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden hover:scale-[1.02]"
+                >
+                  <div className="aspect-square bg-gray-100 overflow-hidden">
+                    <img
+                      src={relatedProduct.images[0]}
+                      alt={relatedProduct.name}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    />
+                  </div>
+                  <div className="p-6">
+                    <h3 className="text-lg md:text-xl font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">{relatedProduct.name}</h3>
+                    <p className="text-gray-600 text-base md:text-lg mb-3">{relatedProduct.tagline}</p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-base md:text-lg font-semibold">${relatedProduct.price.toLocaleString()}</span>
+                      <span className="text-blue-600 group-hover:text-blue-700 font-medium transition-colors text-base md:text-lg">
+                        View Details →
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </Link>
+              )
             ))}
           </div>
         </div>

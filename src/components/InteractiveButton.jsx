@@ -67,6 +67,7 @@ const InteractiveButton = ({
         relative overflow-hidden rounded-lg font-semibold
         transform transition-all duration-300 ease-out
         hover:scale-105 hover:shadow-lg active:scale-95
+        btn-enhanced interactive-hover
         ${getVariantClasses()}
         ${getSizeClasses()}
         ${className}

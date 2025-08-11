@@ -1,11 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 const FAQ = React.memo(() => {
   const [openItem, setOpenItem] = useState(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef(null);
 
   const toggleItem = (index) => {
     setOpenItem(openItem === index ? null : index);
   };
+
+  // Animation observer for scroll-triggered animations
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.2,
+      rootMargin: '-50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      });
+    }, observerOptions);
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   const faqData = [
     {
@@ -55,14 +79,16 @@ const FAQ = React.memo(() => {
   ];
 
   return (
-    <section id="faq" className="py-16 md:py-24 bg-gradient-to-b from-gray-100 to-gray-200 relative">
+    <section id="faq" ref={sectionRef} className="py-16 md:py-24 bg-gradient-to-b from-gray-100 to-gray-200 relative">
       <div className="absolute inset-0 bg-gradient-to-b from-gray-150/30 via-transparent to-gray-300/40"></div>
       <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-gray-100/90 to-transparent"></div>
       <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-gray-200/90 to-transparent"></div>
       <div className="relative z-10">
       <div className="max-w-4xl mx-auto px-6 md:px-8 lg:px-12">
         <div className="text-center mb-12 md:mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold text-black">
+          <h2 className={`text-3xl md:text-5xl font-bold text-black transform transition-all duration-1000 ease-out ${
+            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+          }`} style={{ transitionDelay: '200ms' }}>
             <span className="font-bold">Frequently Asked Questions</span>
           </h2>
         </div>
@@ -74,7 +100,7 @@ const FAQ = React.memo(() => {
                 onClick={() => toggleItem(index)}
                 className="w-full text-left flex justify-between items-center group"
               >
-                <span className="text-base md:text-lg font-medium text-black pr-4 group-hover:text-gray-700 transition-colors duration-200">
+                <span className="text-lg md:text-xl font-medium text-black pr-4 group-hover:text-gray-700 transition-colors duration-200">
                   {item.question}
                 </span>
                 <div className="flex-shrink-0">
@@ -98,7 +124,7 @@ const FAQ = React.memo(() => {
               </button>
               {openItem === index && (
                 <div className="mt-4 animate-fadeIn">
-                  <p className="text-sm md:text-base text-gray-700 leading-relaxed">
+                  <p className="text-base md:text-lg text-gray-700 leading-relaxed">
                     {item.answer}
                   </p>
                 </div>

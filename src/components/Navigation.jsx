@@ -33,7 +33,7 @@ const Navigation = memo(() => {
       className={`fixed top-0 left-0 right-0 z-[100] shadow-md transition-transform duration-300 ease-in-out ${
         isVisible ? "translate-y-0" : "-translate-y-full"
       } ${
-        isHomePage ? "bg-[rgba(115,115,115,0.6)]" : "bg-[rgba(115,115,115,255)]"
+        "bg-[rgba(115,115,115,0.6)]"
       }`}
     >
       <div className="max-w-full mx-auto px-4 sm:px-6 md:px-12 py-2 md:py-3">

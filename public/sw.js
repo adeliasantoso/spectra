@@ -1,85 +1,56 @@
-// Dynamic cache version based on timestamp
-const CACHE_VERSION = `v${Date.now()}`;
+// Force cache clear - aggressive version
+const CACHE_VERSION = 'v1.0.2';
 const CACHE_NAME = `spectra-${CACHE_VERSION}`;
 const STATIC_ASSETS = [
   '/spectra/',
   '/spectra/index.html'
 ];
 
-// Cache for images and videos with version
-const MEDIA_CACHE = `spectra-media-${CACHE_VERSION}`;
-// Cache for API responses with version  
-const API_CACHE = `spectra-api-${CACHE_VERSION}`;
-const DYNAMIC_CACHE = `spectra-dynamic-${CACHE_VERSION}`;
+// Updated cache names to force complete refresh
+const MEDIA_CACHE = `spectra-media-v3`;
+const API_CACHE = `spectra-api-v3`;
+const DYNAMIC_CACHE = `spectra-dynamic-v3`;
 
 // Version check endpoint
 const VERSION_ENDPOINT = '/version.json';
 
-// Install event - cache static assets and clear old caches
+// Install event - aggressive installation
 self.addEventListener('install', (event) => {
-  console.log('Service Worker: Installing new version', CACHE_VERSION);
+  console.log('Service Worker: Installing version', CACHE_VERSION);
   
   event.waitUntil(
-    Promise.all([
-      // Cache new assets
-      caches.open(CACHE_NAME).then((cache) => {
-        return cache.addAll(STATIC_ASSETS);
-      }),
-      // Clear old caches immediately 
-      caches.keys().then(cacheNames => {
-        return Promise.all(
-          cacheNames.map(cacheName => {
-            if (cacheName.startsWith('spectra-') && cacheName !== CACHE_NAME && 
-                cacheName !== MEDIA_CACHE && cacheName !== API_CACHE && 
-                cacheName !== DYNAMIC_CACHE) {
-              console.log('Service Worker: Deleting old cache', cacheName);
-              return caches.delete(cacheName);
-            }
-          }).filter(Boolean)
-        );
-      })
-    ]).then(() => {
-      console.log('Service Worker: Installation complete, skipping waiting');
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.addAll(STATIC_ASSETS);
+    }).then(() => {
+      console.log('Service Worker: Installation complete');
+      // Force skip waiting to take control immediately
       return self.skipWaiting();
     })
   );
 });
 
-// Activate event - clean up old caches and notify clients
+// Activate event - aggressive cache cleanup
 self.addEventListener('activate', (event) => {
-  console.log('Service Worker: Activating new version', CACHE_VERSION);
+  console.log('Service Worker: Activating version', CACHE_VERSION);
   
   event.waitUntil(
-    Promise.all([
-      // Clean up old caches
-      caches.keys().then((cacheNames) => {
-        return Promise.all(
-          cacheNames.map((cacheName) => {
-            if (cacheName.startsWith('spectra-') && 
-                cacheName !== CACHE_NAME && 
-                cacheName !== DYNAMIC_CACHE && 
-                cacheName !== MEDIA_CACHE && 
-                cacheName !== API_CACHE) {
-              console.log('Service Worker: Deleting old cache on activate', cacheName);
-              return caches.delete(cacheName);
-            }
-          }).filter(Boolean)
-        );
-      }),
-      // Take control of all pages
-      self.clients.claim()
-    ]).then(() => {
+    // Clean up ALL old caches, keep only current version
+    caches.keys().then((cacheNames) => {
+      return Promise.all(
+        cacheNames.map((cacheName) => {
+          // Delete any spectra cache that's not the current version
+          if (cacheName.startsWith('spectra-') && cacheName !== CACHE_NAME && 
+              cacheName !== MEDIA_CACHE && cacheName !== API_CACHE && 
+              cacheName !== DYNAMIC_CACHE) {
+            console.log('Service Worker: Cleaning up old cache', cacheName);
+            return caches.delete(cacheName);
+          }
+        }).filter(Boolean)
+      );
+    }).then(() => {
       console.log('Service Worker: Activation complete');
-      
-      // Notify all clients about the update
-      self.clients.matchAll().then(clients => {
-        clients.forEach(client => {
-          client.postMessage({
-            type: 'CACHE_UPDATED',
-            version: CACHE_VERSION
-          });
-        });
-      });
+      // Force claim to ensure new SW takes control immediately
+      return self.clients.claim();
     })
   );
 });
@@ -91,23 +62,9 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // For development localhost, skip service worker completely for most requests
-  if (event.request.url.includes('localhost')) {
-    // Skip caching for dev server files
-    if (event.request.url.includes('/@') || 
-        event.request.url.includes('?') ||
-        event.request.url.includes('main.jsx') ||
-        event.request.url.includes('env.mjs') ||
-        event.request.url.includes('react-refresh')) {
-      return; // Let browser handle normally
-    }
-    
-    // Only cache static assets in development
-    if (!event.request.url.includes('.png') && 
-        !event.request.url.includes('.jpg') && 
-        !event.request.url.includes('.mp4')) {
-      return; // Let browser handle normally
-    }
+  // For development localhost, completely skip service worker
+  if (event.request.url.includes('localhost') || event.request.url.includes('127.0.0.1')) {
+    return; // Let browser handle all requests normally in development
   }
 
   event.respondWith(
@@ -126,17 +83,29 @@ self.addEventListener('fetch', (event) => {
               return response;
             }
 
+            // Skip caching for video files to avoid cache errors
+            if (event.request.url.includes('.mp4') || 
+                event.request.url.includes('.webm') || 
+                event.request.url.includes('.mov')) {
+              return response;
+            }
+
             // Clone the response for caching
             const responseToCache = response.clone();
             const url = event.request.url;
 
-            // Only cache static assets
+            // Only cache images, NOT videos (videos are too large and cause cache errors)
             if (url.includes('.png') || url.includes('.jpg') || url.includes('.jpeg') || 
-                url.includes('.webp') || url.includes('.mp4') || url.includes('.webm')) {
-              caches.open(MEDIA_CACHE)
-                .then((cache) => {
-                  cache.put(event.request, responseToCache);
-                });
+                url.includes('.webp') || url.includes('.gif') || url.includes('.svg')) {
+              // Skip very large images
+              const contentLength = response.headers.get('content-length');
+              if (!contentLength || parseInt(contentLength) < 5 * 1024 * 1024) { // Skip if > 5MB
+                caches.open(MEDIA_CACHE)
+                  .then((cache) => {
+                    cache.put(event.request, responseToCache);
+                  })
+                  .catch(e => console.warn('Cache put failed:', e));
+              }
             }
             // Cache production JS/CSS only
             else if (!url.includes('localhost') && (url.includes('.js') || url.includes('.css'))) {
@@ -148,11 +117,22 @@ self.addEventListener('fetch', (event) => {
 
             return response;
           })
-          .catch(() => {
+          .catch((error) => {
+            console.warn('Service Worker: Network request failed', event.request.url, error);
+            
             // Offline fallback
             if (event.request.destination === 'document') {
               return caches.match('/offline.html') || caches.match('/spectra/');
             }
+            
+            // For failed video requests, don't show error
+            if (event.request.url.includes('.mp4') || 
+                event.request.url.includes('.webm') || 
+                event.request.url.includes('.mov')) {
+              return new Response('', { status: 404, statusText: 'Video not available' });
+            }
+            
+            return caches.match(event.request);
           });
       })
   );
