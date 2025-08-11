@@ -3,10 +3,22 @@ import React, { useState, useEffect, useRef } from 'react';
 const FAQ = React.memo(() => {
   const [openItem, setOpenItem] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [animatingItems, setAnimatingItems] = useState(new Set());
   const sectionRef = useRef(null);
+  const contentRefs = useRef({});
 
   const toggleItem = (index) => {
+    setAnimatingItems(prev => new Set(prev).add(index));
     setOpenItem(openItem === index ? null : index);
+    
+    // Remove from animating set after animation completes
+    setTimeout(() => {
+      setAnimatingItems(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(index);
+        return newSet;
+      });
+    }, 500);
   };
 
   // Animation observer for scroll-triggered animations
@@ -86,19 +98,19 @@ const FAQ = React.memo(() => {
       <div className="relative z-10">
       <div className="max-w-4xl mx-auto px-6 md:px-8 lg:px-12">
         <div className="text-center mb-12 md:mb-16">
-          <h2 className={`text-3xl md:text-5xl font-bold text-black transform transition-all duration-1000 ease-out ${
-            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-          }`} style={{ transitionDelay: '200ms' }}>
-            <span className="font-bold">Frequently Asked Questions</span>
+          <h2 className="text-3xl md:text-5xl font-bold text-black">
+            <span className={`elegant-title-word ${isVisible ? 'animate' : ''}`}>Frequently</span>{' '}
+            <span className={`elegant-title-word ${isVisible ? 'animate' : ''}`}>Asked</span>{' '}
+            <span className={`elegant-title-word ${isVisible ? 'animate' : ''}`}>Questions</span>
           </h2>
         </div>
 
         <div className="divide-y divide-gray-200">
           {faqData.map((item, index) => (
-            <div key={index} className="py-6 md:py-8">
+            <div key={index} className={`elegant-paragraph py-6 md:py-8 ${isVisible ? 'animate' : ''}`} style={{ transitionDelay: `${0.1 + index * 0.05}s` }}>
               <button
                 onClick={() => toggleItem(index)}
-                className="w-full text-left flex justify-between items-center group"
+                className="w-full text-left flex justify-between items-center group hover:bg-gray-50/50 transition-colors duration-200 rounded-lg px-4 py-2 -mx-4"
               >
                 <span className="text-lg md:text-xl font-medium text-black pr-4 group-hover:text-gray-700 transition-colors duration-200">
                   {item.question}
@@ -122,13 +134,29 @@ const FAQ = React.memo(() => {
                   </svg>
                 </div>
               </button>
-              {openItem === index && (
-                <div className="mt-4 animate-fadeIn">
+              <div 
+                ref={(el) => contentRefs.current[index] = el}
+                className="overflow-hidden"
+                style={{
+                  maxHeight: openItem === index ? '400px' : '0px',
+                  opacity: openItem === index ? 1 : 0,
+                  transition: `all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)`
+                }}
+              >
+                <div 
+                  className="mt-4 pb-2"
+                  style={{
+                    transform: openItem === index ? 'translateY(0) scale(1)' : 'translateY(-12px) scale(0.95)',
+                    opacity: openItem === index ? 1 : 0,
+                    transition: `all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)`,
+                    transitionDelay: openItem === index ? '0.1s' : '0s'
+                  }}
+                >
                   <p className="text-base md:text-lg text-gray-700 leading-relaxed">
                     {item.answer}
                   </p>
                 </div>
-              )}
+              </div>
             </div>
           ))}
         </div>

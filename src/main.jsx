@@ -10,6 +10,7 @@ import LoadingSpinner from './components/LoadingSpinner.jsx'
 import ErrorBoundary from './components/ErrorBoundary.jsx'
 import AppInitializer from './components/AppInitializer.jsx'
 import NetworkStatus from './components/NetworkStatus.jsx'
+import ScrollToTop from './components/ScrollToTop.jsx'
 import { initScrollAnimations } from './utils/scrollAnimation.js'
 
 // Lazy load pages for better performance
@@ -26,6 +27,11 @@ const OrderSuccess = lazy(() => import('./pages/OrderSuccess.jsx'))
 // Initialize scroll animations
 initScrollAnimations();
 
+// Disable browser scroll restoration globally for best UX practice
+if (typeof window !== 'undefined' && 'scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <ErrorBoundary>
@@ -34,6 +40,7 @@ createRoot(document.getElementById('root')).render(
           <WishlistProvider>
             <CartProvider>
               <Router>
+                <ScrollToTop />
                 <NetworkStatus />
                 <Suspense fallback={<LoadingSpinner />}>
                   <Routes>

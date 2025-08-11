@@ -544,19 +544,19 @@ const ProductDetail = () => {
                     
                     {isDescriptionExpanded && (
                       <div key={expandAnimationKey} className="space-y-8 animate-fade-in">
-                        <p className="text-base md:text-lg">
+                        <p className="text-[15px] md:text-[17px]">
                           Spectra 1.0 was born from a simple belief: technology should understand more than it serves. It pays attention to the rhythms of your life—what you linger on, what you skip, and turns that awareness into moment-to-moment relevance. More than just a device, it's an intelligent companion that learns from you to help make each day feel smoother and more intentional.
                         </p>
                         
-                        <p className="text-base md:text-lg">
+                        <p className="text-[15px] md:text-[17px]">
                           Built with a sleek, lightweight design, Spectra integrates effortlessly into your routine, delivering personalized recommendations directly into your view. Whether you're navigating a busy day or winding down in the evening, Spectra acts as your reliable, ever-present assistant. It processes your preferences to generate thoughtful, timely suggestions—from recommending what to watch next to guiding you toward smarter purchases.
                         </p>
                         
-                        <p className="text-base md:text-lg">
+                        <p className="text-[15px] md:text-[17px]">
                           Spectra doesn't require constant input to be effective. Drawing on ambient data and contextual insights, it learns what you love and when you need it most. This enables Spectra 1.0 to help you discover the right product, service, or spark of inspiration, often before you even think to ask. With intuitive controls and seamless connectivity, Spectra 1.0 offers a more intelligent way to engage with the world around you.
                         </p>
                         
-                        <p className="text-base md:text-lg">
+                        <p className="text-[15px] md:text-[17px]">
                           Privacy and trust are foundational to Spectra's design. With on-device AI processing and secure encryption, all data is handled locally to avoid cloud syncing or third-party access. It stores only what's necessary and learns solely for your benefit. Spectra 1.0 is equipped with intelligence and care to enrich your world.
                         </p>
                         
@@ -884,9 +884,15 @@ const ProductDetail = () => {
       </div>
 
       {/* Related Products */}
-      <div className="bg-gray-50 py-16">
+      <section
+        id="related-products"
+        ref={(el) => sectionRefs.current['related-products'] = el}
+        className="bg-gray-50 py-16"
+      >
         <div className="max-w-6xl mx-auto px-6 md:px-8 lg:px-12">
-          <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-12 text-center">You might also like</h2>
+          <h2 className={`text-xl md:text-2xl font-bold text-gray-900 mb-12 text-center transform transition-all duration-1000 ease-out ${
+            visibleSections.has('related-products') ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+          }`} style={{ transitionDelay: '200ms' }}>You might also like</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {relatedProducts.map((relatedProduct) => (
               relatedProduct.id === 'spectra-1-0' ? (
@@ -940,7 +946,7 @@ const ProductDetail = () => {
             ))}
           </div>
         </div>
-      </div>
+      </section>
 
       <Footer />
     </div>

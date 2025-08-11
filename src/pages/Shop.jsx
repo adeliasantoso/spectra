@@ -3,14 +3,12 @@ import { useNavigate } from "react-router-dom";
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
 import CartIcon from "../components/CartIcon";
-import ProductQuickView from "../components/ProductQuickView";
 import OptimizedImage from "../components/OptimizedImage";
 import { getAllProducts, getProductsByCategory, CATEGORIES } from "../data/products";
 
 const Shop = () => {
   const navigate = useNavigate();
-  const [selectedProduct, setSelectedProduct] = useState(null);
-  const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
+  
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [isTransitioning, setIsTransitioning] = useState(false);
   
@@ -69,16 +67,18 @@ const Shop = () => {
       <CartIcon />
 
       {/* White spacing below navbar */}
-      <div className="bg-white h-20 sm:h-28 md:h-36 lg:h-44"></div>
+      <div className="bg-white h-16 sm:h-20 md:h-24"></div>
 
       {/* Header */}
       <section 
         id="shop-header"
         ref={(el) => sectionRefs.current['shop-header'] = el}
-        className="py-6 sm:py-8 md:py-12"
+        className="py-4 sm:py-6 md:py-8"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 text-center">
-          <h1 className="scroll-fade-up text-2xl md:text-4xl font-semibold text-black mb-6 sm:mb-8">
+          <h1 className={`text-2xl md:text-4xl font-semibold text-black mb-6 sm:mb-8 transform transition-all duration-1000 ease-out ${
+            visibleSections.has('shop-header') ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+          }`} style={{ transitionDelay: '200ms' }}>
             Explore Our Latest Products
           </h1>
           
@@ -117,7 +117,7 @@ const Shop = () => {
                 key={product.id}
                 className="text-center group interactive-hover scroll-scale-up"
               >
-                {/* Product Image with Quick View icon */}
+                {/* Product Image - clickable for Spectra 1.0 */}
                 <div 
                   className={`relative overflow-hidden mb-3 md:mb-4 ${product.id === 'spectra-1-0' ? 'cursor-pointer' : 'cursor-default'}`} 
                   onClick={() => {
@@ -134,30 +134,18 @@ const Shop = () => {
                     className="w-full aspect-square object-cover group-hover:scale-105 transition-transform duration-300 rounded-2xl"
                   />
                   
-                  {/* Quick View Icon - small floating button */}
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setSelectedProduct(product);
-                      setIsQuickViewOpen(true);
-                    }}
-                    className="absolute top-3 right-3 w-10 h-10 bg-white bg-opacity-90 hover:bg-opacity-100 rounded-full flex items-center justify-center shadow-md opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 active:scale-95 btn-enhanced"
-                    title="Quick View"
-                  >
-                    <svg 
-                      className="w-5 h-5 text-gray-700" 
-                      fill="none" 
-                      stroke="currentColor" 
-                      viewBox="0 0 24 24"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 616 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                    </svg>
-                  </button>
+                  {/* View Details button - appears on hover for Spectra 1.0 */}
+                  {product.id === 'spectra-1-0' && (
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 bg-black bg-opacity-20 rounded-2xl">
+                      <span className="bg-white text-black px-6 py-3 rounded-full font-medium text-sm md:text-base shadow-lg hover:bg-gray-100 transition-all duration-200">
+                        View Details →
+                      </span>
+                    </div>
+                  )}
                 </div>
 
                 <div 
-                  className={`block ${product.id === 'spectra-1-0' ? 'cursor-pointer' : 'cursor-default'}`} 
+                  className={`block pb-4 md:pb-6 ${product.id === 'spectra-1-0' ? 'cursor-pointer' : 'cursor-default'}`} 
                   onClick={() => {
                     if (product.id === 'spectra-1-0') {
                       navigate(`/product/${product.id}`);
@@ -182,17 +170,6 @@ const Shop = () => {
       </section>
 
       <Footer />
-
-      {/* Quick View Modal */}
-      {isQuickViewOpen && selectedProduct && (
-        <ProductQuickView
-          product={selectedProduct}
-          onClose={() => {
-            setIsQuickViewOpen(false);
-            setSelectedProduct(null);
-          }}
-        />
-      )}
     </div>
   );
 };

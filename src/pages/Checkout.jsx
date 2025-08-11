@@ -675,9 +675,9 @@ const Checkout = () => {
         className="pt-24 md:pt-32 pb-12 md:pb-20"
       >
         <div className="max-w-6xl mx-auto px-6 md:px-8 lg:px-12">
-          <h1 className={`text-3xl md:text-4xl lg:text-5xl font-light text-black mb-8 md:mb-12 text-center transition-all duration-700 ${
-            visibleSections.has('checkout-main') ? 'animate-fade-up opacity-100' : 'opacity-0 translate-y-8'
-          }`}>Checkout</h1>
+          <h1 className={`text-3xl md:text-4xl lg:text-5xl font-light text-black mb-8 md:mb-12 text-center transform transition-all duration-1000 ease-out ${
+            visibleSections.has('checkout-main') ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+          }`} style={{ transitionDelay: '200ms' }}>Checkout</h1>
           
           {renderStepIndicator()}
           

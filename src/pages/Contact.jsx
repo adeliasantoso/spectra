@@ -89,24 +89,26 @@ const Contact = () => {
       >
         <div className="max-w-4xl mx-auto px-6 md:px-8 lg:px-12">
           <div className="text-center mb-12 md:mb-16">
-            <h1 className="scroll-fade-up text-4xl md:text-6xl font-semibold text-black mb-8 md:mb-12">
-              Connect with us
+            <h1 className="text-4xl md:text-6xl font-semibold text-black mb-8 md:mb-12 leading-tight">
+              <span className={`elegant-title-word ${visibleSections.has('contact-hero') ? 'animate' : ''}`}>Connect</span>{' '}
+              <span className={`elegant-title-word ${visibleSections.has('contact-hero') ? 'animate' : ''}`}>with</span>{' '}
+              <span className={`elegant-title-word ${visibleSections.has('contact-hero') ? 'animate' : ''}`}>us</span>
             </h1>
-            <div className="scroll-fade-up max-w-2xl mx-auto space-y-4 md:space-y-6">
-              <p className="text-sm md:text-base text-gray-700 leading-relaxed">
+            <div className="max-w-2xl mx-auto space-y-4 md:space-y-6">
+              <p className={`text-sm md:text-base text-gray-700 leading-relaxed elegant-paragraph ${visibleSections.has('contact-hero') ? 'animate' : ''}`}>
                 Connect with our team to explore how Spectra's innovations can support tailored solutions for you or your organization. We also welcome inquiries about potential collaborations or career opportunities.
               </p>
-              <p className="text-sm md:text-base text-gray-700 leading-relaxed">
+              <p className={`text-sm md:text-base text-gray-700 leading-relaxed elegant-paragraph ${visibleSections.has('contact-hero') ? 'animate' : ''}`}>
                 For general inquiries, our <span onClick={() => { navigate('/'); setTimeout(() => { const faqSection = document.getElementById('faq'); if (faqSection) faqSection.scrollIntoView({ behavior: 'smooth' }); }, 500); }} className="text-blue-600 hover:text-blue-800 underline cursor-pointer">FAQ section</span> offers detailed answers to the most common questions and is a good place to begin.
               </p>
             </div>
           </div>
 
           {/* Contact Form */}
-          <div className="scroll-fade-up max-w-3xl mx-auto">
+          <div className={`max-w-3xl mx-auto elegant-paragraph ${visibleSections.has('contact-hero') ? 'animate' : ''}`}>
             <form onSubmit={handleSubmit} className="space-y-6 md:space-y-8">
               {/* Name Section */}
-              <div>
+              <div className={`elegant-paragraph ${visibleSections.has('contact-hero') ? 'animate' : ''}`}>
                 <div className="mb-2 md:mb-3">
                   <span className="text-base md:text-lg font-semibold text-gray-900">Name</span>
                 </div>
@@ -143,7 +145,7 @@ const Contact = () => {
               </div>
 
               {/* Email */}
-              <div>
+              <div className={`elegant-paragraph ${visibleSections.has('contact-hero') ? 'animate' : ''}`}>
                 <div className="mb-2 md:mb-3">
                   <span className="text-base md:text-lg font-semibold text-gray-900">Email</span>
                 </div>
@@ -159,7 +161,7 @@ const Contact = () => {
               </div>
 
               {/* Message */}
-              <div>
+              <div className={`elegant-paragraph ${visibleSections.has('contact-hero') ? 'animate' : ''}`}>
                 <div className="mb-2 md:mb-3">
                   <span className="text-base md:text-lg font-semibold text-gray-900">Message</span>
                 </div>
@@ -175,7 +177,7 @@ const Contact = () => {
               </div>
 
               {/* Send Button */}
-              <div className="pt-2 md:pt-4 text-center">
+              <div className={`pt-2 md:pt-4 text-center elegant-paragraph ${visibleSections.has('contact-hero') ? 'animate' : ''}`}>
                 <button
                   type="submit"
                   disabled={isSubmitting}

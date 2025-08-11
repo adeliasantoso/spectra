@@ -100,9 +100,9 @@ const Cart = () => {
           className="pt-24 md:pt-32 pb-12 md:pb-20"
         >
           <div className="max-w-4xl mx-auto px-6 md:px-8 lg:px-12 text-center">
-            <h1 className={`text-2xl md:text-4xl font-light text-black mb-6 md:mb-8 transition-all duration-700 ${
-              visibleSections.has('empty-cart') ? 'animate-fade-up opacity-100' : 'opacity-0 translate-y-8'
-            }`}>Your Cart</h1>
+            <h1 className={`text-2xl md:text-4xl font-light text-black mb-6 md:mb-8 transform transition-all duration-1000 ease-out ${
+              visibleSections.has('empty-cart') ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+            }`} style={{ transitionDelay: '200ms' }}>Your Cart</h1>
             <div className={`py-8 md:py-16 transition-all duration-700 delay-200 ${
               visibleSections.has('empty-cart') ? 'animate-fade-up opacity-100' : 'opacity-0 translate-y-8'
             }`}>
@@ -136,9 +136,9 @@ const Cart = () => {
         className="pt-24 md:pt-32 pb-12 md:pb-20"
       >
         <div className="max-w-6xl mx-auto px-6 md:px-8 lg:px-12">
-          <h1 className={`text-2xl md:text-4xl font-light text-black mb-8 md:mb-12 text-center transition-all duration-700 ${
-            visibleSections.has('cart-main') ? 'animate-fade-up opacity-100' : 'opacity-0 translate-y-8'
-          }`}>Your Cart</h1>
+          <h1 className={`text-2xl md:text-4xl font-light text-black mb-8 md:mb-12 text-center transform transition-all duration-1000 ease-out ${
+            visibleSections.has('cart-main') ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+          }`} style={{ transitionDelay: '200ms' }}>Your Cart</h1>
           
           <div className={`grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-12 transition-all duration-700 delay-200 ${
             visibleSections.has('cart-main') ? 'animate-fade-up opacity-100' : 'opacity-0 translate-y-8'

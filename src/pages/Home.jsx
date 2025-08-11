@@ -79,8 +79,8 @@ const Home = React.memo(() => {
   // Animation observer for scroll-triggered animations
   useEffect(() => {
     const observerOptions = {
-      threshold: 0.2,
-      rootMargin: '-50px 0px'
+      threshold: 0.05,
+      rootMargin: '-100px 0px'
     };
 
     const observer = new IntersectionObserver((entries) => {
@@ -189,15 +189,20 @@ const Home = React.memo(() => {
         className="pt-0 pb-0 bg-white relative -mb-40 md:-mb-56"
       >
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 text-center">
-          <div className="mb-0 max-w-3xl mx-auto relative">
+          <div className={`mb-0 max-w-3xl mx-auto relative ${
+            visibleSections.has('product-intro') ? 'scroll-animate visible' : 'scroll-animate'
+          }`}>
             <OptimizedImage
               src={spectraGlassesImage}
               alt="Spectra 1.0"
-              className="w-full h-auto rounded-xl sm:rounded-2xl object-cover"
+              className={`w-full h-auto rounded-xl sm:rounded-2xl object-cover transition-all duration-1000 ease-out ${
+                visibleSections.has('product-intro') ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
+              }`}
               priority={true}
               style={{
                 maskImage: 'linear-gradient(to bottom, transparent 0%, black 40%, black 60%, transparent 100%)',
-                WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 40%, black 60%, transparent 100%)'
+                WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 40%, black 60%, transparent 100%)',
+                transitionDelay: '100ms'
               }}
             />
             <div className="absolute top-0 left-0 right-0 flex items-start justify-center pt-16 sm:pt-24 md:pt-32 px-4">
@@ -224,18 +229,22 @@ const Home = React.memo(() => {
         </div>
         <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-8 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 md:gap-20 items-center">
-            <div className="scroll-slide-right lg:col-span-3 lg:pr-8 order-2 lg:order-1 relative">
-              <video
-                ref={(el) => (uspVideoRefs.current['expand-universe'] = el)}
-                autoPlay
-                muted
-                loop
-                playsInline
-                className="w-full h-auto aspect-video object-contain rounded-2xl bg-black"
-              >
-                <source src="https://ik.imagekit.io/ohyemuffin/asset/video/expand-the-universe.mp4?updatedAt=1753676355743" type="video/mp4" />
-                <div className="w-full h-full bg-gray-900 rounded-2xl"></div>
-              </video>
+            <div className={`lg:col-span-3 lg:pr-8 order-2 lg:order-1 relative ${
+              visibleSections.has('expand-universe') ? 'scroll-animate-video visible' : 'scroll-animate-video'
+            }`}>
+              <div className={`enhanced-video-container ${visibleSections.has('expand-universe') ? 'animate' : ''}`}>
+                <video
+                  ref={(el) => (uspVideoRefs.current['expand-universe'] = el)}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className="w-full h-auto aspect-video object-contain rounded-2xl bg-black"
+                >
+                  <source src="https://ik.imagekit.io/ohyemuffin/asset/video/expand-the-universe.mp4?updatedAt=1753676355743" type="video/mp4" />
+                  <div className="w-full h-full bg-gray-900 rounded-2xl"></div>
+                </video>
+              </div>
               
               {/* Play/Pause Button */}
               <button
@@ -253,17 +262,19 @@ const Home = React.memo(() => {
                 )}
               </button>
             </div>
-            <div className="scroll-slide-left lg:col-span-2 space-y-6 md:space-y-8 order-1 lg:order-2">
-              <h2 className={`text-3xl md:text-5xl font-light text-gray-900 leading-tight transform transition-all duration-1000 ease-out ${
-                visibleSections.has('expand-universe') ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-              }`} style={{ transitionDelay: '200ms' }}>
-                Expand your universe
+            <div className={`lg:col-span-2 space-y-6 md:space-y-8 order-1 lg:order-2 ${
+              visibleSections.has('expand-universe') ? 'scroll-animate visible' : 'scroll-animate'
+            }`}>
+              <h2 className="text-3xl md:text-5xl font-light text-gray-900 leading-tight">
+                <span className={`elegant-title-word ${visibleSections.has('expand-universe') ? 'animate' : ''}`} style={{ transitionDelay: '0.1s' }}>Expand</span>{' '}
+                <span className={`elegant-title-word ${visibleSections.has('expand-universe') ? 'animate' : ''}`} style={{ transitionDelay: '0.2s' }}>your</span>{' '}
+                <span className={`elegant-title-word ${visibleSections.has('expand-universe') ? 'animate' : ''}`} style={{ transitionDelay: '0.3s' }}>universe</span>
               </h2>
               <div className="space-y-4 md:space-y-6">
-                <p className="text-sm md:text-base text-gray-600 leading-relaxed">
+                <p className={`elegant-paragraph text-sm md:text-base text-gray-600 leading-relaxed ${visibleSections.has('expand-universe') ? 'animate' : ''}`} style={{ transitionDelay: '0.4s' }}>
                   Seamlessly integrated across all your platforms, Spectra builds tailored recommendations that reflect your unique preferences, even those you haven't yet put into words.
                 </p>
-                <p className="text-sm md:text-base text-gray-600 leading-relaxed">
+                <p className={`elegant-paragraph text-sm md:text-base text-gray-600 leading-relaxed ${visibleSections.has('expand-universe') ? 'animate' : ''}`} style={{ transitionDelay: '0.6s' }}>
                   Whether you're searching for places to go, meals to try, videos to watch, or ways to stay productive, every suggestion is carefully customized to your needs.
                 </p>
               </div>
@@ -287,16 +298,18 @@ const Home = React.memo(() => {
             <div className={`lg:col-span-2 space-y-6 md:space-y-8 ${
               visibleSections.has('unlock-barriers') ? 'scroll-animate visible' : 'scroll-animate'
             }`}>
-              <h2 className={`text-3xl md:text-5xl font-light text-gray-900 leading-tight transform transition-all duration-1000 ease-out ${
-                visibleSections.has('unlock-barriers') ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-              }`} style={{ transitionDelay: '200ms' }}>
-                Unlock a life without barriers
+              <h2 className="text-3xl md:text-5xl font-light text-gray-900 leading-tight">
+                <span className={`elegant-title-word ${visibleSections.has('unlock-barriers') ? 'animate' : ''}`}>Unlock</span>{' '}
+                <span className={`elegant-title-word ${visibleSections.has('unlock-barriers') ? 'animate' : ''}`}>a</span>{' '}
+                <span className={`elegant-title-word ${visibleSections.has('unlock-barriers') ? 'animate' : ''}`}>life</span>{' '}
+                <span className={`elegant-title-word ${visibleSections.has('unlock-barriers') ? 'animate' : ''}`}>without</span>{' '}
+                <span className={`elegant-title-word ${visibleSections.has('unlock-barriers') ? 'animate' : ''}`}>barriers</span>
               </h2>
               <div className="space-y-4 md:space-y-6">
-                <p className="text-sm md:text-base text-gray-600 leading-relaxed">
+                <p className={`elegant-paragraph text-sm md:text-base text-gray-600 leading-relaxed ${visibleSections.has('unlock-barriers') ? 'animate' : ''}`}>
                   Powered by our latest AI model, Spectra uses ambient insights to help you move beyond everyday limitations.
                 </p>
-                <p className="text-sm md:text-base text-gray-600 leading-relaxed">
+                <p className={`elegant-paragraph text-sm md:text-base text-gray-600 leading-relaxed ${visibleSections.has('unlock-barriers') ? 'animate' : ''}`}>
                   From navigating locations to assisting in everyday conversations, Spectra provides intuitive insights that keep you connected and in control.
                 </p>
               </div>
@@ -304,17 +317,19 @@ const Home = React.memo(() => {
             <div className={`lg:col-span-3 lg:pl-8 relative ${
               visibleSections.has('unlock-barriers') ? 'scroll-animate-video visible' : 'scroll-animate-video'
             }`}>
-              <video
-                ref={(el) => (uspVideoRefs.current['unlock-barriers'] = el)}
-                autoPlay
-                muted
-                loop
-                playsInline
-                className="w-full h-auto aspect-video object-cover object-bottom rounded-2xl bg-black"
-              >
-                <source src="https://ik.imagekit.io/ohyemuffin/asset/video/unlock.mp4?updatedAt=1753676356747" type="video/mp4" />
-                <div className="w-full h-full bg-gray-900 rounded-2xl"></div>
-              </video>
+              <div className={`enhanced-video-container ${visibleSections.has('unlock-barriers') ? 'animate' : ''}`}>
+                <video
+                  ref={(el) => (uspVideoRefs.current['unlock-barriers'] = el)}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className="w-full h-auto aspect-video object-cover object-bottom rounded-2xl bg-black"
+                >
+                  <source src="https://ik.imagekit.io/ohyemuffin/asset/video/unlock.mp4?updatedAt=1753676356747" type="video/mp4" />
+                  <div className="w-full h-full bg-gray-900 rounded-2xl"></div>
+                </video>
+              </div>
               
               {/* Play/Pause Button */}
               <button
@@ -348,8 +363,8 @@ const Home = React.memo(() => {
           <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_20%_30%,rgba(156,163,175,0.15)_0%,transparent_40%),radial-gradient(ellipse_at_80%_70%,rgba(209,213,219,0.12)_0%,transparent_35%),radial-gradient(ellipse_at_90%_10%,rgba(156,163,175,0.08)_0%,transparent_25%),radial-gradient(ellipse_at_10%_90%,rgba(209,213,219,0.1)_0%,transparent_30%)]"></div>
         </div>
         <div className="w-full relative z-10">
-          <div className={`relative w-full h-[50vh] md:h-[60vh] lg:h-[70vh] overflow-hidden ${
-            visibleSections.has('smart-recognition') ? 'animate-video-load-in' : ''
+          <div className={`enhanced-video-container relative w-full h-[50vh] md:h-[60vh] lg:h-[70vh] overflow-hidden ${
+            visibleSections.has('smart-recognition') ? 'animate' : ''
           }`}>
             <video
               ref={(el) => {
@@ -399,14 +414,11 @@ const Home = React.memo(() => {
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gray-600/50 to-transparent"></div>
             
             <div className="relative z-10">
-              <h3 className={`text-2xl md:text-4xl font-bold text-white mb-4 transform transition-all duration-1000 ease-out ${
-                visibleSections.has('smart-recognition') ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-              }`} style={{ transitionDelay: '200ms' }}>
-                Smart Recognition
+              <h3 className="text-2xl md:text-4xl font-bold text-white mb-4">
+                <span className={`elegant-title-word ${visibleSections.has('smart-recognition') ? 'animate' : ''}`}>Smart</span>{' '}
+                <span className={`elegant-title-word ${visibleSections.has('smart-recognition') ? 'animate' : ''}`}>Recognition</span>
               </h3>
-              <p className={`text-base md:text-lg text-gray-300 max-w-2xl mx-auto transform transition-all duration-1000 ease-out ${
-                visibleSections.has('smart-recognition') ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-              }`} style={{ transitionDelay: '400ms' }}>
+              <p className={`elegant-paragraph text-base md:text-lg text-gray-300 max-w-2xl mx-auto ${visibleSections.has('smart-recognition') ? 'animate' : ''}`}>
                 See how Spectra identifies and adapts to your environment in real-time
               </p>
             </div>
@@ -429,17 +441,19 @@ const Home = React.memo(() => {
             <div className={`lg:col-span-3 lg:pr-8 order-2 lg:order-1 relative ${
               visibleSections.has('cancel-noise') ? 'scroll-animate-video visible' : 'scroll-animate-video'
             }`}>
-              <video
-                ref={(el) => (uspVideoRefs.current['cancel-noise'] = el)}
-                autoPlay
-                muted
-                loop
-                playsInline
-                className="w-full h-auto aspect-video object-contain rounded-2xl bg-black"
-              >
-                <source src="https://ik.imagekit.io/ohyemuffin/asset/video/cancel-unwanted-noice.mp4?updatedAt=1753676357536" type="video/mp4" />
-                <div className="w-full h-full bg-gray-900 rounded-2xl"></div>
-              </video>
+              <div className={`enhanced-video-container ${visibleSections.has('cancel-noise') ? 'animate' : ''}`}>
+                <video
+                  ref={(el) => (uspVideoRefs.current['cancel-noise'] = el)}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className="w-full h-auto aspect-video object-contain rounded-2xl bg-black"
+                >
+                  <source src="https://ik.imagekit.io/ohyemuffin/asset/video/cancel-unwanted-noice.mp4?updatedAt=1753676357536" type="video/mp4" />
+                  <div className="w-full h-full bg-gray-900 rounded-2xl"></div>
+                </video>
+              </div>
               
               {/* Play/Pause Button */}
               <button
@@ -460,16 +474,17 @@ const Home = React.memo(() => {
             <div className={`lg:col-span-2 space-y-6 md:space-y-8 order-1 lg:order-2 ${
               visibleSections.has('cancel-noise') ? 'scroll-animate visible' : 'scroll-animate'
             }`}>
-              <h2 className={`text-3xl md:text-5xl font-light text-gray-900 leading-tight transform transition-all duration-1000 ease-out ${
-                visibleSections.has('cancel-noise') ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-              }`} style={{ transitionDelay: '200ms' }}>
-                Cancel the unwanted noise
+              <h2 className="text-3xl md:text-5xl font-light text-gray-900 leading-tight">
+                <span className={`elegant-title-word ${visibleSections.has('cancel-noise') ? 'animate' : ''}`}>Cancel</span>{' '}
+                <span className={`elegant-title-word ${visibleSections.has('cancel-noise') ? 'animate' : ''}`}>the</span>{' '}
+                <span className={`elegant-title-word ${visibleSections.has('cancel-noise') ? 'animate' : ''}`}>unwanted</span>{' '}
+                <span className={`elegant-title-word ${visibleSections.has('cancel-noise') ? 'animate' : ''}`}>noise</span>
               </h2>
               <div className="space-y-4 md:space-y-6">
-                <p className="text-sm md:text-base text-gray-600 leading-relaxed">
+                <p className={`elegant-paragraph text-sm md:text-base text-gray-600 leading-relaxed ${visibleSections.has('cancel-noise') ? 'animate' : ''}`}>
                   Spectra cuts through the noise and shows you only what matters to you, even when it comes to ads and product suggestions.
                 </p>
-                <p className="text-sm md:text-base text-gray-600 leading-relaxed">
+                <p className={`elegant-paragraph text-sm md:text-base text-gray-600 leading-relaxed ${visibleSections.has('cancel-noise') ? 'animate' : ''}`}>
                   While using Spectra, you'll only hear from the brands you care about and see products that serve your needs. No intrusive content. Just relevance, always.
                 </p>
               </div>
@@ -491,32 +506,35 @@ const Home = React.memo(() => {
         <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-8 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 md:gap-20 items-center">
             <div className="lg:col-span-2 space-y-6 md:space-y-8">
-              <h2 className={`text-3xl md:text-5xl font-light text-gray-900 leading-tight transform transition-all duration-1000 ease-out ${
-                visibleSections.has('see-through-thoughts') ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-              }`} style={{ transitionDelay: '200ms' }}>
-                See through your thoughts
+              <h2 className="text-3xl md:text-5xl font-light text-gray-900 leading-tight">
+                <span className={`elegant-title-word ${visibleSections.has('see-through-thoughts') ? 'animate' : ''}`}>See</span>{' '}
+                <span className={`elegant-title-word ${visibleSections.has('see-through-thoughts') ? 'animate' : ''}`}>through</span>{' '}
+                <span className={`elegant-title-word ${visibleSections.has('see-through-thoughts') ? 'animate' : ''}`}>your</span>{' '}
+                <span className={`elegant-title-word ${visibleSections.has('see-through-thoughts') ? 'animate' : ''}`}>thoughts</span>
               </h2>
               <div className="space-y-4 md:space-y-6">
-                <p className="text-sm md:text-base text-gray-600 leading-relaxed">
+                <p className={`elegant-paragraph text-sm md:text-base text-gray-600 leading-relaxed ${visibleSections.has('see-through-thoughts') ? 'animate' : ''}`}>
                   Spectra anticipates your needs by spotting patterns in your real-time activity.
                 </p>
-                <p className="text-sm md:text-base text-gray-600 leading-relaxed">
+                <p className={`elegant-paragraph text-sm md:text-base text-gray-600 leading-relaxed ${visibleSections.has('see-through-thoughts') ? 'animate' : ''}`}>
                   As your trusted assistant, it creates hyper-personalized suggestions made just for you. Whatever you need, from an app to a product or service, it's always just one tap away.
                 </p>
               </div>
             </div>
             <div className="lg:col-span-3 lg:pl-8 relative">
-              <video
-                ref={(el) => (uspVideoRefs.current['look-through'] = el)}
-                autoPlay
-                muted
-                loop
-                playsInline
-                className="w-full h-auto aspect-video object-contain rounded-2xl bg-black"
-              >
-                <source src="https://ik.imagekit.io/ohyemuffin/asset/video/look-through-your-head.mp4?updatedAt=1753676357987" type="video/mp4" />
-                <div className="w-full h-full bg-gray-900 rounded-2xl"></div>
-              </video>
+              <div className={`enhanced-video-container ${visibleSections.has('see-through-thoughts') ? 'animate' : ''}`}>
+                <video
+                  ref={(el) => (uspVideoRefs.current['look-through'] = el)}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className="w-full h-auto aspect-video object-contain rounded-2xl bg-black"
+                >
+                  <source src="https://ik.imagekit.io/ohyemuffin/asset/video/look-through-your-head.mp4?updatedAt=1753676357987" type="video/mp4" />
+                  <div className="w-full h-full bg-gray-900 rounded-2xl"></div>
+                </video>
+              </div>
               
               {/* Play/Pause Button */}
               <button
@@ -545,7 +563,7 @@ const Home = React.memo(() => {
         className="py-16 md:py-24 bg-white"
       >
         <div className="w-full">
-          <div className="relative w-full h-[40vh] sm:h-[50vh] md:h-[60vh] lg:h-[70vh] overflow-hidden">
+          <div className={`enhanced-video-container relative w-full h-[40vh] sm:h-[50vh] md:h-[60vh] lg:h-[70vh] overflow-hidden ${visibleSections.has('intuitive-insights') ? 'animate' : ''}`}>
             <video
               ref={(el) => (uspVideoRefs.current['intuitive-insights'] = el)}
               autoPlay
@@ -590,14 +608,11 @@ const Home = React.memo(() => {
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gray-600/50 to-transparent"></div>
             
             <div className="relative z-10">
-              <h3 className={`text-2xl md:text-4xl font-bold text-white mb-4 transform transition-all duration-1000 ease-out ${
-                visibleSections.has('intuitive-insights') ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-              }`} style={{ transitionDelay: '200ms' }}>
-                Intuitive Insights
+              <h3 className="text-2xl md:text-4xl font-bold text-white mb-4">
+                <span className={`elegant-title-word ${visibleSections.has('intuitive-insights') ? 'animate' : ''}`}>Intuitive</span>{' '}
+                <span className={`elegant-title-word ${visibleSections.has('intuitive-insights') ? 'animate' : ''}`}>Insights</span>
               </h3>
-              <p className={`text-base md:text-lg text-gray-300 max-w-2xl mx-auto transform transition-all duration-1000 ease-out ${
-                visibleSections.has('intuitive-insights') ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-              }`} style={{ transitionDelay: '400ms' }}>
+              <p className={`elegant-paragraph text-base md:text-lg text-gray-300 max-w-2xl mx-auto ${visibleSections.has('intuitive-insights') ? 'animate' : ''}`}>
                 Experience personalized recommendations that understand your lifestyle
               </p>
             </div>
@@ -666,14 +681,17 @@ const Home = React.memo(() => {
               </div>
             </div>
             <div className="lg:col-span-2 space-y-8 md:space-y-12 order-1 lg:order-2 text-center lg:text-left">
-              <h2 className={`text-4xl md:text-6xl font-bold text-gray-900 leading-tight transform transition-all duration-1000 ease-out ${
-                visibleSections.has('experience-future') ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-              }`} style={{ transitionDelay: '200ms' }}>
-                Experience
-                <br />
-                the future,
-                <br />
-                today
+              <h2 className="text-4xl md:text-6xl font-bold text-gray-900 leading-tight">
+                <div className="mb-2">
+                  <span className={`elegant-title-word ${visibleSections.has('experience-future') ? 'animate' : ''}`}>Experience</span>
+                </div>
+                <div className="mb-2">
+                  <span className={`elegant-title-word ${visibleSections.has('experience-future') ? 'animate' : ''}`}>the</span>{' '}
+                  <span className={`elegant-title-word ${visibleSections.has('experience-future') ? 'animate' : ''}`}>future,</span>
+                </div>
+                <div>
+                  <span className={`elegant-title-word ${visibleSections.has('experience-future') ? 'animate' : ''}`}>today</span>
+                </div>
               </h2>
               <div className="flex justify-center lg:justify-start">
                 <Link
@@ -699,19 +717,18 @@ const Home = React.memo(() => {
         <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-gray-75/80 to-transparent"></div>
         <div className="relative z-10 max-w-3xl mx-auto px-6 md:px-8 lg:px-12 text-center">
           <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-12 md:p-16 lg:p-20 shadow-xl">
-            <h2 className={`text-3xl md:text-5xl font-bold text-gray-900 mb-12 md:mb-16 transform transition-all duration-1000 ease-out ${
-              visibleSections.has('about-us') ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-            }`} style={{ transitionDelay: '200ms' }}>
-              About us
+            <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-12 md:mb-16">
+              <span className={`elegant-title-word ${visibleSections.has('about-us') ? 'animate' : ''}`}>About</span>{' '}
+              <span className={`elegant-title-word ${visibleSections.has('about-us') ? 'animate' : ''}`}>us</span>
             </h2>
             <div className="space-y-4 md:space-y-6 mb-12 md:mb-20 max-w-4xl mx-auto">
-              <p className="text-base md:text-lg text-gray-600 leading-loose">
+              <p className={`elegant-paragraph text-base md:text-lg text-gray-600 leading-loose ${visibleSections.has('about-us') ? 'animate' : ''}`}>
                 At the forefront of modern innovation, we design technology that puts people first.
               </p>
-              <p className="text-base md:text-lg text-gray-600 leading-loose">
+              <p className={`elegant-paragraph text-base md:text-lg text-gray-600 leading-loose ${visibleSections.has('about-us') ? 'animate' : ''}`}>
                 Combining intelligence with intention, we believe technology should adapt to your needs, not the other way around.
               </p>
-              <p className="text-base md:text-lg text-gray-600 leading-loose">
+              <p className={`elegant-paragraph text-base md:text-lg text-gray-600 leading-loose ${visibleSections.has('about-us') ? 'animate' : ''}`}>
                 Our vision is grounded in building a more intuitive future, one device at a time.
               </p>
             </div>
@@ -735,27 +752,28 @@ const Home = React.memo(() => {
         <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-gray-75/80 to-transparent"></div>
         <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-white/90 to-transparent"></div>
         <div className="relative z-10 max-w-full mx-auto px-6 md:px-8 lg:px-12">
-          <h2 className={`text-3xl md:text-5xl font-bold text-gray-900 text-center mb-12 md:mb-20 transform transition-all duration-1000 ease-out ${
-            visibleSections.has('social-section') ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-          }`} style={{ transitionDelay: '200ms' }}>
-            Follow us on social
+          <h2 className="text-3xl md:text-5xl font-bold text-gray-900 text-center mb-12 md:mb-20">
+            <span className={`elegant-title-word ${visibleSections.has('social-section') ? 'animate' : ''}`}>Follow</span>{' '}
+            <span className={`elegant-title-word ${visibleSections.has('social-section') ? 'animate' : ''}`}>us</span>{' '}
+            <span className={`elegant-title-word ${visibleSections.has('social-section') ? 'animate' : ''}`}>on</span>{' '}
+            <span className={`elegant-title-word ${visibleSections.has('social-section') ? 'animate' : ''}`}>social</span>
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
-            <div>
+            <div className={`enhanced-video-container ${visibleSections.has('social-section') ? 'animate' : ''}`}>
               <img
                 src={social1Image}
                 alt="Social 1"
                 className="w-full h-80 sm:h-96 md:h-[500px] object-cover rounded-2xl"
               />
             </div>
-            <div>
+            <div className={`enhanced-video-container ${visibleSections.has('social-section') ? 'animate' : ''}`} style={{ transitionDelay: '0.2s' }}>
               <img
                 src={social2Image}
                 alt="Social 2"
                 className="w-full h-80 sm:h-96 md:h-[500px] object-cover rounded-2xl"
               />
             </div>
-            <div className="sm:col-span-2 md:col-span-1">
+            <div className={`enhanced-video-container sm:col-span-2 md:col-span-1 ${visibleSections.has('social-section') ? 'animate' : ''}`} style={{ transitionDelay: '0.4s' }}>
               <img
                 src={social3Image}
                 alt="Social 3"

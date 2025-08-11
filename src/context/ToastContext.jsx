@@ -18,7 +18,7 @@ export const ToastProvider = ({ children }) => {
     const newToast = {
       id,
       type: 'success', // success, error, warning, info
-      duration: 4000,
+      duration: 2500,
       ...toast
     };
 
