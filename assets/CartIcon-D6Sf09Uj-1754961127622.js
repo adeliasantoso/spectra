@@ -1,4 +1,4 @@
-import{j as e}from"./ui-Cus3Wscu-1754960989684.js";import{r as n,g as l,L as c}from"./vendor-Daq6HpjJ-1754960989684.js";import{u}from"./index-_4mup-Yb-1754960989684.js";const x=()=>{const{getTotalItems:s}=u(),r=s(),[o,a]=n.useState(null);if(n.useEffect(()=>{const t=document.createElement("div");return t.id="cart-icon-portal",t.style.cssText=`
+import{j as e}from"./ui-BwLNuz_O-1754961127622.js";import{r as n,g as l,L as c}from"./vendor-Daq6HpjJ-1754961127622.js";import{u}from"./index-tFOJW4IL-1754961127622.js";const x=()=>{const{getTotalItems:s}=u(),r=s(),[o,a]=n.useState(null);if(n.useEffect(()=>{const t=document.createElement("div");return t.id="cart-icon-portal",t.style.cssText=`
       position: fixed !important;
       bottom: 24px !important;
       right: 24px !important;
