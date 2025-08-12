@@ -74,7 +74,7 @@ const FAQ = React.memo(() => {
     },
     {
       question: "Why do the product suggestions I see through Spectra 1.0 sometimes change?",
-      answer: "Brands and advertisers typically provide a base version of their content to our team. Spectra 1.0's built-in AI automatically personalizes this content to better suit your preferences. It may alter the ad format—from static image to video, or from live action to animation—depending on what resonates most with you. The message, creative elements, and even duration may also shift to reflect your interests. Over time, the AI may update the ad dynamically to align with changes in your lifestyle. If there's a product you like but aren't ready to purchase, you can mark it as a Favorite for future reference."
+      answer: "Brands and advertisers typically provide a base version of their content to our team. Spectra 1.0's built-in AI automatically personalizes this content to better suit your preferences. It may alter the ad format, from static image to video, or from live action to animation, depending on what resonates most with you. The message, creative elements, and even duration may also shift to reflect your interests. Over time, the AI may update the ad dynamically to align with changes in your lifestyle. If there's a product you like but aren't ready to purchase, you can mark it as a Favorite for future reference."
     },
     {
       question: "Does Spectra 1.0 share my personal data with advertisers to create personalized ads?",
@@ -91,10 +91,10 @@ const FAQ = React.memo(() => {
   ];
 
   return (
-    <section id="faq" ref={sectionRef} className="py-16 md:py-24 bg-gradient-to-b from-gray-100 to-gray-200 relative">
-      <div className="absolute inset-0 bg-gradient-to-b from-gray-150/30 via-transparent to-gray-300/40"></div>
-      <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-gray-100/90 to-transparent"></div>
-      <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-gray-200/90 to-transparent"></div>
+    <section id="faq" ref={sectionRef} className="py-16 md:py-24 bg-gradient-to-br from-gray-200 via-white to-gray-300 relative">
+      <div className="absolute inset-0 bg-gradient-to-r from-gray-100/60 via-white/80 to-gray-200/60"></div>
+      <div className="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-gray-200/80 to-transparent"></div>
+      <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-gray-300/80 to-transparent"></div>
       <div className="relative z-10">
       <div className="max-w-4xl mx-auto px-6 md:px-8 lg:px-12">
         <div className="text-center mb-12 md:mb-16">
@@ -110,7 +110,7 @@ const FAQ = React.memo(() => {
             <div key={index} className={`elegant-paragraph py-6 md:py-8 ${isVisible ? 'animate' : ''}`} style={{ transitionDelay: `${0.1 + index * 0.05}s` }}>
               <button
                 onClick={() => toggleItem(index)}
-                className="w-full text-left flex justify-between items-center group hover:bg-gray-50/50 transition-colors duration-200 rounded-lg px-4 py-2 -mx-4"
+                className="w-full text-left flex justify-between items-center group hover:bg-white/70 transition-colors duration-300 rounded-lg px-4 py-2 -mx-4"
               >
                 <span className="text-lg md:text-xl font-medium text-black pr-4 group-hover:text-gray-700 transition-colors duration-200">
                   {item.question}

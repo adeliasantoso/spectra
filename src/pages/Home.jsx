@@ -778,7 +778,7 @@ const Home = React.memo(() => {
               </h2>
               <div className="flex justify-center lg:justify-start">
                 <Link
-                  to="/shop"
+                  to="/product/spectra-1-0"
                   className="inline-block bg-black text-white px-6 py-3 md:px-8 md:py-4 rounded-full text-base md:text-lg font-bold hover:bg-gray-800 transition-colors duration-200"
                 >
                   Shop Now

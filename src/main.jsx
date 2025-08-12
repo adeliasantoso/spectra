@@ -12,6 +12,7 @@ import AppInitializer from './components/AppInitializer.jsx'
 import NetworkStatus from './components/NetworkStatus.jsx'
 import ScrollToTop from './components/ScrollToTop.jsx'
 import { initScrollAnimations } from './utils/scrollAnimation.js'
+import { initWhiteScreenDetection } from './utils/whiteScreenDetection.js'
 
 // Lazy load pages for better performance
 import { lazy } from 'react'
@@ -26,6 +27,9 @@ const OrderSuccess = lazy(() => import('./pages/OrderSuccess.jsx'))
 
 // Initialize scroll animations
 initScrollAnimations();
+
+// Initialize white screen detection
+initWhiteScreenDetection();
 
 // Disable browser scroll restoration globally for best UX practice
 if (typeof window !== 'undefined' && 'scrollRestoration' in history) {

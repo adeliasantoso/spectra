@@ -9,10 +9,16 @@ const Cart = () => {
   const { cartItems, updateQuantity, removeFromCart, getTotalPrice, clearCart } = useCart();
   const { success, info, warning } = useToast();
   const [removingItems, setRemovingItems] = useState(new Set());
+  const [, forceUpdate] = useState({});
 
   // Animation state for sections
   const [visibleSections, setVisibleSections] = useState(new Set());
   const sectionRefs = useRef({});
+
+  // Debug: Monitor cartItems changes
+  useEffect(() => {
+    console.log('Cart component: cartItems changed, length:', cartItems.length);
+  }, [cartItems]);
 
   // Animation observer for scroll-triggered animations
   useEffect(() => {
@@ -62,8 +68,15 @@ const Cart = () => {
   };
 
   const handleClearCart = () => {
+    console.log('Before clear, cartItems length:', cartItems.length);
     clearCart();
     warning('Cart cleared');
+    console.log('After clear, cartItems length should be 0...');
+    // Force re-render to ensure empty cart state shows immediately
+    setTimeout(() => {
+      console.log('In timeout, cartItems length:', cartItems.length);
+      forceUpdate({});
+    }, 100);
   };
 
   const formatPrice = (price) => {
@@ -89,23 +102,21 @@ const Cart = () => {
     }
   };
 
+  console.log('Rendering Cart component. cartItems.length:', cartItems.length);
+  
   if (cartItems.length === 0) {
+    console.log('Showing empty cart state');
     return (
       <div className="min-h-screen bg-white">
         <Navigation />
         
         <section 
           id="empty-cart"
-          ref={(el) => sectionRefs.current['empty-cart'] = el}
           className="pt-24 md:pt-32 pb-12 md:pb-20"
         >
           <div className="max-w-4xl mx-auto px-6 md:px-8 lg:px-12 text-center">
-            <h1 className={`text-2xl md:text-4xl font-light text-black mb-6 md:mb-8 transform transition-all duration-1000 ease-out ${
-              visibleSections.has('empty-cart') ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-            }`} style={{ transitionDelay: '200ms' }}>Your Cart</h1>
-            <div className={`py-8 md:py-16 transition-all duration-700 delay-200 ${
-              visibleSections.has('empty-cart') ? 'animate-fade-up opacity-100' : 'opacity-0 translate-y-8'
-            }`}>
+            <h1 className="text-2xl md:text-4xl font-light text-black mb-6 md:mb-8">Your Cart</h1>
+            <div className="py-8 md:py-16">
               <svg className="w-16 h-16 md:w-24 md:h-24 mx-auto mb-4 md:mb-6 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m1.6 8L5 3H3m4 10v6a1 1 0 001 1h10a1 1 0 001-1v-6m-8 6V9a1 1 0 011-1h6a1 1 0 011 1v8" />
               </svg>

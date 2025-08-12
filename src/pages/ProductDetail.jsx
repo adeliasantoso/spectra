@@ -545,11 +545,11 @@ const ProductDetail = () => {
                     {isDescriptionExpanded && (
                       <div key={expandAnimationKey} className="space-y-8 animate-fade-in">
                         <p className="text-[15px] md:text-[17px]">
-                          Spectra 1.0 was born from a simple belief: technology should understand more than it serves. It pays attention to the rhythms of your life—what you linger on, what you skip, and turns that awareness into moment-to-moment relevance. More than just a device, it's an intelligent companion that learns from you to help make each day feel smoother and more intentional.
+                          Spectra 1.0 was born from a simple belief: technology should understand more than it serves. It pays attention to the rhythms of your life, what you linger on, what you skip, and turns that awareness into moment-to-moment relevance. More than just a device, it's an intelligent companion that learns from you to help make each day feel smoother and more intentional.
                         </p>
                         
                         <p className="text-[15px] md:text-[17px]">
-                          Built with a sleek, lightweight design, Spectra integrates effortlessly into your routine, delivering personalized recommendations directly into your view. Whether you're navigating a busy day or winding down in the evening, Spectra acts as your reliable, ever-present assistant. It processes your preferences to generate thoughtful, timely suggestions—from recommending what to watch next to guiding you toward smarter purchases.
+                          Built with a sleek, lightweight design, Spectra integrates effortlessly into your routine, delivering personalized recommendations directly into your view. Whether you're navigating a busy day or winding down in the evening, Spectra acts as your reliable, ever-present assistant. It processes your preferences to generate thoughtful, timely suggestions, from recommending what to watch next to guiding you toward smarter purchases.
                         </p>
                         
                         <p className="text-[15px] md:text-[17px]">

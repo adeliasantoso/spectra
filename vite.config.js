@@ -9,15 +9,17 @@ export default defineConfig({
     // Fix for __DEFINES__ error
     global: 'globalThis',
     __DEV__: JSON.stringify(process.env.NODE_ENV !== 'production'),
+    // Add build timestamp for cache busting
+    __BUILD_TIME__: JSON.stringify(Date.now()),
   },
   build: {
     // Optimize chunk splitting
     rollupOptions: {
       output: {
-        // Use normal Vite hashing for cache busting
-        entryFileNames: `assets/[name]-[hash].js`,
-        chunkFileNames: `assets/[name]-[hash].js`,
-        assetFileNames: `assets/[name]-[hash].[ext]`,
+        // Aggressive cache busting with timestamp
+        entryFileNames: `assets/[name]-[hash]-${Date.now()}.js`,
+        chunkFileNames: `assets/[name]-[hash]-${Date.now()}.js`,
+        assetFileNames: `assets/[name]-[hash]-${Date.now()}.[ext]`,
         manualChunks: {
           vendor: ['react', 'react-dom', 'react-router-dom'],
           ui: ['./src/components/OptimizedImage.jsx', './src/components/OptimizedVideo.jsx']

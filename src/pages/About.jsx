@@ -165,7 +165,7 @@ const About = () => {
                 <p className={`text-gray-600 leading-relaxed elegant-paragraph ${visibleSections.has('designing-for') ? 'animate' : ''}`}>
                   The content is automatically adapted to each user's
                   preferences, whether in the form of a video, image, or
-                  text—and actually entertaining. It's advertising that feels
+                  text, and actually entertaining. It's advertising that feels
                   more like your beloved content on the internet than an
                   irrelevant noise.
                 </p>

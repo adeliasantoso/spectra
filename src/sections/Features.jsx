@@ -42,7 +42,7 @@ const Features = () => {
     },
     {
       title: "Look through your head.",
-      description: "Spectra anticipates your needs by finding patterns in your current activities.\n\nAs your reliable assistant, Spectra can create hyper personalized suggestions, only for you. Anything you want—apps, products, or services—are one tap away.",
+      description: "Spectra anticipates your needs by finding patterns in your current activities.\n\nAs your reliable assistant, Spectra can create hyper personalized suggestions, only for you. Anything you want, apps, products, or services, are one tap away.",
       image: unlockLifeAndLookThrough,
       imageAlt: "Look through your head feature",
       layout: "right",

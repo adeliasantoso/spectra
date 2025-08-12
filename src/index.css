@@ -2,23 +2,49 @@
 @tailwind components;
 @tailwind utilities;
 
-/* CSS Reset */
+/* Enhanced Cross-Browser CSS Reset */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  border: 0;
+  outline: 0;
+  vertical-align: baseline;
 }
 
-html,
+/* Normalize browser defaults */
+html {
+  height: 100%;
+  font-size: 16px;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
+  scroll-behavior: smooth;
+  /* Force consistent rendering */
+  -webkit-font-feature-settings: "kern" 1;
+  font-feature-settings: "kern" 1;
+  font-kerning: normal;
+}
+
 body {
   height: 100%;
   line-height: 1.5;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Prevent layout shifts */
+  overflow-x: hidden;
+  overflow-y: auto;
+  /* Remove transform that breaks fixed positioning */
 }
 
+/* Consistent media rendering */
 img,
 picture,
 video,
@@ -26,34 +52,107 @@ canvas,
 svg {
   display: block;
   max-width: 100%;
+  height: auto;
+  border: 0;
+  /* Prevent layout shifts */
+  vertical-align: middle;
 }
 
+/* Form element normalization */
 input,
 button,
 textarea,
 select {
   font: inherit;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 button {
   border: none;
   background: none;
   cursor: pointer;
+  /* Prevent button zoom on iOS */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
+/* Link normalization */
 a {
   text-decoration: none;
   color: inherit;
+  background-color: transparent;
+  /* Improve link performance */
+  -webkit-tap-highlight-color: transparent;
 }
 
+/* List normalization */
 ul,
 ol {
   list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
+/* Table normalization */
 table {
   border-collapse: collapse;
   border-spacing: 0;
+  width: 100%;
+}
+
+/* Additional normalizations for cross-browser consistency */
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+}
+
+p, blockquote, pre, address, hr, dl, dd, ol, ul, li, dt, dd {
+  margin: 0;
+  padding: 0;
+}
+
+fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+legend {
+  padding: 0;
+  color: inherit;
+}
+
+/* Prevent zoom on focus in iOS */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="password"],
+textarea {
+  font-size: 16px;
+  -webkit-appearance: none;
+}
+
+/* Consistent select styling */
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+/* Fix for consistent rendering */
+*, *:before, *:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 /* FAQ animations */

@@ -95,10 +95,10 @@ const Contact = () => {
               <span className={`elegant-title-word ${visibleSections.has('contact-hero') ? 'animate' : ''}`}>us</span>
             </h1>
             <div className="max-w-2xl mx-auto space-y-4 md:space-y-6">
-              <p className={`text-sm md:text-base text-gray-700 leading-relaxed elegant-paragraph ${visibleSections.has('contact-hero') ? 'animate' : ''}`}>
+              <p className={`text-base md:text-lg text-gray-700 leading-relaxed elegant-paragraph ${visibleSections.has('contact-hero') ? 'animate' : ''}`}>
                 Connect with our team to explore how Spectra's innovations can support tailored solutions for you or your organization. We also welcome inquiries about potential collaborations or career opportunities.
               </p>
-              <p className={`text-sm md:text-base text-gray-700 leading-relaxed elegant-paragraph ${visibleSections.has('contact-hero') ? 'animate' : ''}`}>
+              <p className={`text-base md:text-lg text-gray-700 leading-relaxed elegant-paragraph ${visibleSections.has('contact-hero') ? 'animate' : ''}`}>
                 For general inquiries, our <span onClick={() => { navigate('/'); setTimeout(() => { const faqSection = document.getElementById('faq'); if (faqSection) faqSection.scrollIntoView({ behavior: 'smooth' }); }, 500); }} className="text-blue-600 hover:text-blue-800 underline cursor-pointer">FAQ section</span> offers detailed answers to the most common questions and is a good place to begin.
               </p>
             </div>
@@ -114,7 +114,7 @@ const Contact = () => {
                 </div>
                 <div className="space-y-3 md:space-y-4">
                   <div>
-                    <label htmlFor="firstName" className="block text-sm text-gray-600 mb-1 md:mb-2">
+                    <label htmlFor="firstName" className="block text-sm md:text-base text-gray-600 mb-1 md:mb-2">
                       First Name
                     </label>
                     <input
@@ -123,7 +123,7 @@ const Contact = () => {
                       name="firstName"
                       value={formData.firstName}
                       onChange={handleInputChange}
-                      className="w-full px-3 md:px-4 py-2 md:py-3 border border-gray-400 rounded-full bg-white focus:outline-none focus:border-gray-600 transition-colors text-base"
+                      className="w-full px-3 md:px-4 py-2 md:py-3 border border-gray-400 rounded-full bg-white focus:outline-none focus:border-gray-600 transition-colors text-sm md:text-base"
                       required
                     />
                   </div>
@@ -137,7 +137,7 @@ const Contact = () => {
                       name="lastName"
                       value={formData.lastName}
                       onChange={handleInputChange}
-                      className="w-full px-3 md:px-4 py-2 md:py-3 border border-gray-400 rounded-full bg-white focus:outline-none focus:border-gray-600 transition-colors text-base"
+                      className="w-full px-3 md:px-4 py-2 md:py-3 border border-gray-400 rounded-full bg-white focus:outline-none focus:border-gray-600 transition-colors text-sm md:text-base"
                       required
                     />
                   </div>

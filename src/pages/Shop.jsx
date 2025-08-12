@@ -76,7 +76,7 @@ const Shop = () => {
         className="py-4 sm:py-6 md:py-8"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 text-center">
-          <h1 className={`text-2xl md:text-4xl font-semibold text-black mb-6 sm:mb-8 transform transition-all duration-1000 ease-out ${
+          <h1 className={`text-3xl md:text-5xl font-semibold text-black mb-6 sm:mb-8 transform transition-all duration-1000 ease-out ${
             visibleSections.has('shop-header') ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
           }`} style={{ transitionDelay: '200ms' }}>
             Explore Our Latest Products
@@ -136,7 +136,7 @@ const Shop = () => {
                   
                   {/* View Details button - appears on hover for Spectra 1.0 */}
                   {product.id === 'spectra-1-0' && (
-                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 bg-black bg-opacity-20 rounded-2xl">
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 rounded-2xl">
                       <span className="bg-white text-black px-6 py-3 rounded-full font-medium text-sm md:text-base shadow-lg hover:bg-gray-100 transition-all duration-200">
                         View Details →
                       </span>
