@@ -39,8 +39,13 @@ const Home = React.memo(() => {
   const [scrollY, setScrollY] = useState(0);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   
+  // Hero video control
+  const heroVideoRef = useRef(null);
+  const [heroVideoOpacity, setHeroVideoOpacity] = useState(1);
+  
   // Video play/pause states for USP sections
   const [videoPaused, setVideoPaused] = useState({
+    'new-video-section': false,
     'expand-universe': false,
     'unlock-barriers': false,
     'smart-recognition': false,
@@ -73,6 +78,39 @@ const Home = React.memo(() => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, []);
+  
+  // Hero video 6-second loop control
+  useEffect(() => {
+    const video = heroVideoRef.current;
+    if (!video) return;
+
+    const handleTimeUpdate = () => {
+      if (video.currentTime >= 6) {
+        // Fade out
+        setHeroVideoOpacity(0);
+        
+        // After fade out, reset and fade in
+        setTimeout(() => {
+          video.currentTime = 0;
+          setHeroVideoOpacity(1);
+        }, 500); // 500ms fade duration
+      }
+    };
+
+    const handleLoadedData = () => {
+      video.play().catch(() => {
+        // Auto-play was prevented
+      });
+    };
+
+    video.addEventListener('timeupdate', handleTimeUpdate);
+    video.addEventListener('loadeddata', handleLoadedData);
+
+    return () => {
+      video.removeEventListener('timeupdate', handleTimeUpdate);
+      video.removeEventListener('loadeddata', handleLoadedData);
     };
   }, []);
 
@@ -141,17 +179,21 @@ const Home = React.memo(() => {
       <section className="relative h-screen w-full overflow-hidden bg-gradient-to-br from-gray-900 via-black to-gray-800" style={{ minHeight: '100vh' }}>
         {/* Video Background */}
         <div className="absolute inset-0 w-full h-full">
-          <OptimizedVideo
-            src="https://ik.imagekit.io/ohyemuffin/asset/video/Futuristic_Smart_Glasses_Video_Generation.mp4?updatedAt=1754214351100"
-            className="w-full h-full object-cover"
-            autoplay={true}
-            muted={true}
-            loop={true}
-            playsInline={true}
-            priority={true}
-            lazy={false}
-            fallbackImage="data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100' height='100' fill='%23111827'/%3E%3C/svg%3E"
-          />
+          <video
+            ref={heroVideoRef}
+            className="w-full h-full object-cover transition-opacity duration-500"
+            style={{ opacity: heroVideoOpacity }}
+            autoPlay
+            muted
+            playsInline
+            preload="auto"
+          >
+            <source src="https://ik.imagekit.io/ohyemuffin/asset/video/Futuristic_Smart_Glasses_Video_Generation.mp4?updatedAt=1754214351100" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+          
+          {/* Fallback background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-800 -z-10"></div>
         </div>
 
         {/* Dark Overlay */}
@@ -186,25 +228,26 @@ const Home = React.memo(() => {
       <section 
         id="product-intro"
         ref={(el) => sectionRefs.current['product-intro'] = el}
-        className="pt-0 pb-0 bg-white relative -mb-40 md:-mb-56"
+        className="pt-0 pb-0 bg-white relative"
       >
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 text-center">
           <div className={`mb-0 max-w-3xl mx-auto relative ${
             visibleSections.has('product-intro') ? 'scroll-animate visible' : 'scroll-animate'
           }`}>
-            <OptimizedImage
-              src={spectraGlassesImage}
-              alt="Spectra 1.0"
-              className={`w-full h-auto rounded-xl sm:rounded-2xl object-cover transition-all duration-1000 ease-out ${
-                visibleSections.has('product-intro') ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
-              }`}
-              priority={true}
-              style={{
-                maskImage: 'linear-gradient(to bottom, transparent 0%, black 40%, black 60%, transparent 100%)',
-                WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 40%, black 60%, transparent 100%)',
-                transitionDelay: '100ms'
-              }}
-            />
+            <div className="overflow-hidden rounded-xl sm:rounded-2xl">
+              <OptimizedImage
+                src={spectraGlassesImage}
+                alt="Spectra 1.0"
+                className={`w-full h-auto object-cover transition-all duration-1000 ease-out transform scale-125 ${
+                  visibleSections.has('product-intro') ? 'opacity-100' : 'opacity-0 scale-110'
+                }`}
+                priority={true}
+                style={{
+                  transitionDelay: '100ms',
+                  clipPath: 'inset(15% 0 15% 0)'
+                }}
+              />
+            </div>
             <div className="absolute top-0 left-0 right-0 flex items-start justify-center pt-16 sm:pt-24 md:pt-32 px-4">
               <h2 className={`text-3xl md:text-5xl font-bold text-black drop-shadow-2xl text-center max-w-full whitespace-nowrap transform transition-all duration-1000 ease-out ${
                 visibleSections.has('product-intro') ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
@@ -216,6 +259,46 @@ const Home = React.memo(() => {
         </div>
       </section>
 
+      {/* Experience Intelligent Personalization - Full Screen Video */}
+      <section 
+        id="new-video-section"
+        ref={(el) => sectionRefs.current['new-video-section'] = el}
+        className="relative w-full h-screen overflow-hidden"
+      >
+        <div className={`w-full h-full ${
+          visibleSections.has('new-video-section') ? 'scroll-animate-video visible' : 'scroll-animate-video'
+        }`}>
+          <div className={`enhanced-video-container w-full h-full ${visibleSections.has('new-video-section') ? 'animate' : ''}`}>
+            <video
+              ref={(el) => (uspVideoRefs.current['new-video-section'] = el)}
+              className="w-full h-full object-cover"
+              autoPlay
+              loop
+              muted
+              playsInline
+            >
+              <source src="https://ik.imagekit.io/ohyemuffin/asset/video/Untitled%20video%20-%20Made%20with%20Clipchamp.mp4?updatedAt=1754957798356" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+            
+            {/* Play/Pause Button */}
+            <button
+              onClick={() => toggleVideoPlayPause('new-video-section')}
+              className="absolute bottom-4 right-4 w-12 h-12 bg-black/30 hover:bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-black/20 group z-20"
+            >
+              {videoPaused['new-video-section'] ? (
+                <svg className="w-6 h-6 text-white group-hover:scale-110 transition-transform duration-200" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
+              ) : (
+                <svg className="w-6 h-6 text-white group-hover:scale-110 transition-transform duration-200" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+                </svg>
+              )}
+            </button>
+          </div>
+        </div>
+      </section>
 
       {/* Expand Your Universe */}
       <section 
@@ -249,7 +332,7 @@ const Home = React.memo(() => {
               {/* Play/Pause Button */}
               <button
                 onClick={() => toggleVideoPlayPause('expand-universe')}
-                className="absolute bottom-2 right-12 w-12 h-12 bg-black/30 hover:bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 group"
+                className="absolute bottom-2 right-8 w-12 h-12 bg-black/30 hover:bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-black/20 group"
               >
                 {videoPaused['expand-universe'] ? (
                   <svg className="w-6 h-6 text-white group-hover:scale-110 transition-transform duration-200" fill="currentColor" viewBox="0 0 24 24">
@@ -334,7 +417,7 @@ const Home = React.memo(() => {
               {/* Play/Pause Button */}
               <button
                 onClick={() => toggleVideoPlayPause('unlock-barriers')}
-                className="absolute bottom-2 right-2 w-12 h-12 bg-black/30 hover:bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 group"
+                className="absolute bottom-2 right-2 w-12 h-12 bg-black/30 hover:bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-black/20 group"
               >
                 {videoPaused['unlock-barriers'] ? (
                   <svg className="w-6 h-6 text-white group-hover:scale-110 transition-transform duration-200" fill="currentColor" viewBox="0 0 24 24">
@@ -388,7 +471,7 @@ const Home = React.memo(() => {
             {/* Play/Pause Button */}
             <button
               onClick={() => toggleVideoPlayPause('smart-recognition')}
-              className="absolute bottom-4 right-4 w-12 h-12 bg-black/30 hover:bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 group z-20 cursor-pointer"
+              className="absolute bottom-4 right-4 w-12 h-12 bg-black/30 hover:bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-black/20 group z-20 cursor-pointer"
             >
               {videoPaused['smart-recognition'] ? (
                 <svg className="w-6 h-6 text-white group-hover:scale-110 transition-transform duration-200" fill="currentColor" viewBox="0 0 24 24">
@@ -458,7 +541,7 @@ const Home = React.memo(() => {
               {/* Play/Pause Button */}
               <button
                 onClick={() => toggleVideoPlayPause('cancel-noise')}
-                className="absolute bottom-2 right-8 w-12 h-12 bg-black/30 hover:bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 group"
+                className="absolute bottom-2 right-8 w-12 h-12 bg-black/30 hover:bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-black/20 group"
               >
                 {videoPaused['cancel-noise'] ? (
                   <svg className="w-6 h-6 text-white group-hover:scale-110 transition-transform duration-200" fill="currentColor" viewBox="0 0 24 24">
@@ -539,7 +622,7 @@ const Home = React.memo(() => {
               {/* Play/Pause Button */}
               <button
                 onClick={() => toggleVideoPlayPause('look-through')}
-                className="absolute bottom-2 right-2 w-12 h-12 bg-black/30 hover:bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 group"
+                className="absolute bottom-2 right-2 w-12 h-12 bg-black/30 hover:bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-black/20 group"
               >
                 {videoPaused['look-through'] ? (
                   <svg className="w-6 h-6 text-white group-hover:scale-110 transition-transform duration-200" fill="currentColor" viewBox="0 0 24 24">
@@ -582,7 +665,7 @@ const Home = React.memo(() => {
             {/* Play/Pause Button */}
             <button
               onClick={() => toggleVideoPlayPause('intuitive-insights')}
-              className="absolute bottom-4 right-4 w-12 h-12 bg-black/30 hover:bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 group z-10"
+              className="absolute bottom-4 right-4 w-12 h-12 bg-black/30 hover:bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-black/20 group z-10"
             >
               {videoPaused['intuitive-insights'] ? (
                 <svg className="w-6 h-6 text-white group-hover:scale-110 transition-transform duration-200" fill="currentColor" viewBox="0 0 24 24">
