@@ -1,5 +1,5 @@
-// Force cache clear - aggressive version
-const CACHE_VERSION = 'v1.0.2';
+// Enhanced Service Worker with White Screen Detection
+const CACHE_VERSION = 'v' + Date.now(); // Always unique
 const CACHE_NAME = `spectra-${CACHE_VERSION}`;
 const STATIC_ASSETS = [
   '/spectra/',
@@ -7,12 +7,12 @@ const STATIC_ASSETS = [
 ];
 
 // Updated cache names to force complete refresh
-const MEDIA_CACHE = `spectra-media-v3`;
-const API_CACHE = `spectra-api-v3`;
-const DYNAMIC_CACHE = `spectra-dynamic-v3`;
+const MEDIA_CACHE = `spectra-media-${CACHE_VERSION}`;
+const API_CACHE = `spectra-api-${CACHE_VERSION}`;
+const DYNAMIC_CACHE = `spectra-dynamic-${CACHE_VERSION}`;
 
 // Version check endpoint
-const VERSION_ENDPOINT = '/version.json';
+const VERSION_ENDPOINT = '/spectra/version.json';
 
 // Install event - aggressive installation
 self.addEventListener('install', (event) => {
