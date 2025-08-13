@@ -46,15 +46,15 @@ const FAQ = React.memo(() => {
   const faqData = [
     {
       question: "What is Spectra 1.0?",
-      answer: "Spectra 1.0 is lightweight, wearable device designed to support your everyday life. Powered by our advanced AI model, it anticipates your needs by delivering the most relevant solutions directly within your view. Spectra learns from your environment and preferences to provide personalized insights. Its sleek, minimal display enhances your experience while offering hyper-relevant content. Spectra 1.0 is your intelligent companion, built to move with your rhythm."
+      answer: "Spectra 1.0 is a lightweight wearable device designed to support your everyday life. Powered by our advanced AI model, it anticipates your needs by delivering the most relevant solutions directly within your view. Spectra learns from your environment and preferences to provide personalized insights. Its sleek, minimal display enhances your experience while offering hyper-relevant content. Spectra 1.0 is your intelligent companion, built to move with your rhythm."
     },
     {
       question: "What can I do with my Spectra 1.0?",
-      answer: "There are many wonderful things you can do with your Spectra 1.0. The device uses ambient cues to bring relevant suggestions, allowing you to make informed decisions in real time. It boosts your productivity by providing the most useful resources to help you get things done quickly and efficiently. It provides access to practical tools and resources to help you complete tasks efficiently. When you are ready to unwind, Spectra offers tailored recommendations, including original content that align with your current mood and interests."
+      answer: "There are many wonderful things you can do with your Spectra 1.0. The device uses ambient cues to bring relevant suggestions, allowing you to make informed decisions in real time. It boosts your productivity by providing the most useful resources to help you get things done quickly and efficiently. It provides access to practical tools and resources to help you complete tasks efficiently. When you are ready to unwind, Spectra offers tailored recommendations, including original content that aligns with your current mood and interests."
     },
     {
-      question: "How do I custom recommendations shown to me?",
-      answer: "You don't need to manually configure your preferences. Spectra does the work for you. It learns from your offline and online patterns: what you see, where you go, and how you interact. Using contextual awareness and structured memory, Spectra generates dynamic suggestions that reflect your latest preferences. If a particular recommendation doesn't feel useful, simply tap the \"Dislike\" button and similar content will appear less frequently."
+      question: "How do I customise the recommendations shown to me?",
+      answer: "You don't need to manually configure your preferences. Spectra does the work for you. It learns from your online and offline patterns: what you see, where you go, and how you interact. Using contextual awareness and structured memory, Spectra generates dynamic suggestions that reflect your latest preferences. If a particular recommendation doesn't feel useful, simply tap the \"Dislike\" button and similar content will appear less frequently."
     },
     {
       question: "How do I connect my Spectra 1.0 to my other devices?",
@@ -62,7 +62,7 @@ const FAQ = React.memo(() => {
     },
     {
       question: "How does Spectra 1.0 manage my personal data?",
-      answer: "Data privacy is built into every part of Spectra. Information stays on your device whenever possible, and all insights are processed through secure, encrypted channels. You maintain full control through customizable settings for data collection, sharing, and retention."
+      answer: "Data privacy is built into every part of Spectra. Information stays on your device whenever possible, and all insights are processed through secure, encrypted channels. You maintain full control through customizable settings for data collection, sharing, and retention. See our Privacy Policy for details on data retention and opt-out controls."
     },
     {
       question: "How much does it cost to use Spectra 1.0's AI model?",
@@ -70,7 +70,7 @@ const FAQ = React.memo(() => {
     },
     {
       question: "How does Spectra display personalized ads?",
-      answer: "Spectra's ambient AI builds a gradual understanding of your preferences to deliver suggestions that feel relevant. Product recommendations are tailored to reflect your evolving needs, often before you are aware of them. Designed to blend naturally into your routine, these suggestions appear as subtle cues. They appear when they're most useful, in the content formats you prefer. You can manage or adjust the setting at any time through your privacy controls."
+      answer: "Spectra's ambient AI builds a gradual understanding of your preferences to deliver suggestions that feel relevant. Product recommendations are tailored to reflect your evolving needs, often before you are aware of them. Designed to blend naturally into your routine, these suggestions appear as subtle cues. They appear when they're most useful, in the content formats you prefer. You can manage or adjust the settings at any time through your privacy controls."
     },
     {
       question: "Why do the product suggestions I see through Spectra 1.0 sometimes change?",

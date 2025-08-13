@@ -11,6 +11,8 @@ const OptimizedImage = React.memo(({
   priority = false,
   sizes,
   srcSet,
+  webpSrc,
+  responsiveSizes,
   ...props 
 }) => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -18,6 +20,27 @@ const OptimizedImage = React.memo(({
   const [isInView, setIsInView] = useState(false);
   const imgRef = useRef(null);
   const containerRef = useRef(null);
+
+  // Preload critical images
+  useEffect(() => {
+    if (priority && src) {
+      const link = document.createElement('link');
+      link.rel = 'preload';
+      link.as = 'image';
+      link.href = src;
+      if (webpSrc) {
+        link.href = webpSrc;
+        link.type = 'image/webp';
+      }
+      document.head.appendChild(link);
+      
+      return () => {
+        if (document.head.contains(link)) {
+          document.head.removeChild(link);
+        }
+      };
+    }
+  }, [priority, src, webpSrc]);
 
   // Intersection Observer for lazy loading
   useEffect(() => {
@@ -35,7 +58,7 @@ const OptimizedImage = React.memo(({
       },
       {
         threshold: 0.1,
-        rootMargin: priority ? '200px' : '50px'
+        rootMargin: priority ? '300px' : '100px'
       }
     );
 
@@ -66,30 +89,41 @@ const OptimizedImage = React.memo(({
     >
       {/* Placeholder while loading */}
       {placeholder && !isLoaded && isInView && !hasError && (
-        <div className="absolute inset-0 animate-pulse bg-gray-200">
-          <div className="w-full h-full bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 animate-shimmer"></div>
+        <div className={`absolute inset-0 bg-gray-200 ${priority ? 'animate-shimmer-fast' : 'animate-shimmer'}`}>
         </div>
       )}
       
       {/* Main image - only load when in view */}
       {isInView && (
-        <img
-          ref={imgRef}
-          src={src}
-          alt={alt}
-          width={width}
-          height={height}
-          onLoad={handleLoad}
-          onError={handleError}
-          loading={priority ? "eager" : lazy ? "lazy" : "eager"}
-          decoding="async"
-          sizes={sizes}
-          srcSet={srcSet}
-          className={`transition-all duration-500 ease-out ${
-            isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
-          } ${className}`}
-          {...props}
-        />
+        <picture>
+          {/* WebP format for modern browsers */}
+          {webpSrc && (
+            <source 
+              srcSet={webpSrc} 
+              type="image/webp"
+              sizes={sizes || responsiveSizes}
+            />
+          )}
+          {/* Fallback to original format */}
+          <img
+            ref={imgRef}
+            src={src}
+            alt={alt}
+            width={width}
+            height={height}
+            onLoad={handleLoad}
+            onError={handleError}
+            loading={priority ? "eager" : lazy ? "lazy" : "eager"}
+            decoding="async"
+            fetchPriority={priority ? "high" : "auto"}
+            sizes={sizes || responsiveSizes || "(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"}
+            srcSet={srcSet}
+            className={`transition-all duration-700 ease-out ${
+              isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-102'
+            } ${className}`}
+            {...props}
+          />
+        </picture>
       )}
       
       {/* Error state */}

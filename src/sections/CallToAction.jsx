@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import OptimizedImage from '../components/OptimizedImage';
 import introNewSpectraAndExperienceTheFutureToday from '../assets/images/landing-page/intronewspectraandexperiencethefuturetoday.png';
 import ProductQuickView from '../components/ProductQuickView';
 
@@ -26,8 +27,11 @@ const CallToAction = () => {
             {/* Product Image */}
             <div className="flex justify-center group cursor-pointer" onClick={handleImageClick}>
               <div className="relative">
-                <img
+                <OptimizedImage
                   src={introNewSpectraAndExperienceTheFutureToday}
+                  width={512}
+                  height={400}
+                  responsiveSizes="(max-width: 768px) 80vw, (max-width: 1200px) 50vw, 512px"
                   alt="Spectra Smart Glasses"
                   className="w-full max-w-lg h-auto object-contain drop-shadow-2xl group-hover:scale-105 transition-transform duration-300"
                 />

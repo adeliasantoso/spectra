@@ -53,7 +53,9 @@ const About = () => {
           width={1920}
           height={800}
           lazy={false}
-          className={`w-full h-full object-cover object-[center_57%] transition-all duration-1000 ${
+          priority={true}
+          responsiveSizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 1920px"
+          className={`w-full h-full object-cover object-[center_57%] transition-all duration-1000 critical-image gpu-optimized ${
             visibleSections.has("hero-vision") ? "scale-100" : "scale-105"
           }`}
         />
@@ -62,7 +64,7 @@ const About = () => {
           <div className="text-center px-4 md:px-6">
             <h1 className="text-4xl md:text-6xl text-white font-semibold leading-tight">
               <span className={`elegant-title-word ${visibleSections.has('hero-vision') ? 'animate' : ''}`}>Our</span>{' '}
-              <span className={`elegant-title-word ${visibleSections.has('hero-vision') ? 'animate' : ''}`}>vision</span>
+              <span className={`elegant-title-word ${visibleSections.has('hero-vision') ? 'animate' : ''}`}>Vision</span>
             </h1>
           </div>
         </div>
@@ -79,11 +81,11 @@ const About = () => {
             <div className="space-y-6 md:space-y-8">
               <h2 className="text-2xl md:text-4xl font-semibold text-gray-900 leading-tight">
                 <span className={`elegant-title-word ${visibleSections.has('building-tech') ? 'animate' : ''}`}>Building</span>{' '}
-                <span className={`elegant-title-word ${visibleSections.has('building-tech') ? 'animate' : ''}`}>tech</span>{' '}
-                <span className={`elegant-title-word ${visibleSections.has('building-tech') ? 'animate' : ''}`}>that</span>
+                <span className={`elegant-title-word ${visibleSections.has('building-tech') ? 'animate' : ''}`}>Tech</span>{' '}
+                <span className={`elegant-title-word ${visibleSections.has('building-tech') ? 'animate' : ''}`}>That</span>
                 <br />
-                <span className={`elegant-title-word ${visibleSections.has('building-tech') ? 'animate' : ''}`}>understands</span>{' '}
-                <span className={`elegant-title-word ${visibleSections.has('building-tech') ? 'animate' : ''}`}>you</span>
+                <span className={`elegant-title-word ${visibleSections.has('building-tech') ? 'animate' : ''}`}>Understands</span>{' '}
+                <span className={`elegant-title-word ${visibleSections.has('building-tech') ? 'animate' : ''}`}>You</span>
               </h2>
               <div className="space-y-6 md:space-y-8 text-base md:text-lg">
                 <p className={`text-gray-700 leading-relaxed font-medium elegant-paragraph ${visibleSections.has('building-tech') ? 'animate' : ''}`}>
@@ -110,9 +112,12 @@ const About = () => {
               visibleSections.has('building-tech') ? 'translate-y-0 opacity-100 scale-100' : 'translate-y-8 opacity-0 scale-95'
             }`} style={{ transitionDelay: '1000ms' }}>
               <div className="relative">
-                <img
+                <OptimizedImage
                   src={buildingTech}
                   alt="Building technology that understands you"
+                  width={800}
+                  height={550}
+                  responsiveSizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 800px"
                   className="w-full h-[400px] md:h-[500px] lg:h-[550px] object-cover object-[65%] rounded-3xl shadow-2xl"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent rounded-3xl"></div>
@@ -134,9 +139,12 @@ const About = () => {
               visibleSections.has('designing-for') ? 'translate-y-0 opacity-100 scale-100' : 'translate-y-8 opacity-0 scale-95'
             }`} style={{ transitionDelay: '900ms' }}>
               <div className="relative">
-                <img
+                <OptimizedImage
                   src={designingFor}
                   alt="Helping you without disruption"
+                  width={800}
+                  height={550}
+                  responsiveSizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 800px"
                   className="w-full h-[400px] md:h-[500px] lg:h-[550px] object-cover rounded-3xl shadow-2xl"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent rounded-3xl"></div>
@@ -145,10 +153,10 @@ const About = () => {
             <div className="space-y-6 md:space-y-8 order-1 lg:order-2">
               <h2 className="text-2xl md:text-4xl font-semibold text-gray-900 leading-tight">
                 <span className={`elegant-title-word ${visibleSections.has('designing-for') ? 'animate' : ''}`}>Helping</span>{' '}
-                <span className={`elegant-title-word ${visibleSections.has('designing-for') ? 'animate' : ''}`}>you</span>{' '}
-                <span className={`elegant-title-word ${visibleSections.has('designing-for') ? 'animate' : ''}`}>without</span>
+                <span className={`elegant-title-word ${visibleSections.has('designing-for') ? 'animate' : ''}`}>You</span>{' '}
+                <span className={`elegant-title-word ${visibleSections.has('designing-for') ? 'animate' : ''}`}>Without</span>
                 <br />
-                <span className={`elegant-title-word ${visibleSections.has('designing-for') ? 'animate' : ''}`}>disruption</span>
+                <span className={`elegant-title-word ${visibleSections.has('designing-for') ? 'animate' : ''}`}>Disruption</span>
               </h2>
               <div className="space-y-6 md:space-y-8 text-base md:text-lg">
                 <p className={`text-gray-700 leading-relaxed font-medium elegant-paragraph ${visibleSections.has('designing-for') ? 'animate' : ''}`}>
@@ -185,11 +193,11 @@ const About = () => {
           <div className="text-center mb-12 md:mb-20">
             <h2 className="text-2xl md:text-4xl font-semibold text-gray-900 mb-12 md:mb-16 leading-tight">
               <span className={`elegant-title-word ${visibleSections.has('driving-change') ? 'animate' : ''}`}>Designing</span>{' '}
-              <span className={`elegant-title-word ${visibleSections.has('driving-change') ? 'animate' : ''}`}>for</span>{' '}
+              <span className={`elegant-title-word ${visibleSections.has('driving-change') ? 'animate' : ''}`}>For</span>{' '}
               <span className={`elegant-title-word ${visibleSections.has('driving-change') ? 'animate' : ''}`}>Safety,</span>{' '}
               <span className={`elegant-title-word ${visibleSections.has('driving-change') ? 'animate' : ''}`}>Accessibility,</span>
               <br />
-              <span className={`elegant-title-word ${visibleSections.has('driving-change') ? 'animate' : ''}`}>and</span>{' '}
+              <span className={`elegant-title-word ${visibleSections.has('driving-change') ? 'animate' : ''}`}>And</span>{' '}
               <span className={`elegant-title-word ${visibleSections.has('driving-change') ? 'animate' : ''}`}>Sustainability</span>
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 max-w-5xl mx-auto text-left">
@@ -222,9 +230,12 @@ const About = () => {
             visibleSections.has('driving-change') ? 'translate-y-0 opacity-100 scale-100' : 'translate-y-8 opacity-0 scale-95'
           }`} style={{ transitionDelay: '1200ms' }}>
             <div className="relative max-w-5xl mx-auto">
-              <img
+              <OptimizedImage
                 src={drivingChange}
                 alt="Designing for safety, accessibility, and sustainability"
+                width={1000}
+                height={500}
+                responsiveSizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1000px"
                 className="w-full h-[350px] md:h-[450px] lg:h-[500px] object-cover rounded-3xl shadow-2xl"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent rounded-3xl"></div>

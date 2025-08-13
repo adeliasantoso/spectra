@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useCart } from '../context/CartContext';
 import ProductQuickView from './ProductQuickView';
+import OptimizedImage from './OptimizedImage';
 
 const ProductCard = ({ product, showQuickView = true }) => {
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
@@ -25,9 +26,12 @@ const ProductCard = ({ product, showQuickView = true }) => {
       <div className="group cursor-pointer" onClick={handleProductClick}>
         {/* Product Image */}
         <div className="relative overflow-hidden mb-4 rounded-lg">
-          <img
+          <OptimizedImage
             src={product.image}
             alt={product.name}
+            width={400}
+            height={256}
+            responsiveSizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 400px"
             className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
           />
           

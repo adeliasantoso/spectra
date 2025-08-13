@@ -122,13 +122,15 @@ const AppInitializer = ({ children }) => {
 
   if (!isInitialized) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="text-center">
-          <LoadingSpinner />
-          <p className="mt-4 text-gray-600">Initializing application...</p>
-          {retryCount > 0 && (
-            <p className="mt-2 text-sm text-gray-400">Retry attempt: {retryCount}</p>
-          )}
+      <div className="fixed inset-0 bg-white flex items-center justify-center z-50">
+        <div className="text-center space-y-4">
+          <div className="text-3xl font-light text-gray-900 tracking-[0.2em]">
+            SPECTRA
+          </div>
+          <div className="w-8 h-8 border-2 border-gray-300 border-t-black rounded-full animate-spin mx-auto"></div>
+          <p className="text-sm text-gray-600">
+            {retryCount > 0 ? `Initializing... (Retry ${retryCount})` : "Initializing..."}
+          </p>
         </div>
       </div>
     );

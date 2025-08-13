@@ -131,7 +131,12 @@ const Shop = () => {
                     alt={product.name}
                     width={400}
                     height={400}
-                    className="w-full aspect-square object-cover group-hover:scale-105 transition-transform duration-300 rounded-2xl"
+                    className={`w-full aspect-square transition-transform duration-300 rounded-2xl ${
+                      product.id === 'spectra-buds' ? 'object-contain p-20 group-hover:scale-105' : 
+                      product.id === 'spectra-watch' ? 'object-contain p-20 group-hover:scale-105' :
+                      product.id === 'spectra-display' ? 'object-cover scale-110 group-hover:scale-115' :
+                      product.id === 'spectra-1-0' ? 'object-cover scale-110 group-hover:scale-115' : 'object-cover group-hover:scale-105'
+                    }`}
                   />
                   
                   {/* View Details button - appears on hover for Spectra 1.0 */}

@@ -797,7 +797,7 @@ const ProductDetail = () => {
           }}
           className="scroll-mt-32 mt-16 md:mt-24"
         >
-          <h2 className={`text-xl md:text-2xl font-bold text-gray-900 mb-8 text-center transition-all duration-700 ${
+          <h2 className={`text-2xl md:text-3xl font-bold text-gray-900 mb-8 text-center transition-all duration-700 ${
             visibleSections.has('reviews-section') ? 'animate-fade-up opacity-100' : 'opacity-100'
           }`}>Reviews</h2>
           <div className={`transition-all duration-700 delay-200 ${
@@ -812,20 +812,22 @@ const ProductDetail = () => {
                   }`}>
                     <div className="flex flex-col items-center flex-shrink-0">
                       <div className="w-28 h-28 rounded-full overflow-hidden mb-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
-                        <img 
+                        <OptimizedImage 
                           src={testimonials[currentTestimonialIndex].avatar} 
                           alt={testimonials[currentTestimonialIndex].name}
+                          width={112}
+                          height={112}
                           className="w-full h-full object-cover"
                         />
                       </div>
-                      <p className="font-semibold text-gray-900 text-base md:text-lg text-center leading-tight">{testimonials[currentTestimonialIndex].name}</p>
+                      <p className="font-semibold text-gray-900 text-lg md:text-xl text-center leading-tight">{testimonials[currentTestimonialIndex].name}</p>
                     </div>
                     <div className="flex-1 min-w-0 pt-2">
                       <div className="mb-6">
-                        <h5 className="font-semibold text-xl md:text-2xl text-gray-900 mb-3 leading-tight">{testimonials[currentTestimonialIndex].headline}</h5>
-                        <p className="text-xs text-blue-600 font-medium">{testimonials[currentTestimonialIndex].date}</p>
+                        <h5 className="font-semibold text-xl md:text-2xl lg:text-3xl text-gray-900 mb-3 leading-tight">{testimonials[currentTestimonialIndex].headline}</h5>
+                        <p className="text-sm md:text-base text-blue-600 font-medium">{testimonials[currentTestimonialIndex].date}</p>
                       </div>
-                      <p className="text-gray-700 leading-relaxed text-base md:text-lg font-normal">{testimonials[currentTestimonialIndex].review}</p>
+                      <p className="text-gray-700 leading-relaxed text-lg md:text-xl font-normal">{testimonials[currentTestimonialIndex].review}</p>
                     </div>
                   </div>
                 </div>
@@ -901,11 +903,21 @@ const ProductDetail = () => {
                   to={`/product/${relatedProduct.id}`}
                   className="group bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden hover:scale-[1.02]"
                 >
-                  <div className="aspect-square bg-gray-100 overflow-hidden">
-                    <img
+                  <div className={`aspect-square overflow-hidden ${
+                    relatedProduct.id === 'spectra-buds' || relatedProduct.id === 'spectra-watch' ? 'bg-white' : 'bg-gray-100'
+                  }`}>
+                    <OptimizedImage
                       src={relatedProduct.images[0]}
                       alt={relatedProduct.name}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      width={300}
+                      height={200}
+                      responsiveSizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 300px"
+                      className={`w-full h-full transition-transform duration-500 ${
+                        relatedProduct.id === 'spectra-1-0' ? 'object-cover scale-110 group-hover:scale-115' :
+                        relatedProduct.id === 'spectra-display' ? 'object-cover scale-110 group-hover:scale-115' :
+                        relatedProduct.id === 'spectra-buds' || relatedProduct.id === 'spectra-watch' ? 'object-contain p-16 group-hover:scale-105' :
+                        'object-cover group-hover:scale-110'
+                      }`}
                     />
                   </div>
                   <div className="p-6">
@@ -924,11 +936,21 @@ const ProductDetail = () => {
                   key={relatedProduct.id}
                   className="group bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden hover:scale-[1.02]"
                 >
-                  <div className="aspect-square bg-gray-100 overflow-hidden">
-                    <img
+                  <div className={`aspect-square overflow-hidden ${
+                    relatedProduct.id === 'spectra-buds' || relatedProduct.id === 'spectra-watch' ? 'bg-white' : 'bg-gray-100'
+                  }`}>
+                    <OptimizedImage
                       src={relatedProduct.images[0]}
                       alt={relatedProduct.name}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      width={300}
+                      height={200}
+                      responsiveSizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 300px"
+                      className={`w-full h-full transition-transform duration-500 ${
+                        relatedProduct.id === 'spectra-1-0' ? 'object-cover scale-110 group-hover:scale-115' :
+                        relatedProduct.id === 'spectra-display' ? 'object-cover scale-110 group-hover:scale-115' :
+                        relatedProduct.id === 'spectra-buds' || relatedProduct.id === 'spectra-watch' ? 'object-contain p-16 group-hover:scale-105' :
+                        'object-cover group-hover:scale-110'
+                      }`}
                     />
                   </div>
                   <div className="p-6">

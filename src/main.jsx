@@ -46,7 +46,7 @@ createRoot(document.getElementById('root')).render(
               <Router>
                 <ScrollToTop />
                 <NetworkStatus />
-                <Suspense fallback={<LoadingSpinner />}>
+                <Suspense fallback={<div className="fixed inset-0 bg-white flex items-center justify-center z-50"><div className="text-center space-y-4"><div className="text-3xl font-light text-gray-900 tracking-[0.2em]">SPECTRA</div><div className="w-8 h-8 border-2 border-gray-300 border-t-black rounded-full animate-spin mx-auto"></div><p className="text-sm text-gray-600">Loading...</p></div></div>}>
                   <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/shop" element={<Shop />} />

@@ -224,20 +224,27 @@ select {
   transform: translateY(-8px);
 }
 
-/* Shimmer effect for loading images */
+/* Enhanced shimmer effect for loading images */
 @keyframes shimmer {
   0% {
-    background-position: -200px 0;
+    background-position: -200% 0;
   }
   100% {
-    background-position: calc(200px + 100%) 0;
+    background-position: 200% 0;
   }
 }
 
 .animate-shimmer {
-  background: linear-gradient(90deg, #f0f0f0 0px, #e0e0e0 40px, #f0f0f0 80px);
-  background-size: 600px;
-  animation: shimmer 1.6s ease-in-out infinite;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e6e6e6 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+/* Faster shimmer for critical images */
+.animate-shimmer-fast {
+  background: linear-gradient(90deg, #f8f8f8 25%, #e0e0e0 50%, #f8f8f8 75%);
+  background-size: 200% 100%;
+  animation: shimmer 0.8s ease-in-out infinite;
 }
 
 /* Optimize media rendering and performance */
@@ -245,7 +252,19 @@ img, video {
   image-rendering: -webkit-optimize-contrast;
   image-rendering: -moz-crisp-edges;
   image-rendering: crisp-edges;
-  will-change: transform;
+}
+
+/* Optimize critical images for fastest loading */
+.critical-image {
+  will-change: transform, opacity;
+  contain: layout style paint;
+}
+
+/* Optimize for performance - reduce paint and compositing layers */
+.gpu-optimized {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-font-smoothing: subpixel-antialiased;
 }
 
 /* Critical CSS optimizations */
