@@ -15,6 +15,8 @@
     "predeploy": "npm run build:github",
     "deploy": "gh-pages -d dist",
     "deploy:github": "npm run build:github && gh-pages -d dist",
+    "deploy:firebase": "npm run build && firebase deploy",
+    "deploy:all": "npm run deploy:github && npm run deploy:firebase",
     "clear-cache": "node -e \"console.log('Clearing Vite cache...'); require('fs').rmSync('node_modules/.vite', {recursive: true, force: true}); console.log('Cache cleared!')\""
   },
   "dependencies": {
