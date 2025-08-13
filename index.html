@@ -2,19 +2,22 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/spectra/favicon.png" />
+    <link rel="icon" type="image/webp" href="/spectra/favicon.webp" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Spectra - A World Tailored to Your Mind</title>
-    
+
     <!-- Cache control and no-cache headers -->
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    <meta name="cache-bust" content="{{BUILD_TIME}}">
-    
+    <meta
+      http-equiv="Cache-Control"
+      content="no-cache, no-store, must-revalidate"
+    />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <meta name="cache-bust" content="{{BUILD_TIME}}" />
+
     <!-- Enhanced meta tags for better caching -->
-    <meta name="version" content="1.0.0">
-    <meta name="build-time" content="{{BUILD_TIME}}">
+    <meta name="version" content="1.0.0" />
+    <meta name="build-time" content="{{BUILD_TIME}}" />
 
     <!-- Performance optimizations -->
     <link rel="preconnect" href="https://ik.imagekit.io" />
@@ -34,58 +37,73 @@
     <!-- Optimize font loading -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <script type="module" crossorigin src="/spectra/assets/index-COtIRBUF-1755069848394.js"></script>
-    <link rel="modulepreload" crossorigin href="/spectra/assets/vendor-DhIsQial-1755069848394.js">
-    <link rel="modulepreload" crossorigin href="/spectra/assets/ui-DQsFVQ_U-1755069848394.js">
-    <link rel="stylesheet" crossorigin href="/spectra/assets/index-CMUGMgrK-1755069848394.css">
+    <script type="module" crossorigin src="/spectra/assets/index-CGYBnX_g-1755075074455.js"></script>
+    <link rel="modulepreload" crossorigin href="/spectra/assets/vendor-DhIsQial-1755075074455.js">
+    <link rel="modulepreload" crossorigin href="/spectra/assets/ui-CpvBGAqI-1755075074455.js">
+    <link rel="stylesheet" crossorigin href="/spectra/assets/index-CMUGMgrK-1755075074455.css">
   </head>
   <body>
     <div id="root">
       <!-- Fallback loading screen -->
-      <div style="
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-      ">
-        <div style="text-align: center;">
-          <div style="
-            width: 40px;
-            height: 40px;
-            border: 3px solid #e2e8f0;
-            border-top: 3px solid #1f2937;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 1rem;
-          "></div>
-          <div style="
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #1f2937;
-            margin-bottom: 0.5rem;
-          ">SPECTRA</div>
-          <div style="color: #64748b; font-size: 0.9rem;">Loading application...</div>
+      <div
+        style="
+          min-height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+            sans-serif;
+        "
+      >
+        <div style="text-align: center">
+          <div
+            style="
+              width: 40px;
+              height: 40px;
+              border: 3px solid #e2e8f0;
+              border-top: 3px solid #1f2937;
+              border-radius: 50%;
+              animation: spin 1s linear infinite;
+              margin: 0 auto 1rem;
+            "
+          ></div>
+          <div
+            style="
+              font-size: 1.5rem;
+              font-weight: bold;
+              color: #1f2937;
+              margin-bottom: 0.5rem;
+            "
+          >
+            SPECTRA
+          </div>
+          <div style="color: #64748b; font-size: 0.9rem">
+            Loading application...
+          </div>
         </div>
       </div>
       <style>
         @keyframes spin {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
+          0% {
+            transform: rotate(0deg);
+          }
+          100% {
+            transform: rotate(360deg);
+          }
         }
       </style>
     </div>
-    
+
     <!-- Error handling script -->
     <script>
       // Global error handler
-      window.addEventListener('error', function(e) {
-        console.error('Global error:', e.error);
-        
+      window.addEventListener("error", function (e) {
+        console.error("Global error:", e.error);
+
         // Show fallback UI if root element is still showing loading
-        const root = document.getElementById('root');
-        if (root && root.innerHTML.includes('Loading application')) {
+        const root = document.getElementById("root");
+        if (root && root.innerHTML.includes("Loading application")) {
           root.innerHTML = `
             <div style="
               min-height: 100vh;
@@ -132,23 +150,29 @@
       });
 
       // Unhandled promise rejection handler
-      window.addEventListener('unhandledrejection', function(e) {
-        console.error('Unhandled promise rejection:', e.reason);
+      window.addEventListener("unhandledrejection", function (e) {
+        console.error("Unhandled promise rejection:", e.reason);
       });
-      
+
       // GitHub Pages SPA routing fix
-      (function() {
+      (function () {
         var l = window.location;
-        if (l.search[1] === '/' ) {
-          var decoded = l.search.slice(1).split('&').map(function(s) { 
-            return s.replace(/~and~/g, '&')
-          }).join('?');
-          window.history.replaceState(null, null,
+        if (l.search[1] === "/") {
+          var decoded = l.search
+            .slice(1)
+            .split("&")
+            .map(function (s) {
+              return s.replace(/~and~/g, "&");
+            })
+            .join("?");
+          window.history.replaceState(
+            null,
+            null,
             l.pathname.slice(0, -1) + decoded + l.hash
           );
         }
       })();
     </script>
-    
+
   </body>
 </html>
