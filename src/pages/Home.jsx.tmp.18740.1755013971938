@@ -10,15 +10,15 @@ import OptimizedVideo from "../components/OptimizedVideo";
 import { measurePerformance, monitorBundleSize } from "../utils/performance";
 import { useAutoRefresh } from "../hooks/useAutoRefresh";
 import { setupCacheManagement } from "../utils/simpleCache";
-import spectraGlassesImage from "../assets/images/landing-page/spectra1.png";
-import aboutImage from "../assets/images/about-page/hero-about.png";
-import expandUniverseImage from "../assets/images/landing-page/expandtheuniverseandcanceltheunwanted.png";
-import unlockLifeImage from "../assets/images/landing-page/unlocklifeandlookthrough.png";
-import cancelNoiseImage from "../assets/images/landing-page/expandtheuniverseandcanceltheunwanted.png";
-import experienceDudeImage from "../assets/images/landing-page/experience-dude.png";
-import social1Image from "../assets/images/landing-page/social1.png";
-import social2Image from "../assets/images/landing-page/social2.png";
-import social3Image from "../assets/images/landing-page/social3.png";
+import spectraGlassesImage from "../assets/images/landing-page/spectra1.webp";
+import aboutImage from "../assets/images/about-page/hero-about.webp";
+import expandUniverseImage from "../assets/images/landing-page/expandtheuniverseandcanceltheunwanted.webp";
+import unlockLifeImage from "../assets/images/landing-page/unlocklifeandlookthrough.webp";
+import cancelNoiseImage from "../assets/images/landing-page/expandtheuniverseandcanceltheunwanted.webp";
+import experienceDudeImage from "../assets/images/landing-page/experience-dude.webp";
+import social1Image from "../assets/images/landing-page/social1.webp";
+import social2Image from "../assets/images/landing-page/social2.webp";
+import social3Image from "../assets/images/landing-page/social3.webp";
 
 const Home = React.memo(() => {
   const [selectedProduct, setSelectedProduct] = useState(null);

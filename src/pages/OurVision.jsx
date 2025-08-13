@@ -3,10 +3,10 @@ import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
 import CartIcon from "../components/CartIcon";
 import OptimizedImage from "../components/OptimizedImage";
-import heroAbout from "../assets/images/about-page/hero-about.png";
-import buildingTech from "../assets/images/about-page/building-tech.png";
-import designingFor from "../assets/images/about-page/designing-for.png";
-import drivingChange from "../assets/images/about-page/diriving-change.png";
+import heroAbout from "../assets/images/about-page/hero-about.webp";
+import buildingTech from "../assets/images/about-page/building-tech.webp";
+import designingFor from "../assets/images/about-page/designing-for.webp";
+import drivingChange from "../assets/images/about-page/diriving-change.webp";
 
 const OurVision = () => {
   // Animation state for sections

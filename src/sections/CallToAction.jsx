@@ -1,18 +1,19 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import OptimizedImage from '../components/OptimizedImage';
-import introNewSpectraAndExperienceTheFutureToday from '../assets/images/landing-page/intronewspectraandexperiencethefuturetoday.png';
-import ProductQuickView from '../components/ProductQuickView';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import OptimizedImage from "../components/OptimizedImage";
+import introNewSpectraAndExperienceTheFutureToday from "../assets/images/landing-page/intronewspectraandexperiencethefuturetoday.webp";
+import ProductQuickView from "../components/ProductQuickView";
 
 const CallToAction = () => {
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
 
   const featuredProduct = {
-    id: 'featured-1',
-    name: 'Spectra 1.0',
-    price: '£1,099',
+    id: "featured-1",
+    name: "Spectra 1.0",
+    price: "£1,099",
     image: introNewSpectraAndExperienceTheFutureToday,
-    description: 'Advanced neural integration smart glasses with cutting-edge AI technology.'
+    description:
+      "Advanced neural integration smart glasses with cutting-edge AI technology.",
   };
 
   const handleImageClick = () => {
@@ -25,7 +26,10 @@ const CallToAction = () => {
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             {/* Product Image */}
-            <div className="flex justify-center group cursor-pointer" onClick={handleImageClick}>
+            <div
+              className="flex justify-center group cursor-pointer"
+              onClick={handleImageClick}
+            >
               <div className="relative">
                 <OptimizedImage
                   src={introNewSpectraAndExperienceTheFutureToday}
@@ -35,7 +39,7 @@ const CallToAction = () => {
                   alt="Spectra Smart Glasses"
                   className="w-full max-w-lg h-auto object-contain drop-shadow-2xl group-hover:scale-105 transition-transform duration-300"
                 />
-                
+
                 {/* Quick View Button - appears on hover */}
                 <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
                   <button
@@ -53,8 +57,8 @@ const CallToAction = () => {
               <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold text-black mb-8">
                 Experience the future, today.
               </h3>
-              
-              <Link 
+
+              <Link
                 to="/shop"
                 className="inline-block bg-black text-white px-8 py-4 text-lg font-medium hover:bg-gray-800 transition-colors duration-200"
               >

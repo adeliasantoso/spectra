@@ -1,8 +1,8 @@
 import React from "react";
 import LazyImage from "../components/LazyImage";
-import social1 from "../assets/images/landing-page/social1.png";
-import social2 from "../assets/images/landing-page/social2.png";
-import social3 from "../assets/images/landing-page/social3.png";
+import social1 from "../assets/images/landing-page/social1.webp";
+import social2 from "../assets/images/landing-page/social2.webp";
+import social3 from "../assets/images/landing-page/social3.webp";
 
 const SocialGallery = () => {
   const socialImages = [
@@ -38,7 +38,7 @@ const SocialGallery = () => {
                 src={image.src}
                 alt={image.alt}
                 className="w-full h-full hover:scale-105 transition-transform duration-300"
-                style={{ aspectRatio: '1/1' }}
+                style={{ aspectRatio: "1/1" }}
               />
             </div>
           ))}

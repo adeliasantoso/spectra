@@ -3,10 +3,10 @@ import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
 import CartIcon from "../components/CartIcon";
 import OptimizedImage from "../components/OptimizedImage";
-import heroAbout from "../assets/images/about-page/hero-about.png";
-import buildingTech from "../assets/images/about-page/building-tech.png";
-import designingFor from "../assets/images/about-page/designing-for.png";
-import drivingChange from "../assets/images/about-page/diriving-change.png";
+import heroAbout from "../assets/images/about-page/hero-about.webp";
+import buildingTech from "../assets/images/about-page/building-tech.webp";
+import designingFor from "../assets/images/about-page/designing-for.webp";
+import drivingChange from "../assets/images/about-page/diriving-change.webp";
 
 const About = () => {
   // Animation state for sections
@@ -63,8 +63,20 @@ const About = () => {
         <div className="absolute inset-0 flex items-end justify-center pb-8 md:pb-12">
           <div className="text-center px-4 md:px-6">
             <h1 className="text-4xl md:text-6xl text-white font-semibold leading-tight">
-              <span className={`elegant-title-word ${visibleSections.has('hero-vision') ? 'animate' : ''}`}>Our</span>{' '}
-              <span className={`elegant-title-word ${visibleSections.has('hero-vision') ? 'animate' : ''}`}>Vision</span>
+              <span
+                className={`elegant-title-word ${
+                  visibleSections.has("hero-vision") ? "animate" : ""
+                }`}
+              >
+                Our
+              </span>{" "}
+              <span
+                className={`elegant-title-word ${
+                  visibleSections.has("hero-vision") ? "animate" : ""
+                }`}
+              >
+                Vision
+              </span>
             </h1>
           </div>
         </div>
@@ -80,19 +92,57 @@ const About = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16 items-center">
             <div className="space-y-6 md:space-y-8">
               <h2 className="text-2xl md:text-4xl font-semibold text-gray-900 leading-tight">
-                <span className={`elegant-title-word ${visibleSections.has('building-tech') ? 'animate' : ''}`}>Building</span>{' '}
-                <span className={`elegant-title-word ${visibleSections.has('building-tech') ? 'animate' : ''}`}>Tech</span>{' '}
-                <span className={`elegant-title-word ${visibleSections.has('building-tech') ? 'animate' : ''}`}>That</span>
+                <span
+                  className={`elegant-title-word ${
+                    visibleSections.has("building-tech") ? "animate" : ""
+                  }`}
+                >
+                  Building
+                </span>{" "}
+                <span
+                  className={`elegant-title-word ${
+                    visibleSections.has("building-tech") ? "animate" : ""
+                  }`}
+                >
+                  Tech
+                </span>{" "}
+                <span
+                  className={`elegant-title-word ${
+                    visibleSections.has("building-tech") ? "animate" : ""
+                  }`}
+                >
+                  That
+                </span>
                 <br />
-                <span className={`elegant-title-word ${visibleSections.has('building-tech') ? 'animate' : ''}`}>Understands</span>{' '}
-                <span className={`elegant-title-word ${visibleSections.has('building-tech') ? 'animate' : ''}`}>You</span>
+                <span
+                  className={`elegant-title-word ${
+                    visibleSections.has("building-tech") ? "animate" : ""
+                  }`}
+                >
+                  Understands
+                </span>{" "}
+                <span
+                  className={`elegant-title-word ${
+                    visibleSections.has("building-tech") ? "animate" : ""
+                  }`}
+                >
+                  You
+                </span>
               </h2>
               <div className="space-y-6 md:space-y-8 text-base md:text-lg">
-                <p className={`text-gray-700 leading-relaxed font-medium elegant-paragraph ${visibleSections.has('building-tech') ? 'animate' : ''}`}>
+                <p
+                  className={`text-gray-700 leading-relaxed font-medium elegant-paragraph ${
+                    visibleSections.has("building-tech") ? "animate" : ""
+                  }`}
+                >
                   Spectra began with one question: what if technology could go
                   beyond serving us and actually understand our needs?
                 </p>
-                <p className={`text-gray-600 leading-relaxed elegant-paragraph ${visibleSections.has('building-tech') ? 'animate' : ''}`}>
+                <p
+                  className={`text-gray-600 leading-relaxed elegant-paragraph ${
+                    visibleSections.has("building-tech") ? "animate" : ""
+                  }`}
+                >
                   This led to the creation of Spectra. Founded by a small
                   collective of engineers and designers, Spectra was born from a
                   vision of a future where technology improves our lives in
@@ -100,7 +150,11 @@ const About = () => {
                   routine, anticipate your needs, and deliver highly
                   personalized solutions.
                 </p>
-                <p className={`text-gray-600 leading-relaxed elegant-paragraph ${visibleSections.has('building-tech') ? 'animate' : ''}`}>
+                <p
+                  className={`text-gray-600 leading-relaxed elegant-paragraph ${
+                    visibleSections.has("building-tech") ? "animate" : ""
+                  }`}
+                >
                   Spectra introduces a new layer of experience by combining
                   ambient AI with spatial computing. Our products respond
                   intuitively to your environment and preferences, generating
@@ -108,9 +162,14 @@ const About = () => {
                 </p>
               </div>
             </div>
-            <div className={`transform transition-all duration-1000 ease-out ${
-              visibleSections.has('building-tech') ? 'translate-y-0 opacity-100 scale-100' : 'translate-y-8 opacity-0 scale-95'
-            }`} style={{ transitionDelay: '1000ms' }}>
+            <div
+              className={`transform transition-all duration-1000 ease-out ${
+                visibleSections.has("building-tech")
+                  ? "translate-y-0 opacity-100 scale-100"
+                  : "translate-y-8 opacity-0 scale-95"
+              }`}
+              style={{ transitionDelay: "1000ms" }}
+            >
               <div className="relative">
                 <OptimizedImage
                   src={buildingTech}
@@ -135,9 +194,14 @@ const About = () => {
       >
         <div className="max-w-6xl mx-auto px-8 md:px-12 lg:px-16">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16 items-center">
-            <div className={`order-2 lg:order-1 transform transition-all duration-1000 ease-out ${
-              visibleSections.has('designing-for') ? 'translate-y-0 opacity-100 scale-100' : 'translate-y-8 opacity-0 scale-95'
-            }`} style={{ transitionDelay: '900ms' }}>
+            <div
+              className={`order-2 lg:order-1 transform transition-all duration-1000 ease-out ${
+                visibleSections.has("designing-for")
+                  ? "translate-y-0 opacity-100 scale-100"
+                  : "translate-y-8 opacity-0 scale-95"
+              }`}
+              style={{ transitionDelay: "900ms" }}
+            >
               <div className="relative">
                 <OptimizedImage
                   src={designingFor}
@@ -152,30 +216,66 @@ const About = () => {
             </div>
             <div className="space-y-6 md:space-y-8 order-1 lg:order-2">
               <h2 className="text-2xl md:text-4xl font-semibold text-gray-900 leading-tight">
-                <span className={`elegant-title-word ${visibleSections.has('designing-for') ? 'animate' : ''}`}>Helping</span>{' '}
-                <span className={`elegant-title-word ${visibleSections.has('designing-for') ? 'animate' : ''}`}>You</span>{' '}
-                <span className={`elegant-title-word ${visibleSections.has('designing-for') ? 'animate' : ''}`}>Without</span>
+                <span
+                  className={`elegant-title-word ${
+                    visibleSections.has("designing-for") ? "animate" : ""
+                  }`}
+                >
+                  Helping
+                </span>{" "}
+                <span
+                  className={`elegant-title-word ${
+                    visibleSections.has("designing-for") ? "animate" : ""
+                  }`}
+                >
+                  You
+                </span>{" "}
+                <span
+                  className={`elegant-title-word ${
+                    visibleSections.has("designing-for") ? "animate" : ""
+                  }`}
+                >
+                  Without
+                </span>
                 <br />
-                <span className={`elegant-title-word ${visibleSections.has('designing-for') ? 'animate' : ''}`}>Disruption</span>
+                <span
+                  className={`elegant-title-word ${
+                    visibleSections.has("designing-for") ? "animate" : ""
+                  }`}
+                >
+                  Disruption
+                </span>
               </h2>
               <div className="space-y-6 md:space-y-8 text-base md:text-lg">
-                <p className={`text-gray-700 leading-relaxed font-medium elegant-paragraph ${visibleSections.has('designing-for') ? 'animate' : ''}`}>
+                <p
+                  className={`text-gray-700 leading-relaxed font-medium elegant-paragraph ${
+                    visibleSections.has("designing-for") ? "animate" : ""
+                  }`}
+                >
                   As a tech company, one of our key breakthroughs has been
                   rethinking digital advertising through an innovative revenue
                   model. Our business model benefits both users and marketers.
                 </p>
-                <p className={`text-gray-600 leading-relaxed elegant-paragraph ${visibleSections.has('designing-for') ? 'animate' : ''}`}>
+                <p
+                  className={`text-gray-600 leading-relaxed elegant-paragraph ${
+                    visibleSections.has("designing-for") ? "animate" : ""
+                  }`}
+                >
                   Instead of paying for subscriptions to avoid ads, users
                   receive intelligent recommendations that align with their
                   actual needs. Spectra's AI system uses insights to deliver
                   personalized suggestions that truly resonate.
                 </p>
-                <p className={`text-gray-600 leading-relaxed elegant-paragraph ${visibleSections.has('designing-for') ? 'animate' : ''}`}>
+                <p
+                  className={`text-gray-600 leading-relaxed elegant-paragraph ${
+                    visibleSections.has("designing-for") ? "animate" : ""
+                  }`}
+                >
                   The content is automatically adapted to each user's
-                  preferences, whether in the form of a video, image, or
-                  text, and actually entertaining. It's advertising that feels
-                  more like your beloved content on the internet than an
-                  irrelevant noise.
+                  preferences, whether in the form of a video, image, or text,
+                  and actually entertaining. It's advertising that feels more
+                  like your beloved content on the internet than an irrelevant
+                  noise.
                 </p>
               </div>
             </div>
@@ -192,43 +292,100 @@ const About = () => {
         <div className="max-w-6xl mx-auto px-8 md:px-12 lg:px-16">
           <div className="text-center mb-12 md:mb-20">
             <h2 className="text-2xl md:text-4xl font-semibold text-gray-900 mb-12 md:mb-16 leading-tight">
-              <span className={`elegant-title-word ${visibleSections.has('driving-change') ? 'animate' : ''}`}>Designing</span>{' '}
-              <span className={`elegant-title-word ${visibleSections.has('driving-change') ? 'animate' : ''}`}>For</span>{' '}
-              <span className={`elegant-title-word ${visibleSections.has('driving-change') ? 'animate' : ''}`}>Safety,</span>{' '}
-              <span className={`elegant-title-word ${visibleSections.has('driving-change') ? 'animate' : ''}`}>Accessibility,</span>
+              <span
+                className={`elegant-title-word ${
+                  visibleSections.has("driving-change") ? "animate" : ""
+                }`}
+              >
+                Designing
+              </span>{" "}
+              <span
+                className={`elegant-title-word ${
+                  visibleSections.has("driving-change") ? "animate" : ""
+                }`}
+              >
+                For
+              </span>{" "}
+              <span
+                className={`elegant-title-word ${
+                  visibleSections.has("driving-change") ? "animate" : ""
+                }`}
+              >
+                Safety,
+              </span>{" "}
+              <span
+                className={`elegant-title-word ${
+                  visibleSections.has("driving-change") ? "animate" : ""
+                }`}
+              >
+                Accessibility,
+              </span>
               <br />
-              <span className={`elegant-title-word ${visibleSections.has('driving-change') ? 'animate' : ''}`}>And</span>{' '}
-              <span className={`elegant-title-word ${visibleSections.has('driving-change') ? 'animate' : ''}`}>Sustainability</span>
+              <span
+                className={`elegant-title-word ${
+                  visibleSections.has("driving-change") ? "animate" : ""
+                }`}
+              >
+                And
+              </span>{" "}
+              <span
+                className={`elegant-title-word ${
+                  visibleSections.has("driving-change") ? "animate" : ""
+                }`}
+              >
+                Sustainability
+              </span>
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 max-w-5xl mx-auto text-left">
               <div className="space-y-6 text-base md:text-lg">
-                <p className={`text-gray-700 leading-relaxed font-medium elegant-paragraph ${visibleSections.has('driving-change') ? 'animate' : ''}`}>
+                <p
+                  className={`text-gray-700 leading-relaxed font-medium elegant-paragraph ${
+                    visibleSections.has("driving-change") ? "animate" : ""
+                  }`}
+                >
                   We prioritize safety, accessibility, and sustainability in
-                  everything we create. Our dedicated research and policy
-                  team, with their deep expertise in law and social
-                  impact, ensures that each product reflects our core values.
+                  everything we create. Our dedicated research and policy team,
+                  with their deep expertise in law and social impact, ensures
+                  that each product reflects our core values.
                 </p>
-                <p className={`text-gray-600 leading-relaxed elegant-paragraph ${visibleSections.has('driving-change') ? 'animate' : ''}`}>
+                <p
+                  className={`text-gray-600 leading-relaxed elegant-paragraph ${
+                    visibleSections.has("driving-change") ? "animate" : ""
+                  }`}
+                >
                   Through our work, we strive to improve the wellbeing of both
                   people and the planet.
                 </p>
               </div>
               <div className="space-y-6 text-base md:text-lg">
-                <p className={`text-gray-700 leading-relaxed elegant-paragraph ${visibleSections.has('driving-change') ? 'animate' : ''}`}>
+                <p
+                  className={`text-gray-700 leading-relaxed elegant-paragraph ${
+                    visibleSections.has("driving-change") ? "animate" : ""
+                  }`}
+                >
                   We believe technology should be respectful and beautifully
                   attuned to the individual. At the heart of our vision is a
                   world of innovation that seamlessly integrates into your life.
                 </p>
-                <p className={`text-gray-600 leading-relaxed elegant-paragraph ${visibleSections.has('driving-change') ? 'animate' : ''}`}>
+                <p
+                  className={`text-gray-600 leading-relaxed elegant-paragraph ${
+                    visibleSections.has("driving-change") ? "animate" : ""
+                  }`}
+                >
                   A world shaped with you in mind.
                 </p>
               </div>
             </div>
           </div>
 
-          <div className={`mt-12 md:mt-16 transform transition-all duration-1000 ease-out ${
-            visibleSections.has('driving-change') ? 'translate-y-0 opacity-100 scale-100' : 'translate-y-8 opacity-0 scale-95'
-          }`} style={{ transitionDelay: '1200ms' }}>
+          <div
+            className={`mt-12 md:mt-16 transform transition-all duration-1000 ease-out ${
+              visibleSections.has("driving-change")
+                ? "translate-y-0 opacity-100 scale-100"
+                : "translate-y-8 opacity-0 scale-95"
+            }`}
+            style={{ transitionDelay: "1200ms" }}
+          >
             <div className="relative max-w-5xl mx-auto">
               <OptimizedImage
                 src={drivingChange}

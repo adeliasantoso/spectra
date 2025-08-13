@@ -46,7 +46,7 @@ for = "/*.css"
 Cache-Control = "max-age=31536000"
 
 [[headers]]
-for = "/*.png"
+for = "/*.webp"
 
 [headers.values]
 Cache-Control = "max-age=31536000"
