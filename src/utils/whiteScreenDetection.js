@@ -1,14 +1,18 @@
 // White Screen Detection and Auto-Recovery
 class WhiteScreenDetector {
   constructor() {
-    this.checkInterval = 3000; // Check every 3 seconds
-    this.retryDelay = 2000; // Wait 2 seconds before retry
-    this.maxRetries = 3;
+    this.checkInterval = 10000; // Check every 10 seconds (less aggressive)
+    this.retryDelay = 5000; // Wait 5 seconds before retry  
+    this.maxRetries = 2; // Reduce retries
     this.currentRetries = 0;
     this.isChecking = false;
     this.hasContent = false;
+    this.isProduction = window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
     
-    this.init();
+    // Only initialize in production or when there's actual error
+    if (this.isProduction) {
+      this.init();
+    }
   }
 
   init() {
@@ -51,14 +55,18 @@ class WhiteScreenDetector {
       const hasReactRoot = this.hasReactContent();
       const hasErrors = this.hasJavaScriptErrors();
       
-      if (!hasVisibleContent || !hasReactRoot || hasErrors) {
-        console.warn('[WhiteScreen] Detected potential white screen:', {
+      // Only act on severe issues, not minor ones
+      const isSevereWhiteScreen = (!hasVisibleContent && !hasReactRoot) || (hasErrors && !hasVisibleContent);
+      
+      if (isSevereWhiteScreen && this.currentRetries === 0) {
+        console.warn('[WhiteScreen] Detected severe white screen:', {
           hasVisibleContent,
           hasReactRoot,
           hasErrors,
           retries: this.currentRetries
         });
         
+        // Only handle if this is the first detection
         this.handleWhiteScreen();
       } else {
         // Reset retry counter if content is loaded successfully

@@ -2,6 +2,7 @@ import { StrictMode, Suspense } from 'react'
 import { createRoot } from 'react-dom/client'
 import { HashRouter as Router, Routes, Route } from 'react-router-dom'
 import './index.css'
+import './styles/youtube-hide.css'
 import { CartProvider } from './context/CartContext.jsx'
 import { ToastProvider } from './context/ToastContext.jsx'
 import { WishlistProvider } from './context/WishlistContext.jsx'
@@ -28,8 +29,8 @@ const OrderSuccess = lazy(() => import('./pages/OrderSuccess.jsx'))
 // Initialize scroll animations
 initScrollAnimations();
 
-// Initialize white screen detection
-initWhiteScreenDetection();
+// Initialize white screen detection (disabled for now to prevent auto-reload)
+// initWhiteScreenDetection();
 
 // Disable browser scroll restoration globally for best UX practice
 if (typeof window !== 'undefined' && 'scrollRestoration' in history) {

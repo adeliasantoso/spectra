@@ -1,0 +1,49 @@
+/* Hide YouTube branding and controls */
+
+/* Hide YouTube logo that appears during replay */
+iframe[src*="youtube.com"]:after,
+iframe[src*="youtube.com"] .ytp-watermark,
+iframe[src*="youtube.com"] .ytp-chrome-bottom,
+iframe[src*="youtube.com"] .ytp-show-cards-title,
+iframe[src*="youtube.com"] .ytp-pause-overlay {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* DISABLE ALL IFRAME INTERACTIONS - No hover icons */
+iframe[src*="youtube.com"] {
+  pointer-events: none !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+}
+
+/* Hide any overlay elements that might appear */
+iframe[src*="youtube.com"]::before,
+iframe[src*="youtube.com"]::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* Additional container styling */
+.youtube-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.youtube-container iframe {
+  pointer-events: none !important;
+}
+
+/* Overlay to completely block interactions */
+.youtube-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  z-index: 999;
+  pointer-events: none;
+}

@@ -9,14 +9,14 @@
 - **Routing**: React Router DOM v7.7.0 (HashRouter for GitHub Pages)
 - **Language**: JavaScript (ES6+)
 - **State Management**: React Context API
-- **Deployment**: GitHub Pages
+- **Deployment**: Multi-platform (GitHub Pages, Firebase, Vercel, Netlify)
 
 ## Development Commands
 ```bash
 npm run dev       # Start development server (http://localhost:5173)
 npm run build     # Build for production
 npm run preview   # Preview production build
-npm run deploy    # Deploy to GitHub Pages
+npm run deploy    # Deploy to all platforms at once
 npm run lint      # Run ESLint (if configured)
 ```
 
@@ -89,12 +89,12 @@ Routes:
 ## Key Features Implemented
 
 ### 🏠 Homepage
-- **Hero Section**: Video background with animated title
+- **Hero Section**: Video background with animated title and 6-second loop
 - **Smart Navigation**: Auto-hide/show navbar on scroll with smooth animations
-- **Video Carousel**: Interactive carousel with 4 product videos and navigation
 - **Product Introduction**: "Introducing new Spectra 1.0" with animations
+- **USP Video Sections**: 6 individual video sections with play/pause controls
 - **Background Textures**: Subtle patterns for visual interest
-- **Interactive Elements**: Clickable product, hover effects, play/pause controls
+- **Interactive Elements**: Hover effects, play/pause controls, scroll animations
 - **FAQ Section**: Expandable accordion with fade-in animations
 - **Responsive Design**: Mobile-first approach
 
@@ -166,14 +166,26 @@ info('Color selection updated');
 
 ## Deployment
 
-### GitHub Pages Setup
+### Multi-Platform Deployment
 ```bash
-# Deploy command
+# Deploy to all platforms at once
 npm run deploy
 
-# Builds project and pushes to gh-pages branch
-# Live URL: https://adeliasantoso.github.io/spectra
+# Individual platform deployments
+npm run deploy:github    # GitHub Pages
+npm run deploy:firebase  # Firebase Hosting  
+npm run deploy:vercel    # Vercel
+npm run deploy:netlify   # Netlify
+
+# Complete deployment (git push + deploy all)
+npm run deploy:complete
 ```
+
+### Live Website URLs
+- **GitHub Pages**: https://adeliasantoso.github.io/spectra
+- **Firebase Hosting**: https://spectra-vision.web.app
+- **Vercel**: https://spectra-opal.vercel.app (Custom: https://spectra-vision.site)
+- **Netlify**: https://spectra-vision.netlify.app
 
 ### Build Configuration
 - **Base Path**: `/spectra/` for GitHub Pages
@@ -213,8 +225,9 @@ const { addToCart } = useCart();
 
 ### ✅ Completed Features
 - **Smart Navigation Bar**: Auto-hide/show navbar on scroll with smooth animations, stays visible during hero section
-- **Video Carousel System**: Interactive 4-video carousel with dots navigation, auto-advance, and 3D transitions
-- **Video Play/Pause Controls**: Working play/pause buttons on all USP section videos with proper state management
+- **Hero Video Loop**: 6-second video loop with fade-in/out transitions for seamless playback
+- **USP Video Sections**: 8 individual video sections with play/pause controls and scroll animations
+- **Video Play/Pause Controls**: Working play/pause buttons on all video sections with proper state management
 - **Performance Optimization**: Added RequestAnimationFrame for smooth 60fps scroll handling and debounced interactions
 - **FAQ Section**: Added comprehensive FAQ with 11 Q&A items, expandable accordion design
 - **Product Detail Enhancements**: Updated positioning copy, customer testimonials, optimized image gallery
@@ -318,55 +331,75 @@ localStorage.setItem('debug', 'true');
 
 ## Video Asset Links
 
-### ImageKit CDN Video Assets
-All videos hosted on ImageKit CDN (https://ik.imagekit.io/ohyemuffin/asset/video/):
+### Current Video Assets (YouTube Embed)
+All videos hosted on YouTube with unlisted privacy settings:
+
+**Total: 8 Active Videos**
 
 1. **Hero Section Video**
-   - **Current**: `Futuristic_Smart_Glasses_Video_Generation.mp4?updatedAt=1754214351100`
-   - **Previous**: `https://drive.google.com/uc?export=download&id=1zXmE4fsjzJcGTNnie8mlQQlAwHsCJsP3`
-   - **Original**: `https://ik.imagekit.io/ohyemuffin/asset/video/dipake.mp4?updatedAt=1753676071907`
-   - Used in: Hero background, main landing page video
-   - Source: ImageKit CDN
+   - YouTube ID: `fNUB1H8sJwY`
+   - URL: `https://youtu.be/fNUB1H8sJwY`
+   - Used in: Hero background with YouTube's built-in loop
+   - Features: Auto-play, muted, seamless loop
 
-2. **Video Carousel Section**
-   - **Expand the Universe**: `expand-the-universe.mp4?updatedAt=1753676355743`
-   - **Unlock Life Without Barriers**: `unlock.mp4?updatedAt=1753676356747` 
-   - **See Through Your Thoughts**: `AI_Fashion_Design_Assistance_Video.mp4?updatedAt=1753676356653`
-   - **Cancel Unwanted Noise**: `cancel-unwanted-noice.mp4?updatedAt=1753676357536`
-   - **Previous Carousel Videos (BACKUP)**:
-     - `AI_TV_Tailors_Content_for_Family.mp4?updatedAt=1754214349805`
-     - `Watch_Tracks_Active_Lifestyle.mp4?updatedAt=1754214349971` 
-     - `Immersive_Audio_on_a_Busy_Street.mp4?updatedAt=1754214349985`
-     - `smart-recognition.mp4?updatedAt=1753676355632`
-   - Used in: Interactive video carousel with 8-second auto-advance
-   - Features: Animated black texture background, dots navigation, smooth transitions
+2. **Product Introduction (Full-width)**
+   - YouTube ID: `kiQ8le_fX9U`
+   - URL: `https://youtu.be/kiQ8le_fX9U`
+   - Used in: "Quietly tailored to you" section
+   - Features: Full viewport height, YouTube controls hidden
 
-3. **Expand the Universe**
-   - **Current**: `AI_TV_Tailors_Content_for_Family.mp4?updatedAt=1754214349805` (Spectra Display)
-   - **Previous**: `expand-the-universe.mp4?updatedAt=1753676355743`
-   - Used in: "Expand your universe" section
+3. **USP Section Videos (6 videos)**
+   - **Expand the Universe**: `ZYkvvZqOG8s`
+     - URL: `https://youtu.be/ZYkvvZqOG8s`
+     - Used in: "Expand your universe" section (left-side video)
+   - **Unlock Life Without Barriers**: `auWOyxsT1ys`
+     - URL: `https://youtu.be/auWOyxsT1ys`
+     - Used in: "Unlock a life without barriers" section (right-side video)  
+   - **Smart Recognition**: `K-giE2RrBWE`
+     - URL: `https://youtu.be/K-giE2RrBWE`
+     - Used in: "Recognizes the moment" section (full-width)
+   - **Cancel Unwanted Noise**: `-JYdcGqnYSQ`
+     - URL: `https://youtu.be/-JYdcGqnYSQ`
+     - Used in: "Cancel the unwanted noise" section (left-side video)
+   - **Look Through Your Head**: `mv2jf6y9Bko`
+     - URL: `https://youtu.be/mv2jf6y9Bko`
+     - Used in: "See through your thoughts" section (right-side video)
+   - **Thoughtful Follow-ups**: `vRHAVwK7QQM`
+     - URL: `https://youtu.be/vRHAVwK7QQM`
+     - Used in: "Thoughtful follow-ups" section (full-width)
 
-4. **Unlock Life Without Barriers**
-   - **Current**: `Watch_Tracks_Active_Lifestyle.mp4?updatedAt=1754214349971` (Spectra Watch)
-   - **Previous**: `unlock.mp4?updatedAt=1753676356747`
-   - Used in: "Unlock a life without barriers" section
+### YouTube Embed Parameters
+- `autoplay=1`: Videos start automatically when page loads
+- `mute=1`: Videos are muted by default (required for autoplay)
+- `loop=1&playlist=VIDEO_ID`: Videos loop continuously
+- `controls=0`: Hide YouTube player controls for clean design
+- `showinfo=0`: Hide video title and info
+- `rel=0`: Don't show related videos
+- `modestbranding=1`: Minimal YouTube branding
 
-5. **Cancel Unwanted Noise**
-   - **Current**: `Immersive_Audio_on_a_Busy_Street.mp4?updatedAt=1754214349985` (Spectra Buds)
-   - **Previous**: `cancel-unwanted-noice.mp4?updatedAt=1753676357536`
-   - Used in: "Cancel the unwanted noise" section
-
-6. **See Through Your Thoughts**
-   - **Current**: `AI_Fashion_Design_Assistance_Video.mp4?updatedAt=1753676356653` (Used in carousel)
-   - **Previous**: `look-through-your-head.mp4?updatedAt=1753676357987`
-   - Used in: "See through your thoughts" section
-
-7. **Intuitive Insights**
-   - `terakhir-sebelum-product.mp4?updatedAt=1753676358212`
-   - Used in: Full-width video USP section 2
-
-### Video Usage Context
-- All videos are set to autoplay, muted, loop, and playsInline
+### Technical Implementation
+- All videos use `<iframe>` tags with YouTube embed URLs
+- Play/pause buttons are decorative (YouTube handles playback)
 - Videos serve as background elements and feature demonstrations
-- Each video supports the corresponding section's messaging
 - Fallback background colors provided for loading states
+- Videos are set to "Unlisted" privacy for embedding without public visibility
+
+### BACKUP: Original ImageKit Video URLs
+**Keep for restore purposes if needed:**
+
+```
+Hero Section:
+- https://ik.imagekit.io/ohyemuffin/asset/video/Futuristic_Smart_Glasses_Video_Generation.mp4?updatedAt=1754214351100
+- https://ik.imagekit.io/ohyemuffin/asset/video/dipake.mp4?updatedAt=1753676071907
+
+Product Introduction:
+- https://ik.imagekit.io/ohyemuffin/asset/video/Untitled%20video%20-%20Made%20with%20Clipchamp.mp4?updatedAt=1754957798356
+
+USP Sections:
+- https://ik.imagekit.io/ohyemuffin/asset/video/expand-the-universe.mp4?updatedAt=1753676355743
+- https://ik.imagekit.io/ohyemuffin/asset/video/unlock.mp4?updatedAt=1753676356747 (REPLACED with auWOyxsT1ys)
+- https://ik.imagekit.io/ohyemuffin/asset/video/smart-recognition.mp4?updatedAt=1753676355632
+- https://ik.imagekit.io/ohyemuffin/asset/video/cancel-unwanted-noice.mp4?updatedAt=1753676357536
+- https://ik.imagekit.io/ohyemuffin/asset/video/look-through-your-head.mp4?updatedAt=1753676357987
+- https://ik.imagekit.io/ohyemuffin/asset/video/terakhir-sebelum-product.mp4?updatedAt=1753676358212
+```

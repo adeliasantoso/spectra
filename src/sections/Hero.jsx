@@ -25,19 +25,31 @@ const Hero = () => {
     <section className="relative h-screen w-full overflow-hidden">
       {/* Video Background with parallax */}
       <motion.div 
-        className="absolute inset-0 w-full h-full"
+        className="absolute inset-0 w-full h-full overflow-hidden"
         style={{ y }}
       >
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="w-full h-full object-cover scale-110"
+        <div 
+          className="absolute w-full h-full"
+          style={{
+            top: '-10%',
+            height: '110%'
+          }}
         >
-          <source src="https://ik.imagekit.io/ohyemuffin/asset/video/dipake.mp4?updatedAt=1753676071907" type="video/mp4" />
-          <div className="w-full h-full bg-gray-900"></div>
-        </video>
+          <iframe
+            src="https://www.youtube.com/embed/fNUB1H8sJwY?autoplay=1&mute=1&loop=1&playlist=fNUB1H8sJwY&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&cc_load_policy=0&disablekb=1&fs=0"
+            className="w-full h-full"
+            style={{
+              position: 'absolute',
+              top: '0',
+              left: '0',
+              width: '100%',
+              height: '100%'
+            }}
+            frameBorder="0"
+            allow="autoplay; encrypted-media"
+            allowFullScreen
+          />
+        </div>
       </motion.div>
 
       {/* XR-style interactive overlay */}

@@ -13,11 +13,13 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "npm run build:github",
-    "deploy": "gh-pages -d dist",
+    "deploy": "npm run deploy:all",
     "deploy:github": "npm run build:github && gh-pages -d dist",
     "deploy:firebase": "npm run build && firebase deploy",
-    "deploy:all": "npm run deploy:github && npm run deploy:firebase",
-    "deploy:complete": "git push origin main && npm run deploy:github && npm run deploy:firebase",
+    "deploy:vercel": "npm run build && npx vercel --prod",
+    "deploy:netlify": "npm run build && npx netlify deploy --prod --dir=dist",
+    "deploy:all": "echo 'Starting multi-platform deployment...' && npm run build && npm run deploy:github && npm run deploy:firebase && npm run deploy:vercel && npm run deploy:netlify && echo 'All deployments complete!'",
+    "deploy:complete": "git add . && git commit -m 'feat: auto-deploy updates' && git push origin main && npm run deploy:all",
     "clear-cache": "node -e \"console.log('Clearing Vite cache...'); require('fs').rmSync('node_modules/.vite', {recursive: true, force: true}); console.log('Cache cleared!')\""
   },
   "dependencies": {

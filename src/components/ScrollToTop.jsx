@@ -10,12 +10,18 @@ const ScrollToTop = () => {
       history.scrollRestoration = 'manual';
     }
 
-    // Scroll to top on route change
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: 'instant' // Use 'instant' to avoid visual jump, change to 'smooth' if you want animation
-    });
+    // Only scroll to top if route actually changed (not just hash or query params)
+    const currentPath = pathname.split('?')[0].split('#')[0];
+    const storedPath = sessionStorage.getItem('lastPath');
+    
+    if (storedPath !== currentPath) {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'instant'
+      });
+      sessionStorage.setItem('lastPath', currentPath);
+    }
   }, [pathname]);
 
   return null;
