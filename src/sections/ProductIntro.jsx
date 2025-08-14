@@ -7,7 +7,7 @@ import spectra1Image from "../assets/images/landing-page/spectra1.webp";
 
 const ProductIntro = () => {
   return (
-    <section className="py-8 bg-gradient-to-b from-white via-gray-50 to-white relative overflow-hidden">
+    <section className="py-0 bg-gradient-to-b from-white via-gray-50 to-white relative overflow-hidden">
       {/* XR-style ambient background */}
       <div className="absolute inset-0">
         <motion.div
@@ -39,11 +39,11 @@ const ProductIntro = () => {
         />
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
+      <div className="max-w-7xl mx-auto px-6 relative z-10 -mt-16">
         {/* Enhanced Heading */}
-        <div className="text-center mb-8">
+        <div className="text-center mb-0">
           <motion.h2
-            className="text-4xl md:text-5xl lg:text-6xl font-light text-black mb-8"
+            className="text-4xl md:text-5xl lg:text-6xl font-light text-black mb-0"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -83,7 +83,7 @@ const ProductIntro = () => {
               <Link to="/product/spectra-1-0" className="block">
                 {/* Holographic frame */}
                 <motion.div
-                  className="relative p-8"
+                  className="relative p-0"
                   whileHover={{ scale: 1.02 }}
                   transition={{ duration: 0.3 }}
                 >
@@ -92,7 +92,7 @@ const ProductIntro = () => {
 
                   {/* Main image container */}
                   <motion.div
-                    className="relative bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-white/20"
+                    className="relative bg-white/80 backdrop-blur-sm rounded-2xl p-0 border border-white/20"
                     style={{
                       boxShadow: "0 20px 60px rgba(0, 0, 0, 0.1)",
                     }}
@@ -103,8 +103,8 @@ const ProductIntro = () => {
                     <LazyImage
                       src={spectra1Image}
                       alt="Spectra 1.0 Smart Glasses"
-                      className="w-full transition-all duration-700 group-hover:scale-105"
-                      style={{ aspectRatio: "16/10", maxHeight: "500px" }}
+                      className="w-full transition-all duration-700 group-hover:scale-105 object-cover"
+                      style={{ aspectRatio: "3/1", height: "200px", objectPosition: "center" }}
                     />
 
                     {/* Holographic scanlines */}
@@ -155,7 +155,7 @@ const ProductIntro = () => {
 
                 {/* Enhanced Click indicator */}
                 <motion.div
-                  className="text-center mt-6 opacity-0 group-hover:opacity-100"
+                  className="text-center mt-2 opacity-0 group-hover:opacity-100"
                   initial={{ y: 20 }}
                   whileHover={{ y: 0 }}
                   transition={{ duration: 0.3 }}

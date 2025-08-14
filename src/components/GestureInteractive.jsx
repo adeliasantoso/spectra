@@ -66,7 +66,7 @@ const GestureInteractive = ({ children, className = "", sensitivity = 1 }) => {
       >
         {/* Glow effect that appears on interaction */}
         <motion.div
-          className="absolute -inset-4 bg-gradient-radial from-blue-500/20 via-purple-500/10 to-transparent rounded-3xl blur-xl"
+          className="absolute -inset-2 sm:-inset-4 bg-gradient-radial from-blue-500/20 via-purple-500/10 to-transparent rounded-2xl sm:rounded-3xl blur-lg sm:blur-xl"
           animate={{
             opacity: isHovered ? 1 : 0,
             scale: isHovered ? 1 : 0.8,
@@ -89,7 +89,7 @@ const GestureInteractive = ({ children, className = "", sensitivity = 1 }) => {
         
         {/* Interaction hint */}
         <motion.div
-          className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-xs text-white/60 font-light"
+          className="absolute -bottom-6 sm:-bottom-8 left-1/2 transform -translate-x-1/2 text-xs sm:text-sm text-white/60 font-light"
           animate={{
             opacity: isHovered ? 1 : 0,
             y: isHovered ? 0 : 10,

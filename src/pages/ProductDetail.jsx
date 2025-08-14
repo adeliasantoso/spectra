@@ -4,6 +4,7 @@ import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
 import CartIcon from "../components/CartIcon";
 import OptimizedImage from "../components/OptimizedImage";
+import Breadcrumb from "../components/Breadcrumb";
 import { useCart } from "../context/CartContext";
 import { useToast } from "../context/ToastContext";
 import { useWishlist } from "../context/WishlistContext";
@@ -175,7 +176,7 @@ const ProductDetail = () => {
             : currentTestimonialIndex + 1;
         handleTestimonialChange(nextIndex);
       }
-    }, 4000); // Change every 4 seconds
+    }, 6000); // Change every 6 seconds
 
     return () => clearInterval(interval);
   }, [currentTestimonialIndex, isTransitioning, testimonials.length]);
@@ -329,20 +330,25 @@ const ProductDetail = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white">
       <Navigation />
       <CartIcon />
+      
+      {/* Spacing for fixed navbar */}
+      <div className="h-14 sm:h-16 md:h-18"></div>
+      
+      <Breadcrumb />
 
       <div
         id="product-detail-main"
         ref={(el) => (sectionRefs.current["product-detail-main"] = el)}
-        className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 pt-20 sm:pt-24 md:pt-32 pb-8 sm:pb-12"
+        className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 pt-4 sm:pt-6 md:pt-8 pb-8 sm:pb-12"
         style={{ minHeight: "60vh" }}
       >
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-12">
           {/* Product Images */}
           <div
-            className={`space-y-4 transition-all duration-700 ${
+            className={`space-y-4 transition-all duration-700 -mt-4 ${
               visibleSections.has("product-detail-main")
                 ? "animate-fade-up opacity-100"
                 : "opacity-100"
@@ -354,6 +360,7 @@ const ProductDetail = () => {
                 src={product.images[selectedImage]}
                 alt={product.name}
                 className="w-full h-full object-cover"
+                style={{ objectPosition: "center 10%" }}
                 priority={true}
                 lazy={false}
               />
@@ -553,17 +560,24 @@ const ProductDetail = () => {
         </div>
 
         {/* Sticky Navigation with Scroll Spy */}
-        <div
-          className={`mt-12 sm:mt-16 sticky z-30 bg-white/95 backdrop-blur-sm ${
+        <div 
+          className={`mt-12 sm:mt-16 sticky z-50 transition-all duration-300 ${
             isNavbarVisible
-              ? "top-[52px] md:top-[64px] transition-all duration-300"
-              : "top-0 transition-all duration-300"
+              ? "top-[52px] md:top-[64px]"
+              : "top-0"
           }`}
         >
-          <div className="flex justify-center space-x-2 sm:space-x-4 md:space-x-8 px-4 overflow-x-auto product-tabs-container py-6 sm:py-8">
+          <div className="flex justify-center">
+            <div
+              className="bg-white rounded-full"
+              style={{
+                boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
+              }}
+            >
+              <div className="flex space-x-2 sm:space-x-4 md:space-x-8 px-6 py-3 sm:py-4">
             <button
               onClick={() => scrollToSection(descriptionRef, "description")}
-              className={`px-4 sm:px-6 md:px-8 py-2 sm:py-3 rounded-full font-medium text-base md:text-lg transition-all duration-300 whitespace-nowrap ${
+              className={`px-4 sm:px-6 md:px-8 py-2 sm:py-3 rounded-full font-medium text-lg md:text-xl transition-all duration-300 whitespace-nowrap ${
                 activeSection === "description"
                   ? "bg-black text-white shadow-lg scale-105"
                   : "text-gray-600 hover:text-black hover:bg-gray-100"
@@ -575,7 +589,7 @@ const ProductDetail = () => {
               onClick={() =>
                 scrollToSection(specificationsRef, "specifications")
               }
-              className={`px-4 sm:px-6 md:px-8 py-2 sm:py-3 rounded-full font-medium text-base md:text-lg transition-all duration-300 whitespace-nowrap ${
+              className={`px-4 sm:px-6 md:px-8 py-2 sm:py-3 rounded-full font-medium text-lg md:text-xl transition-all duration-300 whitespace-nowrap ${
                 activeSection === "specifications"
                   ? "bg-black text-white shadow-lg scale-105"
                   : "text-gray-600 hover:text-black hover:bg-gray-100"
@@ -585,7 +599,7 @@ const ProductDetail = () => {
             </button>
             <button
               onClick={() => scrollToSection(reviewsRef, "reviews")}
-              className={`px-4 sm:px-6 md:px-8 py-2 sm:py-3 rounded-full font-medium text-base md:text-lg transition-all duration-300 whitespace-nowrap ${
+              className={`px-4 sm:px-6 md:px-8 py-2 sm:py-3 rounded-full font-medium text-lg md:text-xl transition-all duration-300 whitespace-nowrap ${
                 activeSection === "reviews"
                   ? "bg-black text-white shadow-lg scale-105"
                   : "text-gray-600 hover:text-black hover:bg-gray-100"
@@ -593,6 +607,8 @@ const ProductDetail = () => {
             >
               Reviews
             </button>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -606,7 +622,7 @@ const ProductDetail = () => {
           className="scroll-mt-32 mt-8 md:mt-12"
         >
           <h2
-            className={`text-xl md:text-2xl font-bold text-gray-900 mb-8 text-center transition-all duration-700 ${
+            className={`text-xl md:text-2xl font-bold text-gray-900 mb-8 text-center transition-all duration-700 -mt-20 pt-20 ${
               visibleSections.has("description-section")
                 ? "animate-fade-up opacity-100"
                 : "opacity-100"
@@ -1008,7 +1024,7 @@ const ProductDetail = () => {
           className="scroll-mt-32 mt-16 md:mt-24"
         >
           <h2
-            className={`text-xl md:text-2xl font-bold text-gray-900 mb-8 text-center transition-all duration-700 ${
+            className={`text-xl md:text-2xl font-bold text-gray-900 mb-8 text-center transition-all duration-700 -mt-20 pt-20 ${
               visibleSections.has("specifications-section")
                 ? "animate-fade-up opacity-100"
                 : "opacity-100"
@@ -1053,7 +1069,7 @@ const ProductDetail = () => {
           className="scroll-mt-32 mt-16 md:mt-24"
         >
           <h2
-            className={`text-2xl md:text-3xl font-bold text-gray-900 mb-8 text-center transition-all duration-700 ${
+            className={`text-2xl md:text-3xl font-bold text-gray-900 mb-8 text-center transition-all duration-700 -mt-20 pt-20 ${
               visibleSections.has("reviews-section")
                 ? "animate-fade-up opacity-100"
                 : "opacity-100"
@@ -1070,17 +1086,20 @@ const ProductDetail = () => {
           >
             {/* Testimonial Carousel */}
             <div className="relative max-w-5xl mx-auto">
-              <div className="bg-gradient-to-br from-white to-gray-50 rounded-3xl p-10 shadow-lg hover:shadow-xl transition-all duration-500">
-                <div className="min-h-[280px] flex items-center">
-                  <div
-                    className={`flex space-x-10 w-full transition-all duration-500 ease-in-out transform ${
-                      isTransitioning
-                        ? "opacity-0 scale-95"
-                        : "opacity-100 scale-100"
-                    }`}
-                  >
-                    <div className="flex flex-col items-center flex-shrink-0">
-                      <div className="w-28 h-28 rounded-full overflow-hidden mb-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+              <div 
+                className="bg-gradient-to-br from-white to-gray-50 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-500"
+                style={{ minHeight: '260px' }}
+              >
+                <div
+                  className={`h-full transition-all duration-500 ease-in-out transform ${
+                    isTransitioning
+                      ? "opacity-0 scale-95"
+                      : "opacity-100 scale-100"
+                  }`}
+                >
+                  <div className="flex space-x-10 h-full">
+                    <div className="flex flex-col items-center flex-shrink-0 w-40">
+                      <div className="w-28 h-28 rounded-full overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
                         <OptimizedImage
                           src={testimonials[currentTestimonialIndex].avatar}
                           alt={testimonials[currentTestimonialIndex].name}
@@ -1089,11 +1108,13 @@ const ProductDetail = () => {
                           className="w-full h-full object-cover"
                         />
                       </div>
-                      <p className="font-semibold text-gray-900 text-lg md:text-xl text-center leading-tight">
-                        {testimonials[currentTestimonialIndex].name}
-                      </p>
+                      <div className="mt-4 h-16 flex items-start justify-center">
+                        <p className="font-semibold text-gray-900 text-lg md:text-xl text-center leading-tight">
+                          {testimonials[currentTestimonialIndex].name}
+                        </p>
+                      </div>
                     </div>
-                    <div className="flex-1 min-w-0 pt-2">
+                    <div className="flex-1 min-w-0 flex flex-col">
                       <div className="mb-6">
                         <h5 className="font-semibold text-xl md:text-2xl lg:text-3xl text-gray-900 mb-3 leading-tight">
                           {testimonials[currentTestimonialIndex].headline}
@@ -1102,7 +1123,7 @@ const ProductDetail = () => {
                           {testimonials[currentTestimonialIndex].date}
                         </p>
                       </div>
-                      <p className="text-gray-700 leading-relaxed text-lg md:text-xl font-normal">
+                      <p className="text-gray-700 leading-relaxed text-lg md:text-xl font-normal flex-1">
                         {testimonials[currentTestimonialIndex].review}
                       </p>
                     </div>
@@ -1191,7 +1212,7 @@ const ProductDetail = () => {
       <section
         id="related-products"
         ref={(el) => (sectionRefs.current["related-products"] = el)}
-        className="bg-gray-50 py-16"
+        className="bg-white py-16"
       >
         <div className="max-w-6xl mx-auto px-6 md:px-8 lg:px-12">
           <h2

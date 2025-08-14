@@ -233,11 +233,11 @@ const Home = React.memo(() => {
       <section
         id="product-intro"
         ref={(el) => (sectionRefs.current["product-intro"] = el)}
-        className="pt-0 pb-0 bg-white relative"
+        className="-mt-8 pt-0 pb-0 bg-transparent relative"
       >
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 text-center">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 text-center -mt-4">
           <div
-            className={`mb-0 max-w-3xl mx-auto relative ${
+            className={`-mb-24 max-w-3xl mx-auto relative ${
               visibleSections.has("product-intro")
                 ? "scroll-animate visible"
                 : "scroll-animate"
@@ -255,11 +255,13 @@ const Home = React.memo(() => {
                 priority={true}
                 style={{
                   transitionDelay: "100ms",
-                  clipPath: "inset(15% 0 15% 0)",
+                  clipPath: "inset(30% 0 30% 0)",
+                  aspectRatio: "3/1",
+                  height: "600px"
                 }}
               />
             </div>
-            <div className="absolute top-0 left-0 right-0 flex items-start justify-center pt-16 sm:pt-24 md:pt-32 px-4">
+            <div className="absolute top-0 left-0 right-0 flex items-start justify-center pt-8 sm:pt-12 md:pt-16 px-4">
               <h2
                 className={`text-3xl md:text-5xl font-bold text-black drop-shadow-2xl text-center max-w-full whitespace-nowrap transform transition-all duration-1000 ease-out ${
                   visibleSections.has("product-intro")
@@ -279,7 +281,7 @@ const Home = React.memo(() => {
       <section
         id="new-video-section"
         ref={(el) => (sectionRefs.current["new-video-section"] = el)}
-        className="py-16 md:py-24 bg-gradient-to-br from-gray-100 via-gray-50 to-gray-75 relative"
+        className="py-8 md:py-12 bg-gradient-to-br from-gray-100 via-gray-50 to-gray-75 relative"
       >
         {/* Asymmetric radial gradient texture */}
         <div className="absolute inset-0 opacity-20">
@@ -395,14 +397,14 @@ const Home = React.memo(() => {
       <section
         id="expand-universe"
         ref={(el) => (sectionRefs.current["expand-universe"] = el)}
-        className="py-16 md:py-32 bg-gradient-to-br from-gray-50 via-white to-gray-100 relative"
+        className="py-8 md:py-16 bg-gradient-to-br from-gray-50 via-white to-gray-100 relative"
       >
         {/* Asymmetric radial gradient texture */}
         <div className="absolute inset-0 opacity-15">
           <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_70%_20%,rgba(156,163,175,0.1)_0%,transparent_45%),radial-gradient(ellipse_at_15%_80%,rgba(209,213,219,0.08)_0%,transparent_40%),radial-gradient(ellipse_at_85%_60%,rgba(156,163,175,0.06)_0%,transparent_35%)]"></div>
         </div>
         <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-8 lg:px-12">
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 md:gap-20 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-1 md:gap-2 items-center">
             <div
               className={`lg:col-span-3 lg:pr-8 order-2 lg:order-1 relative ${
                 visibleSections.has("expand-universe")
@@ -519,14 +521,14 @@ const Home = React.memo(() => {
       <section
         id="unlock-barriers"
         ref={(el) => (sectionRefs.current["unlock-barriers"] = el)}
-        className="py-16 md:py-32 bg-gradient-to-bl from-gray-50 via-white to-gray-100 relative"
+        className="py-8 md:py-16 bg-gradient-to-bl from-gray-50 via-white to-gray-100 relative"
       >
         {/* Asymmetric radial gradient texture */}
         <div className="absolute inset-0 opacity-18">
           <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_25%_15%,rgba(156,163,175,0.12)_0%,transparent_42%),radial-gradient(ellipse_at_90%_85%,rgba(209,213,219,0.1)_0%,transparent_38%),radial-gradient(ellipse_at_60%_50%,rgba(156,163,175,0.07)_0%,transparent_32%)]"></div>
         </div>
         <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-8 lg:px-12">
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 md:gap-20 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-1 md:gap-2 items-center">
             <div
               className={`lg:col-span-2 space-y-6 md:space-y-8 ${
                 visibleSections.has("unlock-barriers")
@@ -651,7 +653,7 @@ const Home = React.memo(() => {
       <section
         id="smart-recognition"
         ref={(el) => (sectionRefs.current["smart-recognition"] = el)}
-        className="py-16 md:py-24 bg-gradient-to-br from-gray-100 via-gray-50 to-gray-75 relative"
+        className="py-8 md:py-12 bg-gradient-to-br from-gray-100 via-gray-50 to-gray-75 relative"
       >
         {/* Asymmetric radial gradient texture */}
         <div className="absolute inset-0 opacity-20">
@@ -759,14 +761,14 @@ const Home = React.memo(() => {
       <section
         id="cancel-noise"
         ref={(el) => (sectionRefs.current["cancel-noise"] = el)}
-        className="py-16 md:py-32 bg-gradient-to-br from-gray-50 via-white to-gray-100 relative"
+        className="py-8 md:py-16 bg-gradient-to-br from-gray-50 via-white to-gray-100 relative"
       >
         {/* Asymmetric radial gradient texture */}
         <div className="absolute inset-0 opacity-16">
           <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_80%_25%,rgba(156,163,175,0.11)_0%,transparent_48%),radial-gradient(ellipse_at_20%_75%,rgba(209,213,219,0.09)_0%,transparent_43%),radial-gradient(ellipse_at_95%_90%,rgba(156,163,175,0.05)_0%,transparent_28%)]"></div>
         </div>
         <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-8 lg:px-12">
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 md:gap-20 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-1 md:gap-2 items-center">
             <div
               className={`lg:col-span-3 lg:pr-8 order-2 lg:order-1 relative ${
                 visibleSections.has("cancel-noise")
@@ -884,14 +886,14 @@ const Home = React.memo(() => {
       <section
         id="see-through-thoughts"
         ref={(el) => (sectionRefs.current["see-through-thoughts"] = el)}
-        className="py-16 md:py-32 bg-gradient-to-bl from-gray-50 via-white to-gray-100 relative"
+        className="py-8 md:py-16 bg-gradient-to-bl from-gray-50 via-white to-gray-100 relative"
       >
         {/* Asymmetric radial gradient texture */}
         <div className="absolute inset-0 opacity-14">
           <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_30%_10%,rgba(156,163,175,0.1)_0%,transparent_50%),radial-gradient(ellipse_at_85%_70%,rgba(209,213,219,0.08)_0%,transparent_45%),radial-gradient(ellipse_at_10%_85%,rgba(156,163,175,0.06)_0%,transparent_30%)]"></div>
         </div>
         <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-8 lg:px-12">
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 md:gap-20 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-1 md:gap-2 items-center">
             <div className="lg:col-span-2 space-y-6 md:space-y-8">
               <h2 className="text-3xl md:text-5xl font-light text-gray-900 leading-tight">
                 <span
@@ -997,7 +999,7 @@ const Home = React.memo(() => {
       <section
         id="intuitive-insights"
         ref={(el) => (sectionRefs.current["intuitive-insights"] = el)}
-        className="py-16 md:py-24 bg-white"
+        className="py-8 md:py-12 bg-white"
       >
         <div className="w-full">
           <div
@@ -1096,7 +1098,7 @@ const Home = React.memo(() => {
           <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_60%_30%,rgba(156,163,175,0.08)_0%,transparent_55%),radial-gradient(ellipse_at_15%_70%,rgba(209,213,219,0.06)_0%,transparent_48%),radial-gradient(ellipse_at_90%_15%,rgba(156,163,175,0.04)_0%,transparent_35%)]"></div>
         </div>
         <div className="relative z-10 max-w-6xl mx-auto px-6 md:px-8 lg:px-12">
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 md:gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-1 md:gap-2 items-center">
             <div className="order-2 lg:order-1 lg:col-span-3 relative group flex justify-center">
               <div className="relative max-w-md lg:max-w-lg xl:max-w-xl overflow-hidden rounded-2xl">
                 {/* Background glow effect */}
@@ -1223,7 +1225,7 @@ const Home = React.memo(() => {
       <section
         id="about-us"
         ref={(el) => (sectionRefs.current["about-us"] = el)}
-        className="py-16 md:py-32 bg-gradient-to-b from-gray-200 via-gray-100 to-gray-75 relative"
+        className="py-8 md:py-16 bg-gradient-to-b from-gray-200 via-gray-100 to-gray-75 relative"
       >
         <div className="absolute inset-0 bg-gradient-to-b from-gray-300/20 via-transparent to-gray-200/30"></div>
         <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-gray-200/80 to-transparent"></div>
@@ -1286,7 +1288,7 @@ const Home = React.memo(() => {
       <section
         id="social-section"
         ref={(el) => (sectionRefs.current["social-section"] = el)}
-        className="py-16 md:py-32 bg-gradient-to-b from-gray-75 via-gray-50 to-white relative"
+        className="py-8 md:py-16 bg-gradient-to-b from-gray-75 via-gray-50 to-white relative"
       >
         <div className="absolute inset-0 bg-gradient-to-b from-gray-100/25 via-transparent to-white/50"></div>
         <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-gray-75/80 to-transparent"></div>

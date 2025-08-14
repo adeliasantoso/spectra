@@ -3,7 +3,7 @@ import { useToast } from '../context/ToastContext';
 
 const Toast = ({ toast, onRemove }) => {
   const getToastStyles = () => {
-    const baseStyles = "flex items-center px-4 py-3 rounded-xl backdrop-blur-xl border transform transition-all duration-300 ease-out animate-slide-in hover:scale-[1.02] shadow-lg";
+    const baseStyles = "flex items-center px-3 sm:px-4 py-2 sm:py-3 rounded-xl backdrop-blur-xl border transform transition-all duration-300 ease-out animate-slide-in hover:scale-[1.02] shadow-lg";
     
     switch (toast.type) {
       case 'success':
@@ -69,7 +69,7 @@ const Toast = ({ toast, onRemove }) => {
       <div className="flex items-center flex-1">
         {getIcon()}
         <div className="flex-1">
-          <div className="text-gray-800 text-sm font-medium">{toast.message}</div>
+          <div className="text-gray-800 text-xs sm:text-sm font-medium">{toast.message}</div>
         </div>
       </div>
       
@@ -91,7 +91,7 @@ const ToastContainer = () => {
   if (toasts.length === 0) return null;
 
   return (
-    <div className="fixed top-20 right-4 z-50 space-y-3 max-w-xs">
+    <div className="fixed top-20 right-4 left-4 sm:left-auto z-50 space-y-3 max-w-xs sm:max-w-sm">
       {toasts.map(toast => (
         <Toast 
           key={toast.id} 

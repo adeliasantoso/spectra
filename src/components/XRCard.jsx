@@ -87,7 +87,7 @@ const XRCard = ({
         </div>
 
         {/* Corner accent */}
-        <div className="absolute top-0 right-0 w-20 h-20 opacity-30">
+        <div className="absolute top-0 right-0 w-16 h-16 sm:w-20 sm:h-20 opacity-30">
           <div 
             className="absolute top-0 right-0 w-full h-full rounded-bl-2xl"
             style={{

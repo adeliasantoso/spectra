@@ -1,9 +1,12 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { getProductById } from '../data/products';
+import { getProductById, CATEGORIES } from '../data/products';
 
 const Breadcrumb = ({ customPath = null, className = "" }) => {
   const location = useLocation();
+  
+  // For HashRouter, we need to clean the pathname to remove hash
+  const cleanPathname = location.pathname || window.location.hash.replace('#', '') || '/';
   
   // Custom breadcrumb data for different pages
   const breadcrumbMap = {
@@ -27,34 +30,46 @@ const Breadcrumb = ({ customPath = null, className = "" }) => {
   };
 
   // Handle product detail pages
-  if (location.pathname.startsWith('/product/')) {
-    const productId = location.pathname.split('/')[2];
+  if (cleanPathname.startsWith('/product/')) {
+    const productId = cleanPathname.split('/')[2];
     const product = getProductById(productId);
     const productName = product ? product.name : 'Product';
     
-    breadcrumbMap[location.pathname] = [
+    // Get category display name
+    const getCategoryLabel = (category) => {
+      switch(category) {
+        case CATEGORIES.WEARABLES: return 'Wearables';
+        case CATEGORIES.AUDIO: return 'Audio';
+        case CATEGORIES.DISPLAY: return 'Display';
+        default: return 'Products';
+      }
+    };
+    
+    breadcrumbMap[cleanPathname] = [
       { label: 'Home', path: '/' },
       { label: 'Shop', path: '/shop' },
+      { label: getCategoryLabel(product?.category), path: '/shop' },
       { label: productName, path: location.pathname }
     ];
   }
   
 
-  const breadcrumbs = customPath || breadcrumbMap[location.pathname] || [
+  const breadcrumbs = customPath || breadcrumbMap[cleanPathname] || [
     { label: 'Home', path: '/' }
   ];
+
 
   if (breadcrumbs.length <= 1) return null;
 
   return (
-    <div className={`bg-white border-b border-gray-200 ${className}`}>
-      <div className="max-w-7xl mx-auto px-6 py-4">
-        <nav className="flex items-center space-x-2 text-sm">
+    <div className={`bg-gray-50 border-b border-gray-200 relative z-10 ${className}`}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2 sm:py-3">
+        <nav className="flex items-center space-x-1 sm:space-x-2 text-xs sm:text-sm">
           {breadcrumbs.map((crumb, index) => (
             <React.Fragment key={crumb.path}>
               {index > 0 && (
                 <svg 
-                  className="w-4 h-4 text-gray-400 mx-2" 
+                  className="w-3 h-3 sm:w-4 sm:h-4 text-gray-400 mx-1 sm:mx-2" 
                   fill="currentColor" 
                   viewBox="0 0 20 20"
                 >
