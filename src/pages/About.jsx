@@ -47,17 +47,13 @@ const About = () => {
         ref={(el) => (sectionRefs.current["hero-vision"] = el)}
         className="relative w-full h-[80vh] md:h-[90vh] lg:h-[100vh] overflow-hidden -mt-16 pt-16"
       >
-        <OptimizedImage
+        <img
           src={heroAbout}
           alt="Our Vision"
-          width={1920}
-          height={800}
-          lazy={false}
-          priority={true}
-          responsiveSizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 1920px"
-          className={`w-full h-full object-cover object-[center_57%] transition-all duration-1000 critical-image gpu-optimized ${
+          className={`w-full h-full object-cover transition-all duration-1000 ${
             visibleSections.has("hero-vision") ? "scale-100" : "scale-105"
           }`}
+          style={{ objectPosition: 'center 55%' }}
         />
         <div className="absolute inset-0 bg-black bg-opacity-60"></div>
         <div className="absolute inset-0 flex items-end justify-center pb-8 md:pb-12">

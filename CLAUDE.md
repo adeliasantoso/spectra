@@ -222,6 +222,7 @@ const { addToCart } = useCart();
 - **Wishlist Integration**: Full wishlist context and functionality
 - **Contact Page**: Fixed syntax errors, functional contact form
 - **Enhanced Components**: Added OptimizedVideo, performance utilities, and modern UI components
+- **About Page Hero Image Fix**: Resolved object-position issues by replacing OptimizedImage component with direct img tag
 
 ### FAQ Content Areas Covered:
 1. Product introduction and capabilities
@@ -271,6 +272,16 @@ npm run audit
 2. **Images not loading**: Verify asset paths and build process
 3. **Toast not showing**: Ensure ToastProvider wraps app
 4. **Cart state reset**: Check CartProvider placement
+5. **Hero image positioning issues**: When object-position styles don't work with OptimizedImage component, use direct `<img>` tag instead
+
+### Image Position Adjustments Guide
+When adjusting hero image positioning in About.jsx:
+- Use inline `style={{ objectPosition: 'center X%' }}` for direct control
+- Lower percentages (0-30%) = show upper part of image
+- Higher percentages (70-100%) = show lower part of image  
+- 50% = center position
+- If OptimizedImage component interferes, replace with direct `<img>` tag
+- Current About page hero uses `objectPosition: 'center 10%'` to show upper portion
 
 ### Debug Mode
 ```javascript
