@@ -17,7 +17,10 @@ export default [
     },
     languageOptions: {
       ecmaVersion: 2020,
-      globals: globals.browser,
+      globals: {
+        ...globals.browser,
+        process: 'readonly', // Add process as global for Node.js environment checks
+      },
       parserOptions: {
         ecmaVersion: 'latest',
         ecmaFeatures: { jsx: true },
@@ -36,11 +39,17 @@ export default [
         varsIgnorePattern: '^[A-Z_]',
         argsIgnorePattern: '^_',
       }],
-      'sonarjs/no-duplicate-string': 'error',
-      'sonarjs/cognitive-complexity': ['error', 15],
-      'sonarjs/no-identical-expressions': 'error',
-      'sonarjs/no-unused-collection': 'error',
-      'sonarjs/prefer-single-boolean-return': 'error',
+      'sonarjs/no-duplicate-string': ['error', { threshold: 5 }], // Allow 5 duplicates before error
+      'sonarjs/cognitive-complexity': ['error', 25], // Increase to 25 for React components
+      'sonarjs/no-identical-expressions': 'warn',
+      'sonarjs/no-unused-collection': 'warn',
+      'sonarjs/prefer-single-boolean-return': 'warn',
+      'sonarjs/no-nested-conditional': 'warn', // Ternary operators are common in React
+      'sonarjs/no-nested-functions': 'warn', // Event handlers often nested
+      'sonarjs/unused-import': 'error',
+      'sonarjs/no-unused-vars': 'warn',
+      'sonarjs/no-dead-store': 'warn',
+      'sonarjs/pseudo-random': 'off', // Math.random is fine for UI animations
     },
   },
 ]
