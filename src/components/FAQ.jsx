@@ -3,17 +3,17 @@ import React, { useState, useEffect, useRef } from 'react';
 const FAQ = React.memo(() => {
   const [openItem, setOpenItem] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
-  const [animatingItems, setAnimatingItems] = useState(new Set());
+  const [_animatingItems, _setAnimatingItems] = useState(new Set());
   const sectionRef = useRef(null);
   const contentRefs = useRef({});
 
   const toggleItem = (index) => {
-    setAnimatingItems(prev => new Set(prev).add(index));
+    _setAnimatingItems(prev => new Set(prev).add(index));
     setOpenItem(openItem === index ? null : index);
     
     // Remove from animating set after animation completes
     setTimeout(() => {
-      setAnimatingItems(prev => {
+      _setAnimatingItems(prev => {
         const newSet = new Set(prev);
         newSet.delete(index);
         return newSet;

@@ -16,7 +16,7 @@ const GestureInteractive = ({ children, className = "", sensitivity = 1 }) => {
     return 1 + (distance / 500) * sensitivity;
   });
 
-  const dragControls = useDrag({
+  const _dragControls = useDrag({
     onDrag: (event, info) => {
       x.set(info.offset.x);
       y.set(info.offset.y);

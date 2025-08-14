@@ -5,7 +5,7 @@ const MagneticElement = ({
   children, 
   className = '', 
   strength = 0.3, 
-  ease = 0.15,
+  ease: _ease = 0.15,
   ...props 
 }) => {
   const elementRef = useRef(null);

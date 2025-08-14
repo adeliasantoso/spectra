@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // Floating Label Input
 export const FloatingInput = ({ 
@@ -13,10 +13,10 @@ export const FloatingInput = ({
   ...props 
 }) => {
   const [isFocused, setIsFocused] = useState(false);
-  const [hasValue, setHasValue] = useState(false);
+  const [_hasValue, _setHasValue] = useState(false);
 
   useEffect(() => {
-    setHasValue(value && value.length > 0);
+    _setHasValue(value && value.length > 0);
   }, [value]);
 
   const handleFocus = () => setIsFocused(true);
@@ -37,7 +37,7 @@ export const FloatingInput = ({
             ? 'border-red-500 focus:border-red-500 bg-red-50' 
             : 'border-gray-300 focus:border-blue-500 bg-white'
           }
-          ${hasValue || isFocused ? 'pt-6 pb-2' : 'py-4'}
+          ${_hasValue || isFocused ? 'pt-6 pb-2' : 'py-4'}
         `}
         placeholder=""
         {...props}
@@ -45,7 +45,7 @@ export const FloatingInput = ({
       
       <label className={`
         absolute left-4 transition-all duration-200 pointer-events-none
-        ${hasValue || isFocused 
+        ${_hasValue || isFocused 
           ? 'top-2 text-xs font-medium' 
           : 'top-1/2 -translate-y-1/2 text-base'
         }
@@ -92,10 +92,10 @@ export const FloatingTextarea = ({
   ...props 
 }) => {
   const [isFocused, setIsFocused] = useState(false);
-  const [hasValue, setHasValue] = useState(false);
+  const [_hasValue, _setHasValue] = useState(false);
 
   useEffect(() => {
-    setHasValue(value && value.length > 0);
+    _setHasValue(value && value.length > 0);
   }, [value]);
 
   const handleFocus = () => setIsFocused(true);

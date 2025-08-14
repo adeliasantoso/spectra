@@ -6,7 +6,7 @@ import { CartProvider } from './context/CartContext.jsx'
 import { ToastProvider } from './context/ToastContext.jsx'
 import { WishlistProvider } from './context/WishlistContext.jsx'
 import ToastContainer from './components/ToastContainer.jsx'
-import LoadingSpinner from './components/LoadingSpinner.jsx'
+
 import ErrorBoundary from './components/ErrorBoundary.jsx'
 import AppInitializer from './components/AppInitializer.jsx'
 import NetworkStatus from './components/NetworkStatus.jsx'

@@ -6,7 +6,6 @@ import CartIcon from "../components/CartIcon";
 import ProductQuickView from "../components/ProductQuickView";
 import FAQ from "../components/FAQ";
 import OptimizedImage from "../components/OptimizedImage";
-import OptimizedVideo from "../components/OptimizedVideo";
 import { measurePerformance, monitorBundleSize } from "../utils/performance";
 import { useAutoRefresh } from "../hooks/useAutoRefresh";
 import { setupCacheManagement } from "../utils/simpleCache";

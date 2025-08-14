@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+
 import LazyImage from "../components/LazyImage";
 import GestureInteractive from "../components/GestureInteractive";
 import spectra1Image from "../assets/images/landing-page/spectra1.webp";
