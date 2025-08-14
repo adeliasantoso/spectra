@@ -531,7 +531,7 @@ const ProductDetail = () => {
             <div className="flex items-center space-x-2">
               <div className="w-3 h-3 bg-green-500 rounded-full"></div>
               <span className="text-base md:text-lg text-green-600 font-medium">
-                In Stock - Ships in 1-2 business days
+                In stock - ships in 1–2 business days
               </span>
             </div>
 
@@ -625,13 +625,13 @@ const ProductDetail = () => {
               <div className="space-y-8 text-gray-700 leading-loose tracking-wide">
                 {product.id === "spectra-1-0" ? (
                   <>
-                    <p className="text-base md:text-lg font-medium">
+                    <p className="text-lg md:text-xl font-medium">
                       <strong>
                         Welcome to a new dimension of personalization.
                       </strong>
                     </p>
 
-                    <p className="text-base md:text-lg">
+                    <p className="text-lg md:text-xl">
                       Spectra 1.0 is a next-generation wearable that brings the
                       power of intelligent personalization into your everyday
                       life. Designed to adapt and respond in real time, it
@@ -648,7 +648,7 @@ const ProductDetail = () => {
                         key={expandAnimationKey}
                         className="space-y-8 animate-fade-in"
                       >
-                        <p className="text-[15px] md:text-[17px]">
+                        <p className="text-base md:text-lg">
                           Spectra 1.0 was born from a simple belief: technology
                           should understand more than it serves. It pays
                           attention to the rhythms of your life, what you linger
@@ -658,7 +658,7 @@ const ProductDetail = () => {
                           help make each day feel smoother and more intentional.
                         </p>
 
-                        <p className="text-[15px] md:text-[17px]">
+                        <p className="text-base md:text-lg">
                           Built with a sleek, lightweight design, Spectra
                           integrates effortlessly into your routine, delivering
                           personalized recommendations directly into your view.
@@ -670,7 +670,7 @@ const ProductDetail = () => {
                           smarter purchases.
                         </p>
 
-                        <p className="text-[15px] md:text-[17px]">
+                        <p className="text-base md:text-lg">
                           Spectra doesn't require constant input to be
                           effective. Drawing on ambient data and contextual
                           insights, it learns what you love and when you need it
@@ -682,7 +682,7 @@ const ProductDetail = () => {
                           you.
                         </p>
 
-                        <p className="text-[15px] md:text-[17px]">
+                        <p className="text-base md:text-lg">
                           Privacy and trust are foundational to Spectra's
                           design. With on-device AI processing and secure
                           encryption, all data is handled locally to avoid cloud
@@ -692,7 +692,7 @@ const ProductDetail = () => {
                           your world.
                         </p>
 
-                        <p className="text-base md:text-lg font-medium text-left pt-6">
+                        <p className="text-lg md:text-xl font-medium text-left pt-6">
                           <em>A world tailored to your mind.</em>
                         </p>
                       </div>

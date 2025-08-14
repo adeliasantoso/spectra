@@ -71,7 +71,7 @@ const About = () => {
                   visibleSections.has("hero-vision") ? "animate" : ""
                 }`}
               >
-                Vision
+                vision
               </span>
             </h1>
           </div>
@@ -100,14 +100,14 @@ const About = () => {
                     visibleSections.has("building-tech") ? "animate" : ""
                   }`}
                 >
-                  Tech
+                  tech
                 </span>{" "}
                 <span
                   className={`elegant-title-word ${
                     visibleSections.has("building-tech") ? "animate" : ""
                   }`}
                 >
-                  That
+                  that
                 </span>
                 <br />
                 <span
@@ -115,14 +115,14 @@ const About = () => {
                     visibleSections.has("building-tech") ? "animate" : ""
                   }`}
                 >
-                  Understands
+                  understands
                 </span>{" "}
                 <span
                   className={`elegant-title-word ${
                     visibleSections.has("building-tech") ? "animate" : ""
                   }`}
                 >
-                  You
+                  you
                 </span>
               </h2>
               <div className="space-y-6 md:space-y-8 text-base md:text-lg">
@@ -224,14 +224,14 @@ const About = () => {
                     visibleSections.has("designing-for") ? "animate" : ""
                   }`}
                 >
-                  You
+                  you
                 </span>{" "}
                 <span
                   className={`elegant-title-word ${
                     visibleSections.has("designing-for") ? "animate" : ""
                   }`}
                 >
-                  Without
+                  without
                 </span>
                 <br />
                 <span
@@ -239,7 +239,7 @@ const About = () => {
                     visibleSections.has("designing-for") ? "animate" : ""
                   }`}
                 >
-                  Disruption
+                  disruption
                 </span>
               </h2>
               <div className="space-y-6 md:space-y-8 text-base md:text-lg">
@@ -300,21 +300,21 @@ const About = () => {
                   visibleSections.has("driving-change") ? "animate" : ""
                 }`}
               >
-                For
+                for
               </span>{" "}
               <span
                 className={`elegant-title-word ${
                   visibleSections.has("driving-change") ? "animate" : ""
                 }`}
               >
-                Safety,
+                safety,
               </span>{" "}
               <span
                 className={`elegant-title-word ${
                   visibleSections.has("driving-change") ? "animate" : ""
                 }`}
               >
-                Accessibility,
+                accessibility,
               </span>
               <br />
               <span
@@ -322,14 +322,14 @@ const About = () => {
                   visibleSections.has("driving-change") ? "animate" : ""
                 }`}
               >
-                And
+                and
               </span>{" "}
               <span
                 className={`elegant-title-word ${
                   visibleSections.has("driving-change") ? "animate" : ""
                 }`}
               >
-                Sustainability
+                sustainability
               </span>
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 max-w-5xl mx-auto text-left">

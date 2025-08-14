@@ -16,10 +16,10 @@ export default defineConfig({
     // Optimize chunk splitting
     rollupOptions: {
       output: {
-        // Aggressive cache busting with timestamp
-        entryFileNames: `assets/[name]-[hash]-${Date.now()}.js`,
-        chunkFileNames: `assets/[name]-[hash]-${Date.now()}.js`,
-        assetFileNames: `assets/[name]-[hash]-${Date.now()}.[ext]`,
+        // Standard file naming with content-based hash
+        entryFileNames: `assets/[name]-[hash].js`,
+        chunkFileNames: `assets/[name]-[hash].js`,
+        assetFileNames: `assets/[name]-[hash].[ext]`,
         manualChunks: {
           vendor: ['react', 'react-dom', 'react-router-dom'],
           ui: ['./src/components/OptimizedImage.jsx', './src/components/OptimizedVideo.jsx']
@@ -45,7 +45,13 @@ export default defineConfig({
   },
   // Server configuration for development
   server: {
-    open: true,
-    cors: true
+    open: false,
+    cors: true,
+    hmr: {
+      overlay: false
+    },
+    watch: {
+      ignored: ['**/node_modules/**', '**/.git/**', '**/dist/**']
+    }
   }
 })

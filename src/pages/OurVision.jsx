@@ -49,7 +49,7 @@ const OurVision = () => {
       >
         <OptimizedImage
           src={heroAbout}
-          alt="Our Vision"
+          alt="Our ision"
           width={1920}
           height={800}
           lazy={false}

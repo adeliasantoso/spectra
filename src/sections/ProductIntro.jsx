@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import LazyImage from "../components/LazyImage";
 import GestureInteractive from "../components/GestureInteractive";
-import introNewSpectraAndExperienceTheFutureToday from "../assets/images/landing-page/intronewspectraandexperiencethefuturetoday.webp";
+import spectra1Image from "../assets/images/landing-page/spectra1.webp";
 
 const ProductIntro = () => {
   return (
@@ -101,7 +101,7 @@ const ProductIntro = () => {
                     }}
                   >
                     <LazyImage
-                      src={introNewSpectraAndExperienceTheFutureToday}
+                      src={spectra1Image}
                       alt="Spectra 1.0 Smart Glasses"
                       className="w-full transition-all duration-700 group-hover:scale-105"
                       style={{ aspectRatio: "16/10", maxHeight: "500px" }}

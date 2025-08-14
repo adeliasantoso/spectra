@@ -273,6 +273,18 @@ npm run audit
 3. **Toast not showing**: Ensure ToastProvider wraps app
 4. **Cart state reset**: Check CartProvider placement
 5. **Hero image positioning issues**: When object-position styles don't work with OptimizedImage component, use direct `<img>` tag instead
+6. **Vercel/Netlify not auto-deploying**: Check deployment configuration and build commands in vercel.json and netlify.toml
+
+### Deployment Issues
+**Problem**: Vercel or Netlify not updating after GitHub push
+**Solutions**:
+- Verify repository is correctly connected in platform dashboard
+- Check build command matches package.json scripts
+- Ensure vercel.json uses `"buildCommand": "npm run build"` (not build:vercel)
+- For Netlify, verify netlify.toml has correct Node.js version (20+)
+- Check deployment logs for build errors
+- Manually trigger deployment if auto-deploy fails
+- Verify webhook settings in GitHub repository settings
 
 ### Image Position Adjustments Guide
 When adjusting hero image positioning in About.jsx:

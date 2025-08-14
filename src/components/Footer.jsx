@@ -8,7 +8,18 @@ const Footer = React.memo(() => {
           {/* Left Side - Logo and Copyright */}
           <div className="mb-8 md:mb-0">
             <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-2 md:mb-4">SPECTRA</h3>
-            <p className="text-gray-700 text-sm md:text-base">© 2025</p>
+            <p className="text-gray-700 text-sm md:text-base mb-4">© 2025</p>
+            
+            {/* Legal Links */}
+            <div className="text-xs text-gray-600 space-x-2 flex flex-wrap">
+              <a href="/privacy-policy" className="hover:text-gray-900 transition-colors">Privacy Policy</a>
+              <span>•</span>
+              <a href="/terms-of-service" className="hover:text-gray-900 transition-colors">Terms of Service</a>
+              <span>•</span>
+              <a href="/privacy-choices" className="hover:text-gray-900 transition-colors">Your Privacy Choices (CCPA)</a>
+              <span>•</span>
+              <a href="/do-not-sell" className="hover:text-gray-900 transition-colors">Do Not Sell or Share My Personal Information</a>
+            </div>
           </div>
 
           {/* Right Side - Location and Contact */}

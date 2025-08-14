@@ -112,7 +112,7 @@ const ProductQuickView = memo(({ product, onClose }) => {
                   onClick={handleViewFullItem}
                   className="w-full border-2 border-gray-200 text-gray-800 px-8 py-3 text-base font-medium hover:bg-gray-50 hover:border-gray-300 hover:scale-[1.02] active:scale-95 transition-all duration-200 rounded-xl"
                 >
-                  Product Detail
+                  View Details
                 </button>
               </div>
             </div>

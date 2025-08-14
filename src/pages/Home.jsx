@@ -727,7 +727,7 @@ const Home = React.memo(() => {
                     visibleSections.has("smart-recognition") ? "animate" : ""
                   }`}
                 >
-                  Recognises
+                  Recognizes
                 </span>{" "}
                 <span
                   className={`elegant-title-word ${
@@ -1306,7 +1306,7 @@ const Home = React.memo(() => {
                 visibleSections.has("social-section") ? "animate" : ""
               }`}
             >
-              Us
+              us
             </span>{" "}
             <span
               className={`elegant-title-word ${
@@ -1320,7 +1320,7 @@ const Home = React.memo(() => {
                 visibleSections.has("social-section") ? "animate" : ""
               }`}
             >
-              Social
+              social
             </span>
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">

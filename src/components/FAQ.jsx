@@ -53,7 +53,7 @@ const FAQ = React.memo(() => {
       answer: "There are many wonderful things you can do with your Spectra 1.0. The device uses ambient cues to bring relevant suggestions, allowing you to make informed decisions in real time. It boosts your productivity by providing the most useful resources to help you get things done quickly and efficiently. It provides access to practical tools and resources to help you complete tasks efficiently. When you are ready to unwind, Spectra offers tailored recommendations, including original content that aligns with your current mood and interests."
     },
     {
-      question: "How do I customise the recommendations shown to me?",
+      question: "How do I customize the recommendations shown to me?",
       answer: "You don't need to manually configure your preferences. Spectra does the work for you. It learns from your online and offline patterns: what you see, where you go, and how you interact. Using contextual awareness and structured memory, Spectra generates dynamic suggestions that reflect your latest preferences. If a particular recommendation doesn't feel useful, simply tap the \"Dislike\" button and similar content will appear less frequently."
     },
     {
